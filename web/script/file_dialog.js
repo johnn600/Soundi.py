@@ -27,7 +27,7 @@ function loadFile(){
     input = document.getElementById('csvFile');
     alertMessage = document.getElementById('alertMessage');
     fileInput = document.getElementById('fileInput');
-    sidebar = document.getElementById('sidebar');
+    tabs = document.getElementById('myTabs');
     mainContents = document.getElementById('mainContents');
 
     //if no csv file is selected
@@ -37,8 +37,9 @@ function loadFile(){
     } 
     else {
         //show the main contents and the sidebar
-        sidebar.classList.remove("d-none");
+        tabs.classList.remove("d-none");
         mainContents.classList.remove("d-none");
+        
 
         //assign value to the global variable
         csv = input.value;
@@ -66,9 +67,11 @@ async function plotSongsPerYear(){
     };
     const data = await temp();
     const details = {
-        index: data[0],
+        index: data[0].map(String),
         values: data[1]
     }
+
+    console.log(details);
 
     //plot the graph
     plot(details, 'songsPerYearChart')
@@ -80,9 +83,9 @@ function plot(data, element) {
     const ctx = document.getElementById(element).getContext('2d');
   
     const myChart = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: {
-        labels: data.index,
+        labels: data.index.map(String),
         datasets: [{
           label: 'Number of Songs Released Per Year',
           data: data.values,
@@ -91,18 +94,25 @@ function plot(data, element) {
       },
       options: {
         scales: {
-          x: { type: 'linear', position: 'bottom' },
+          x: {
+            type: 'linear',
+            position: 'bottom',
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 10, // Adjust the limit as needed
+            },
+          },
           y: { beginAtZero: true }
         },
         plugins: {
-          title: {
-            display: true,
-            text: 'Released songs:'
+          legend: {
+            display: false // Set display to false to hide the title
           }
         }
       }
     });
   }
+  
   
 
 

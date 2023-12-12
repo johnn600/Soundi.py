@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="style/style.css">
 
   <!-- Chart js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
 
 </head>
@@ -34,47 +34,52 @@
   </nav>
 
   <div class="container-fluid">
-    <div class="row">
 
-      <!-- Sidebar -->
-      <nav class="col-md-2 bg-light sidebar d-none" id="sidebar">
-        <div class="sidebar-sticky">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">
-                Descriptive
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Predictive
-              </a>
-            </li>
-            <!-- Add more sidebar items as needed -->
-          </ul>
-        </div>
-      </nav>
+<!-- Tabs -->
+<ul class="nav nav-tabs d-none" id="myTabs">
+  <li class="nav-item">
+    <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1">Descriptive</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="tab2" data-toggle="tab" href="#content2">Predictive</a>
+  </li>
+</ul>
 
-      <!-- Main contents -->
-      <div class="col-md-10 d-none" id="mainContents">
-        <div class="w-100 align-items-center justify-content-center">
+<!-- Tab Contents -->
+<div class="tab-content d-none" id="mainContents">
 
-          <div class="card">
-            <div class="card-body">
+  <!-- Tab 1 Content -->
+  <div class="tab-pane fade show active" id="content1">
+    <div class="col-md-10" id="mainContents1">
+      <div class="w-100 align-items-center justify-content-center">
+        <div class="card p-3 mt-3">
+          <div class="ratio ratio-2x1">
+            <div class="card-title">
+              Number of Songs Released Per Year
+            </div>
+            <div class="card-body" style="position: relative;">
               <!-- Your main content goes here -->
-              <canvas id="songsPerYearChart" width="400" height="200"></canvas>
+              <canvas id="songsPerYearChart" width="600" height="100"></canvas>
             </div>
           </div>
-
-          <div class="card mt-3">
-            <div class="card-body">
-              <!-- Your main content goes here -->
-              
-            </div>
-          </div>
-
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Tab 2 Content -->
+  <div class="tab-pane fade" id="content2">
+    <div class="col-md-10" id="mainContents">
+      <div class="w-100 align-items-center justify-content-center">
+        <div class="card mt-3">
+          <div class="card-body">
+            <!-- Your main content goes here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -90,7 +95,7 @@
       
             <div class="custom-file">
               <input title="File input" type="text" class="custom-file-input" id="csvFile" width="100" accept=".csv" onclick="filePicker()">
-                <label class="custom-file-label" for="customFile" id="csvFileLabel">Select CSV file</label>
+                <label class="custom-file-label" for="customFile" id="csvFileLabel">Select CSV/DFB file</label>
             </div>
 
             <button type="button" class="btn btn-primary btn-block mt-3" id="loadBtn" onclick="loadFile()">Load</button>
@@ -110,12 +115,12 @@
     
     
     
-    </div>
+
   </div>
 
   <!-- Bootstrap JS, Popper.js, and jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
