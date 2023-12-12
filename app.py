@@ -20,6 +20,7 @@ def list_files_in_folder(folder_path):
     return file_list
 
 folder_path = os.getcwd()
+print(folder_path)
 excluded = list_files_in_folder(folder_path)
 
 
