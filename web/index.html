@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Dashboard</title>
+  <title>Music Dashboard</title>
   
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -14,8 +14,12 @@
   <!-- custom scripts -->
   <script type="text/javascript" src="script/file_dialog.js"></script>
 
+
   <!-- css file -->
   <link rel="stylesheet" href="style/style.css">
+
+  <!-- Chart js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
 
 </head>
@@ -29,12 +33,11 @@
     
   </nav>
 
-  <div class="container-flui">
+  <div class="container-fluid">
     <div class="row">
 
-      <!-- Dashboard -->
       <!-- Sidebar -->
-      <nav class="col-md-2 bg-light sidebar rounded d-none" id="navbar">
+      <nav class="col-md-2 bg-light sidebar d-none" id="sidebar">
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
@@ -51,11 +54,28 @@
           </ul>
         </div>
       </nav>
-      
-      <!-- Main contents -->
-      <div>
 
+      <!-- Main contents -->
+      <div class="col-md-10 d-none" id="mainContents">
+        <div class="w-100 align-items-center justify-content-center">
+
+          <div class="card">
+            <div class="card-body">
+              <!-- Your main content goes here -->
+              <canvas id="songsPerYearChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+
+          <div class="card mt-3">
+            <div class="card-body">
+              <!-- Your main content goes here -->
+              
+            </div>
+          </div>
+
+        </div>
       </div>
+
 
 
 
@@ -82,10 +102,14 @@
           </div>
         </div>
       </div>
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
     </div>
   </div>
 
