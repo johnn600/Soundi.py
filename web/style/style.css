@@ -1,0 +1,14 @@
+body {
+    padding-top: 56px;
+}
+
+@media (min-width: 768px) {
+body {
+    padding-top: 72px;
+}
+}
+/* Add rounded corners to the main container */
+.rounded {
+border-radius: 15px; /* You can adjust the value to control the roundness */
+overflow: hidden; /* Ensure content doesn't overflow rounded corners */
+}

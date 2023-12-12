@@ -14,24 +14,10 @@
   <!-- custom scripts -->
   <script type="text/javascript" src="script/file_dialog.js"></script>
 
-  <!-- Custom styles for this template -->
-  <style>
-    body {
-      padding-top: 56px;
-    }
+  <!-- css file -->
+  <link rel="stylesheet" href="style/style.css">
 
-    @media (min-width: 768px) {
-      body {
-        padding-top: 72px;
-      }
-    }
-    /* Add rounded corners to the main container */
-    .rounded {
-      border-radius: 15px; /* You can adjust the value to control the roundness */
-      overflow: hidden; /* Ensure content doesn't overflow rounded corners */
-    }
 
-  </style>
 </head>
 <body>
 
@@ -77,13 +63,13 @@
 
 
       <!-- File upload -->
-      <div class="m-4 w-100 d-flex align-items-center justify-content-center" id="fileInput">
-        <div class="card" >
+      <div class="m-4 d-flex w-100 align-items-center justify-content-center" id="fileInput">
+        <div class="card w-50" >
           <div class="card-body">
             <h5 class="card-title">Load dataset</h5>
       
             <div class="custom-file">
-              <input title="File input" type="file" class="custom-file-input" id="csvFile" accept=".csv" onchange="inputCSV(event)">
+              <input title="File input" type="text" class="custom-file-input" id="csvFile" width="100" accept=".csv" onclick="filePicker()">
                 <label class="custom-file-label" for="customFile" id="csvFileLabel">Select CSV file</label>
             </div>
 
