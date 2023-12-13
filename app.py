@@ -55,7 +55,7 @@ def returnFileDetails():
     return fileName, filePath
 
 @eel.expose
-def plot_songs_per_year():
+def released_songs_per_year():
     # Load the dataset
     df = pd.read_csv(filePath)
 
@@ -68,6 +68,28 @@ def plot_songs_per_year():
 
     # Combine the lists into a single list
     result_list = [list_of_years, list_of_values]
+
+    return result_list
+
+@eel.expose
+def artist_top_songs_by_popularity(artist_name):
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Filter songs by the given artist
+    artist_songs = df[df['artists'].apply(lambda x: artist_name in x)]
+
+    # Sort songs by popularity in descending order
+    top_songs = artist_songs.sort_values(by='popularity', ascending=False).head(10)
+
+    # Create separate lists for song names and popularity values
+    list_of_songs = top_songs['name'].tolist()
+    list_of_popularity = top_songs['popularity'].tolist()
+
+    # Combine the lists into a single list
+    result_list = [list_of_songs, list_of_popularity]
+
+    print(result_list)
 
     return result_list
     

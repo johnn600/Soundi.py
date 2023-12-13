@@ -14,11 +14,14 @@
   <!-- custom scripts -->
   <script type="text/javascript" src="script/file_dialog.js"></script>
   <script type="text/javascript" src="script/visualization.js"></script>
-
+  <script type="text/javascript" src="script/search_artist.js"></script>
 
   <!-- css file -->
   <link rel="stylesheet" href="style/style.css">
 
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  
   <!-- Chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
@@ -49,10 +52,11 @@
 <!-- Tab Contents -->
 <div class="tab-content d-none" id="mainContents">
 
-  <!-- Tab 1 Content -->
+  <!-- Descriptive -->
   <div class="tab-pane fade show active" id="content1">
     <div class="col-md-10 m-auto" id="section1">
       <div class="w-100 align-items-center justify-content-center">
+
         <div class="card p-3 mt-3">
           <div class="ratio ratio-2x1">
             <div class="card-title">
@@ -64,9 +68,49 @@
             </div>
           </div>
         </div>
+
+        <!--- Top 10 songs -->
+        <div class="card p-3 mt-3">
+          <div class=" d-flex align-items-center justify-content-space-evenly">
+            <span class="mr-auto">Artist's Top 10 Popular Songs</span>
+            
+            <!-- create a code for search bar with icon inside -->
+            <form onsubmit="event.preventDefault(); search();">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search artist" id="artistName">
+                    <div class="input-group-append">
+                        <button title="Search" class="btn btn-primary" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+          </div>
+
+          <div class="card-body position-relative">
+            <!-- Your main content goes here -->
+            <!-- loading spinner -->
+            <div class="mt-3" id="loadingSpinner" style="display: none;">
+              <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only">Loading...</span>
+              </div>
+              <p>Loading...</p>
+            </div>
+
+            <div id="canvasTop10Songs">
+              <!-- canvas element to be created with JS -->
+            </div>
+          </div>
+          
+        </div>
       </div>
     </div>
   </div>
+
+
+
+
+
 
   <!-- Tab 2 Content -->
   <div class="tab-pane fade" id="content2">
@@ -119,10 +163,11 @@
 
   </div>
 
-  <!-- Bootstrap JS, Popper.js, and jQuery -->
+  <!-- Bootstrap JS, Popper.js, and other plugins -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="script/papaparse.min.js"></script>
 
 </body>
 </html>
