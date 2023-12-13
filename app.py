@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
+
 # exclude all plugins and assets else mag-hang ang app
 def list_files_in_folder(folder_path):
     file_list = []
@@ -92,6 +93,9 @@ def artist_top_songs_by_popularity(artist_name):
     result_list = [list_of_songs, list_of_popularity]
     return result_list
     
+@eel.expose
+def artist_search_spotify(query):
+    pass
 
 
 

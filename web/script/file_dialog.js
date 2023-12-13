@@ -59,4 +59,29 @@ function loadFile(){
     }
 }
 
+//for testing
+function test(){
+    fileInput = document.getElementById('fileInput');
+    tabs = document.getElementById('myTabs');
+    //show the main contents and the sidebar
+    tabs.classList.remove("d-none");
+    mainContents.classList.remove("d-none");
+    
+
+    //assign value to the global variable
+    csv = "input.value";
+    console.log(csv);
+
+    //hide the file input
+    fileInput.classList.remove("d-flex");
+    fileInput.classList.add("d-none");
+
+    //show the navbarTitle
+    document.getElementById('navbarTitle').classList.remove("invisible");
+    document.getElementById('navbarTitleInfo').classList.remove("invisible");
+
+    //analyze the dataset
+    analyzeDataset();
+}
+
 
