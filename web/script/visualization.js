@@ -31,10 +31,8 @@ async function plotSongsPerYear(){
         values: data[1]
     }
 
-    console.log(details);
-
     //plot the graph
-    plotLineGraph(details, 'songsPerYearChart')
+    plotLineGraph(details, 'songsPerYearChart', 'Songs released')
 }
 
 //top 10 popular songs of an artist
@@ -44,12 +42,8 @@ async function plotTop10Songs(data){
         values: data[1]
     }
 
-    console.log("cxgfgh"+ details);
-
-    
-
     //create a horizontal bar graph
-    plotHorizontalBarGraph(details, 'artistTop10SongsChart')
+    plotHorizontalBarGraph(details, 'artistTop10SongsChart', 'Popularity')
 
 }
 
@@ -61,15 +55,15 @@ async function plotTop10Songs(data){
 */ 
 
 //LINE GRAPH CONSTRUCTOR
-function plotLineGraph(data, element) {
+function plotLineGraph(data, element, label) {
     const ctx = document.getElementById(element).getContext('2d');
   
     const myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: data.index.map(String),
+        labels: data.index.map(num => num.toLocaleString('en-US')), // Convert to string without formatting
         datasets: [{
-          label: 'Number of Songs Released Per Year',
+          label: label,
           data: data.values,
           backgroundColor: 'skyblue',
         }]
@@ -96,7 +90,7 @@ function plotLineGraph(data, element) {
   }
   
 //HORIZONTAL BAR GRAPH CONSTRUCTOR
-function plotHorizontalBarGraph(data, element) {
+function plotHorizontalBarGraph(data, element, label) {
   const ctx = document.getElementById(element).getContext('2d');
 
   const myChart = new Chart(ctx, {
@@ -104,7 +98,7 @@ function plotHorizontalBarGraph(data, element) {
     data: {
       labels: data.index.map(String),
       datasets: [{
-        label: 'Number of Songs Released Per Year',
+        label: label,
         data: data.values,
         backgroundColor: 'skyblue',
       }]

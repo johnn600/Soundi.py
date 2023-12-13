@@ -10,6 +10,7 @@ function hideLoadingSpinner() {
     document.getElementById('loadingSpinner').classList.remove('d-flex');
 }
 
+
 function getQuerry() {
     const artistName = document.getElementById('artistName').value;
     return artistName;
@@ -21,37 +22,57 @@ async function search() {
 
     if (file) {
         showLoadingSpinner();
+        //hide existing canvas if present
+        if(document.getElementById('artistTop10SongsChart') != null){
+            document.getElementById('artistTop10SongsChart').classList.add('d-none');
+        }
+
+        //check if searchNoResults message is visible
+        const msg = document.getElementById('searchNoResults');
+        if (!msg.classList.contains('d-none')) {
+            msg.classList.add('d-none');
+        }
 
         //invoke python eel function
         const temp = async () => {
             return await eel.artist_top_songs_by_popularity(getQuerry())();
         };
 
-        const parentDiv = document.getElementById('canvasTop10Songs');
-
-        //check if div has no child canvas
-        if (parentDiv.querySelector('canvas') == null) {
-            //create a canvas
-            createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
-        } 
-        else {
-            //hide the canvas
-            parentDiv.querySelector('canvas').style.display = 'none';
-            //clear the canvas
-            parentDiv.removeChild(parentDiv.querySelector('canvas'));
-            //create a canvas
-            createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
-            //show the canvas
-            parentDiv.querySelector('canvas').style.display = 'flex';
-        }
-
         const data = await temp();
 
-        //visualize data
-        plotTop10Songs(data).then(() => {
+        //show no results message when data is empty
+        if (data[0].length == 0) {
+            const msg = document.getElementById('searchNoResults');
+            msg.classList.remove('d-none');
+            hideLoadingSpinner();
+            return false;
+        }
+        else {
             //hide loading spinner after loading data
             hideLoadingSpinner();
-        });
+
+            const parentDiv = document.getElementById('canvasTop10Songs');
+
+            //check if div has no child canvas
+            if (parentDiv.querySelector('canvas') == null) {
+                //create a canvas
+                createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
+            } 
+            else {
+                //hide the canvas
+                parentDiv.querySelector('canvas').style.display = 'none';
+                //clear the canvas
+                parentDiv.removeChild(parentDiv.querySelector('canvas'));
+                //create a canvas
+                createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
+                //show the canvas
+                parentDiv.querySelector('canvas').style.display = 'flex';
+            }
+
+            //visualize data
+            plotTop10Songs(data).then(() => {
+            });
+        }
     }
 }
 

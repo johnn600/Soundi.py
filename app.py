@@ -31,8 +31,11 @@ eel.init('web', allowed_extensions=['.js', '.html'],
          excluded_prefixes=excluded)
 
 
-#python link to js (BACKEND CODES HERE)
-
+'''
+    --------------------------------------
+    python link to js (BACKEND CODES HERE)
+    --------------------------------------
+'''
 
 @eel.expose
 def filePicker():
@@ -68,7 +71,6 @@ def released_songs_per_year():
 
     # Combine the lists into a single list
     result_list = [list_of_years, list_of_values]
-
     return result_list
 
 @eel.expose
@@ -88,9 +90,6 @@ def artist_top_songs_by_popularity(artist_name):
 
     # Combine the lists into a single list
     result_list = [list_of_songs, list_of_popularity]
-
-    print(result_list)
-
     return result_list
     
 
