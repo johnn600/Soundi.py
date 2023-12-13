@@ -1,11 +1,13 @@
 
 
 function showLoadingSpinner() {
-    document.getElementById('loadingSpinner').style.display = 'block';
+    document.getElementById('loadingSpinner').classList.add('d-flex');
+    document.getElementById('loadingSpinner').classList.remove('d-none');
 }
 
 function hideLoadingSpinner() {
-    document.getElementById('loadingSpinner').style.display = 'none';
+    document.getElementById('loadingSpinner').classList.add('d-none');
+    document.getElementById('loadingSpinner').classList.remove('d-flex');
 }
 
 function getQuerry() {
@@ -13,6 +15,7 @@ function getQuerry() {
     return artistName;
 }
 
+//search for artist
 async function search() {
     const file = csv;
 
@@ -23,29 +26,13 @@ async function search() {
         const temp = async () => {
             return await eel.artist_top_songs_by_popularity(getQuerry())();
         };
-
         const data = await temp();
 
-        console.log(data);
-
-        //check if canvas is
-
-
         //visualize data
-        plotTop10Songs(data)
-
-
-
-
-        /*
-        Papa.parse(file, {
-            complete: function(results) {
-                hideLoadingSpinner();
-                const extractedData = extractData(results.data);
-                displayData(extractedData);
-            }
+        plotTop10Songs(data).then(() => {
+            //hide loading spinner after loading data
+            hideLoadingSpinner();
         });
-        */
     }
 }
 

@@ -1,6 +1,4 @@
-/* 
-    MAIN CODES FOR DATA VISUALIZATION
-*/
+
 
 //global variables
 let myChart = null;
@@ -17,6 +15,8 @@ function createCanvas(parent, canvasId) {
   
     // Append the canvas element as a child to the div
     parentDiv.appendChild(canvas);
+
+    console.log("canvas created");
 }
 
 
@@ -46,14 +46,31 @@ async function plotTop10Songs(data){
 
     console.log("cxgfgh"+ details);
 
-    //create a canvas
-    createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
+    const parentDiv = document.getElementById('canvasTop10Songs');
+
+    //check if div has no child canvas
+    if (parentDiv.querySelector('canvas') == null) {
+        //create a canvas
+        createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
+    } 
+    else {
+        //clear the canvas
+        parentDiv.removeChild(parentDiv.querySelector('canvas'));
+        //create a canvas
+        createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
+    }
 
     //create a horizontal bar graph
     plotHorizontalBarGraph(details, 'artistTop10SongsChart')
 
 }
 
+
+/* 
+  --------------------------------------------
+    GRAPHS FOR DATA VISUALIZATION
+  --------------------------------------------
+*/ 
 
 //LINE GRAPH CONSTRUCTOR
 function plotLineGraph(data, element) {
@@ -94,8 +111,6 @@ function plotLineGraph(data, element) {
 function plotHorizontalBarGraph(data, element) {
   const ctx = document.getElementById(element).getContext('2d');
 
-
-
   const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -125,15 +140,6 @@ function plotHorizontalBarGraph(data, element) {
     }
   });
 
-  // Function to update the chart with new data
-  const updateHorizontalBarGraph = newData => {
-    myChart.data.labels = newData.index.map(String);
-    myChart.data.datasets[0].data = newData.values;
-    myChart.update();
-  };
-
-  // Return the updateChart function so it can be used externally
-  return updateHorizontalBarGraph;
 }
 
   
