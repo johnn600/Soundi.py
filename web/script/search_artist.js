@@ -1,5 +1,4 @@
 
-
 function showLoadingSpinner() {
     document.getElementById('loadingSpinner').classList.add('d-flex');
     document.getElementById('loadingSpinner').classList.remove('d-none');
@@ -16,7 +15,7 @@ function getQuerry() {
     return artistName;
 }
 
-//search for artist
+//search for artist from imported csv file
 async function search() {
     const file = csv;
 
@@ -68,6 +67,34 @@ async function search() {
                 //show the canvas
                 parentDiv.querySelector('canvas').style.display = 'flex';
             }
+
+            //fetch data from Spotify API
+            const spotifyData = await searchSpotify(getQuerry());
+
+            //set variables
+            const artistName = spotifyData[0]
+            const artistImageURL = spotifyData[1]
+            const artistPopularity = spotifyData[2]
+            const spotifyLink = spotifyData[3]
+            const artistFollowers = spotifyData[4]
+            const artistGenres = spotifyData[5]
+
+            //display artist details
+            document.getElementById('infoArtistName').innerHTML = artistName;
+            document.getElementById('infoArtistImage').src = artistImageURL;
+            document.getElementById('infoArtistPopularity').innerHTML = artistPopularity;
+            document.getElementById('infoArtistFollowers').innerHTML = artistFollowers;
+            //delete existing pills
+            document.getElementById('infoArtistGenres').innerHTML = '';
+            //create bootstrap pill for each genre
+            artistGenres.forEach(genre => {
+                const pill = document.createElement('span');
+                pill.classList.add('badge', 'badge-dark', 'p-1', 'mr-1');
+                pill.innerHTML = genre;
+                document.getElementById('infoArtistGenres').appendChild(pill);
+            });
+            document.getElementById('infoArtistSpotifyURL').href = spotifyLink;
+
 
             //visualize data
             plotTop10Songs(data).then(() => {

@@ -53,3 +53,9 @@ overflow: hidden; /* Ensure content doesn't overflow rounded corners */
 .nav-tabs {
     border-bottom: none;
 }
+
+.artist-thumbnail {
+    width: 200px;
+    height: auto;
+    object-fit: cover;
+}

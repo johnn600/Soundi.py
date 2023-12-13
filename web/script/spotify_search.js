@@ -34,7 +34,7 @@ async function searchSpotify(query) {
     };
 
     const params = new URLSearchParams({
-        q: query + '*',
+        q: query,
         type: 'artist',
         limit: '1',
         offset: '0'
@@ -55,17 +55,17 @@ async function searchSpotify(query) {
         return await retryResponse.json();
     }
 
-    const artistName = response.json().artists.items[0].name;
-    const artistImageURL = response.json().artists.items[0].images[0].url;
-    const artistPopularity = response.json().artists.items[0].popularity;
-    const spotifyLink = response.json().artists.items[0].external_urls.spotify;
-    const artistFollowers = response.json().artists.items[0].followers.total;
+    const json = await response.json();
 
-    const artistInfo = [artistName, artistImageURL, artistPopularity, spotifyLink, artistFollowers];
+    const artistName = json.artists.items[0].name;
+    const artistImageURL = json.artists.items[0].images[2].url;
+    const artistPopularity = json.artists.items[0].popularity;
+    const spotifyLink = json.artists.items[0].external_urls.spotify;
+    const artistFollowers = json.artists.items[0].followers.total;
+    const artistGenres = json.artists.items[0].genres;
+
+    const artistInfo = [artistName, artistImageURL, artistPopularity, spotifyLink, artistFollowers, artistGenres];
     console.log(artistInfo);
     return artistInfo;
 }
 
-// Replace 'your_artist_query' with the actual artist query
-const artistQuery = 'your_artist_query';
-searchSpotify(artistQuery);
