@@ -26,6 +26,25 @@ async function search() {
         const temp = async () => {
             return await eel.artist_top_songs_by_popularity(getQuerry())();
         };
+
+        const parentDiv = document.getElementById('canvasTop10Songs');
+
+        //check if div has no child canvas
+        if (parentDiv.querySelector('canvas') == null) {
+            //create a canvas
+            createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
+        } 
+        else {
+            //hide the canvas
+            parentDiv.querySelector('canvas').style.display = 'none';
+            //clear the canvas
+            parentDiv.removeChild(parentDiv.querySelector('canvas'));
+            //create a canvas
+            createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
+            //show the canvas
+            parentDiv.querySelector('canvas').style.display = 'flex';
+        }
+
         const data = await temp();
 
         //visualize data

@@ -8,7 +8,7 @@ function createCanvas(parent, canvasId) {
     const canvas = document.createElement('canvas');
     canvas.id = String(canvasId);
     canvas.width = 400;
-    canvas.height = 150;
+    canvas.height = 120;
   
     // Get the reference to the div element
     const parentDiv = document.getElementById(parent);
@@ -46,19 +46,7 @@ async function plotTop10Songs(data){
 
     console.log("cxgfgh"+ details);
 
-    const parentDiv = document.getElementById('canvasTop10Songs');
-
-    //check if div has no child canvas
-    if (parentDiv.querySelector('canvas') == null) {
-        //create a canvas
-        createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
-    } 
-    else {
-        //clear the canvas
-        parentDiv.removeChild(parentDiv.querySelector('canvas'));
-        //create a canvas
-        createCanvas('canvasTop10Songs', 'artistTop10SongsChart');
-    }
+    
 
     //create a horizontal bar graph
     plotHorizontalBarGraph(details, 'artistTop10SongsChart')
