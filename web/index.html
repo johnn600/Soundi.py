@@ -149,14 +149,14 @@
             </div>
           </div>
 
-          <!-- When the search returns nothing -->
-          <div class="container rounded alert-danger mt-5 text-center p-5 d-none" id="searchNoResults">
-            Artist record not found
+          <!-- Error messages -->
+          <div class="container rounded alert-danger mt-5 text-center p-5 d-none" id="searchError">
+            error messages here
           </div>
 
           <!-- artist details -->
           <div class="container mt-4">
-            <div class="card p-5 rounded" id="artistPage">
+            <div class="card p-5 rounded d-none" id="artistInfo">
                 <div class="row no-gutters d-flex align-items-center justify-content-center">
                     <!-- First column with square image -->
                     <div class="col-md-6 d-flex align-items-right justify-content-end">
@@ -170,7 +170,7 @@
                             <div class="card-text">Popularity: <span id="infoArtistPopularity">0</span></div>
                             <div class="card-text">Followers: <span id="infoArtistFollowers">0</span></div>
                             <div><span id="infoArtistGenres"></span></div>
-                            <a title="Spotify link" href="#" id="infoArtistSpotifyURL" target="_blank"><i class="fa-brands fa-spotify fa-lg mt-3" style="color: #1dd366;"></i></a>
+                            <a title="Spotify link" href="#" id="infoArtistSpotifyURL" target="_blank"><i class="fa-brands fa-spotify fa-xl mt-4" style="color: #1dd366;"></i></a>
                         </div>
                     </div>
                 </div>

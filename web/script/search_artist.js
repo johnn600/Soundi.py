@@ -19,6 +19,15 @@ function getQuerry() {
 async function search() {
     const file = csv;
 
+    //check if search bar is empty
+    if (getQuerry() == '') {
+        document.getElementById('searchError').innerHTML = 'Please enter an artist name';
+        document.getElementById('searchError').classList.remove('d-none');
+        //hide artist info card
+        document.getElementById('artistInfo').classList.add('d-none');
+        return false;
+    }
+
     if (file) {
         showLoadingSpinner();
         //hide existing canvas if present
@@ -26,8 +35,14 @@ async function search() {
             document.getElementById('artistTop10SongsChart').classList.add('d-none');
         }
 
-        //check if searchNoResults message is visible
-        const msg = document.getElementById('searchNoResults');
+        //check if artist card has class d-none
+        if (!document.getElementById('artistInfo').classList.contains('d-none')) {
+            //hide artist info card
+            document.getElementById('artistInfo').classList.add('d-none');
+        }
+
+        //check if searchError message is visible
+        const msg = document.getElementById('searchError');
         if (!msg.classList.contains('d-none')) {
             msg.classList.add('d-none');
         }
@@ -41,15 +56,13 @@ async function search() {
 
         //show no results message when data is empty
         if (data[0].length == 0) {
-            const msg = document.getElementById('searchNoResults');
+            const msg = document.getElementById('searchError');
             msg.classList.remove('d-none');
+            msg.innerHTML = 'No results found';
             hideLoadingSpinner();
             return false;
         }
         else {
-            //hide loading spinner after loading data
-            hideLoadingSpinner();
-
             const parentDiv = document.getElementById('canvasTop10Songs');
 
             //check if div has no child canvas
@@ -76,15 +89,16 @@ async function search() {
             const artistImageURL = spotifyData[1]
             const artistPopularity = spotifyData[2]
             const spotifyLink = spotifyData[3]
-            const artistFollowers = spotifyData[4]
+            //add commas to followers count
+            const artistFollowers = spotifyData[4].toLocaleString('en-US')
             const artistGenres = spotifyData[5]
 
             //display artist details
             document.getElementById('infoArtistName').innerHTML = artistName;
             document.getElementById('infoArtistImage').src = artistImageURL;
-            document.getElementById('infoArtistPopularity').innerHTML = artistPopularity;
+            document.getElementById('infoArtistPopularity').innerHTML = artistPopularity + '%';
             document.getElementById('infoArtistFollowers').innerHTML = artistFollowers;
-            //delete existing pills
+            //clear existing pills
             document.getElementById('infoArtistGenres').innerHTML = '';
             //create bootstrap pill for each genre
             artistGenres.forEach(genre => {
@@ -94,11 +108,16 @@ async function search() {
                 document.getElementById('infoArtistGenres').appendChild(pill);
             });
             document.getElementById('infoArtistSpotifyURL').href = spotifyLink;
-
-
+            
             //visualize data
             plotTop10Songs(data).then(() => {
             });
+
+            //show artist card
+            document.getElementById('artistInfo').classList.remove('d-none');
+            
+            //hide loading spinner after loading data
+            hideLoadingSpinner();
         }
     }
 }
