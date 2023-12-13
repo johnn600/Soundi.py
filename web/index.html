@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Music Dashboard</title>
+  <title>Soundi.py | Spotify Dataset Analyzer</title>
   
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -30,83 +30,138 @@
 <body>
 
   <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Dashboard</a>
-    
-
-    
+  <nav class="navbar navbar-expand-lg fixed-top" id="navbar">
+    <a class="navbar-brand text-dark font-weight-bold invisible" id="navbarTitle">Soundi.py</a>
+    <span class="badge badge-pill badge-dark invisible" id="navbarTitleInfo">v 1.0</span>
   </nav>
 
-  <div class="container-fluid">
 
-<!-- Tabs -->
-<ul class="nav nav-tabs d-none" id="myTabs">
-  <li class="nav-item">
-    <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1">Descriptive</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="tab2" data-toggle="tab" href="#content2">Predictive</a>
-  </li>
-</ul>
+  <!--
+    -------------------------------------
+     MAIN CONTENTS
+    -------------------------------------
+  -->
 
-<!-- Tab Contents -->
-<div class="tab-content d-none" id="mainContents">
+  <div role="main" class="container-fluid">
 
-  <!-- Descriptive -->
-  <div class="tab-pane fade show active" id="content1">
-    <div class="col-md-10 m-auto" id="section1">
-      <div class="w-100 align-items-center justify-content-center">
 
-        <div class="card p-3 mt-3">
-          <div class="ratio ratio-2x1">
-            <div class="card-title">
-              Number of Songs Released Per Year
-            </div>
-            <div class="card-body position-relative">
-              <!-- Your main content goes here -->
-              <canvas id="songsPerYearChart" width="400" height="50"></canvas>
-            </div>
-          </div>
+  <!-- File upload -->
+  <div class="m-4 d-flex flex-column align-items-center justify-content-center" id="fileInput">
+    
+    <div class="d-flex flex-column align-items-center mb-5">
+      <h1 class="app-title">Soundi.py</h1>
+      <h3 class="app-subtitle">Spotify Dataset Analyzer</h3>
+    </div>
+    
+    <div class="card w-30 rounded" >
+      <div class="card-body">
+        <div class="d-flex flex-column justify-content-center align-items-center mt-3">
+          <i class="fa-solid fa-file-import fa-2xl"></i>
+          <h5 class="mt-4">Load dataset</h5>
+        </div>
+  
+        <div class="custom-file mt-3">
+          <input title="File input" type="text" class="custom-file-input cursor-pointer" id="csvFile" width="100" accept=".csv" onclick="filePicker()">
+            <label class="custom-file-label" for="customFile" id="csvFileLabel">Select CSV/DFB file</label>
         </div>
 
-        <!--- Top 10 songs -->
-        <div class="card p-3 mt-3">
-          <div class="d-flex align-items-center justify-content-space-evenly">
-            <span class="mr-auto">Artist's Top 10 Popular Songs</span>
-            
-            <!-- create a code for search bar with icon inside -->
-            <form onsubmit="event.preventDefault(); search();">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search artist" id="artistName">
-                    <div class="input-group-append">
-                        <button title="Search" class="btn btn-primary" type="submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-          </div>
+        <button type="button" class="btn btn-primary btn-block mt-3" id="loadBtn" onclick="loadFile()">Load</button>
 
-          <div class="card-body position-relative">
-            
-            <!-- loading spinner -->
-            <div class="mt-3 justify-content-center align-items-center d-none" id="loadingSpinner">
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
+        <!-- alert if no file selected -->
+        <div class="alert alert-danger mt-3 text-center d-none" role="alert" id="alertMessage">
+          No file selected
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  <!-- Tabs -->
+  <ul class="nav nav-tabs d-none" id="myTabs">
+    <li class="nav-item">
+      <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1">Overview</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="tab2" data-toggle="tab" href="#content2">Artist Profile</a>
+    </li>
+  </ul>
+
+  <!-- Tab Contents -->
+  <div class="tab-content d-none" id="mainContents">
+
+    <!-- Descriptive -->
+    <div class="tab-pane fade show active" id="content1">
+      <div class="col-md-10 m-auto" id="section1">
+        <div class="w-100 align-items-center justify-content-center">
+
+          <div class="card p-3 mt-3">
+            <div class="ratio ratio-2x1">
+              <div class="card-title">
+                Number of Songs Released Per Year
+              </div>
+              <div class="card-body position-relative">
+                <!-- Your main content goes here -->
+                <canvas id="songsPerYearChart" width="400" height="50"></canvas>
               </div>
             </div>
+          </div>
 
-            <!-- When the search returns nothing -->
-            <div class="alert alert-danger mt-3 text-center d-none" id="searchNoResults">
-              Artist record not found
+          <!--- Top 10 songs -->
+          <div class="card p-3 mt-3">
+            <div class="d-flex align-items-center justify-content-space-evenly">
+              <span class="mr-auto">Artist's Top 10 Popular Songs</span>
+              
+              <!-- create a code for search bar with icon inside -->
+              <form onsubmit="event.preventDefault(); search();">
+                  <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Search artist" id="artistName">
+                      <div class="input-group-append">
+                          <button title="Search" class="btn btn-primary" type="submit">
+                              <i class="fa-solid fa-magnifying-glass"></i>
+                          </button>
+                      </div>
+                  </div>
+              </form>
             </div>
 
-            <!-- horizontal graph -->
-            <div id="canvasTop10Songs">
-              <!-- canvas element to be created with JS -->
+            <div class="card-body position-relative">
+              
+              <!-- loading spinner -->
+              <div class="mt-3 justify-content-center align-items-center d-none" id="loadingSpinner">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+
+              <!-- When the search returns nothing -->
+              <div class="alert alert-danger mt-3 text-center d-none" id="searchNoResults">
+                Artist record not found
+              </div>
+
+              <!-- horizontal graph -->
+              <div id="canvasTop10Songs">
+                <!-- canvas element to be created with JS -->
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <!-- Tab 2 Content -->
+    <div class="tab-pane fade" id="content2">
+      <div class="col-md-10" id="section2">
+        <div class="w-100 align-items-center justify-content-center">
+          <div class="card mt-3">
+            <div class="card-body">
+              <!-- Your main content goes here -->
             </div>
           </div>
-          
         </div>
       </div>
     </div>
@@ -117,47 +172,7 @@
 
 
 
-  <!-- Tab 2 Content -->
-  <div class="tab-pane fade" id="content2">
-    <div class="col-md-10" id="section2">
-      <div class="w-100 align-items-center justify-content-center">
-        <div class="card mt-3">
-          <div class="card-body">
-            <!-- Your main content goes here -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-
-
-
-
-
-
-      <!-- File upload -->
-      <div class="m-4 d-flex w-100 align-items-center justify-content-center" id="fileInput">
-        <div class="card w-50" >
-          <div class="card-body">
-            <h5 class="card-title">Load dataset</h5>
-      
-            <div class="custom-file">
-              <input title="File input" type="text" class="custom-file-input" id="csvFile" width="100" accept=".csv" onclick="filePicker()">
-                <label class="custom-file-label" for="customFile" id="csvFileLabel">Select CSV/DFB file</label>
-            </div>
-
-            <button type="button" class="btn btn-primary btn-block mt-3" id="loadBtn" onclick="loadFile()">Load</button>
-
-            <!-- alert if no file selected -->
-            <div class="alert alert-danger mt-3 text-center d-none" role="alert" id="alertMessage">
-              No file selected
-            </div>
-          </div>
-        </div>
-      </div>
-    
     
     
     
@@ -172,7 +187,6 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="script/papaparse.min.js"></script>
 
 </body>
 </html>

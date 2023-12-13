@@ -1,18 +1,40 @@
 body {
-    padding-top: 56px;
+    overflow-x: hidden;
+    background-color: rgb(247, 247, 247);
+    padding-top: 100px;
+    font-family: Poppins;
 }
 
-@media (min-width: 768px) {
-body {
-    padding-top: 72px;
+#navbar {
+    background-image: linear-gradient(to bottom, #c4c4c4, rgba(29, 211, 102, 0));
+    height: 75px;
+  }
+
+.app-title {
+    font-weight: bold;
+    color: #1dd366;
+    font-family: monospace;
 }
+
+.app-subtitle {
+    color: #1dd366;
 }
+
+.w-30 {
+    width: 30%;
+
+}
+
 /* Add rounded corners to the main container */
 .rounded {
-border-radius: 15px; /* You can adjust the value to control the roundness */
+border-radius: 15px!important; /* override bootstrap radius */
 overflow: hidden; /* Ensure content doesn't overflow rounded corners */
 }
 
 .nav-link.active{
     font-weight: bold;
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }

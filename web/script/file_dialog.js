@@ -49,6 +49,10 @@ function loadFile(){
         fileInput.classList.remove("d-flex");
         fileInput.classList.add("d-none");
 
+        //show the navbarTitle
+        document.getElementById('navbarTitle').classList.remove("invisible");
+        document.getElementById('navbarTitleInfo').classList.remove("invisible");
+
         //analyze the dataset
         analyzeDataset();
 

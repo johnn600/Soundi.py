@@ -93,13 +93,3 @@ function extractData(data) {
     return extractedData;
 }
 
-function displayData(data) {
-    if (!data.length) {
-        const outputElement = document.getElementById('output');
-        outputElement.textContent = 'No results found';
-    }
-    else {
-        const outputElement = document.getElementById('output');
-        outputElement.textContent = JSON.stringify(data, null, 2);
-    }
-}
