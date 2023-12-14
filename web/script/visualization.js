@@ -68,6 +68,25 @@ async function plotMusicalKeyShare(){
     document.getElementById("leastCommonKey").innerHTML = details.index[details.index.length-1];
   }
 
+  //top artist in key
+  async function getTopArtistInKey(key){    
+    const temp = async () => {
+        return await eel.top_artist_in_key(key)();
+    };
+    const data = await temp();
+    const info = JSON.parse(data)[0]['artists'];
+    const name = info.replace(/\[|\]|'/g, '');
+     
+    //set innerHTML of topArtistInKey
+    document.getElementById("topArtistInKey").innerHTML = name;
+  }
+
+  //onchange event for topArtistInKey
+function updateTopArtistInKey(){
+    //get the key
+    const key = document.getElementById("selectKey").value;
+    getTopArtistInKey(key);
+  }
 
 //explicit vs non-explicit comparison
 async function plotExplicitNonexplicitComparison(){
@@ -531,6 +550,7 @@ function plotPolarAreaGraph(data, element, label) {
 async function analyzeDataset(){
     await plotSongsPerYear();
     await plotMusicalKeyShare();
+    await getTopArtistInKey('C');
     await plotExplicitNonexplicitComparison();
     await plotTop5ExplicitArtists(2020);
     await plotLinearRegressionAverageTempo();

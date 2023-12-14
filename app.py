@@ -99,22 +99,23 @@ def musical_key_share():
     return result_list
 
 @eel.expose
-def least_common_key_popular_artists():
+def top_artist_in_key(key):
     # Load the dataset
     df = pd.read_csv(filePath)
 
-    # Filter the dataset for songs with the key of C
-    key_of_C_songs = df[df['key'] == 'D♯/E♭']
+    # Filter the dataset for songs with the key of C and records after 1945
+    key_of_C_songs_after_1945 = df[(df['key'] == key) & (df['year'] >= 1950)]
 
-    # Group by artists and count the number of songs in the key of C
-    artists_key_of_C_count = key_of_C_songs.groupby('artists').size().reset_index(name='count')
+    # Group by artists and count the number of songs in the key of C after 1945
+    artists_key_of_C_count_after_1945 = key_of_C_songs_after_1945.groupby('artists').size().reset_index(name='count')
 
     # Sort the artists by the count in descending order
-    top_artists_key_of_C = artists_key_of_C_count.sort_values(by='count', ascending=False).head(3)
+    top_artists_key_of_C_after_1945 = artists_key_of_C_count_after_1945.sort_values(by='count', ascending=False).head(1)
 
-    # create a json object encoded in utf-8
-    json_object = top_artists_key_of_C.to_json(orient='records', force_ascii=False)
+    # Create a JSON object encoded in utf-8
+    json_object = top_artists_key_of_C_after_1945.to_json(orient='records', force_ascii=False)
     return json_object
+
     
 @eel.expose
 def explicit_vs_nonexplicit_comparison():
