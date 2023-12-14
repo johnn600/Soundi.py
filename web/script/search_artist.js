@@ -117,6 +117,9 @@ async function search() {
             
             //hide loading spinner after loading data
             hideLoadingSpinner();
+
+            //predictions here
+            predictSongLength(artistName);
         }
     }
 }
@@ -137,4 +140,5 @@ function extractData(data) {
 
     return extractedData;
 }
+
 

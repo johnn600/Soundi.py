@@ -148,6 +148,12 @@ def top_explicit_artists(year):
     return result_list
 
 #song length prediction for an artist
+
+def format_duration(milliseconds):
+    seconds = milliseconds / 1000
+    minutes, seconds = divmod(seconds, 60)
+    return f'{int(minutes):02d}:{int(seconds):02d}'
+
 @eel.expose
 def predict_artist_song_duration(artist_name):
     # Load the dataset
@@ -168,7 +174,6 @@ def predict_artist_song_duration(artist_name):
 
     # Separate features (X) and target variable (y)
     X_train, y_train = train_data[['year']], train_data['duration_ms']
-    X_test, y_test = test_data[['year']], test_data['duration_ms']
 
     # Create a linear regression model
     model = LinearRegression()
@@ -176,19 +181,20 @@ def predict_artist_song_duration(artist_name):
     # Train the model
     model.fit(X_train, y_train)
 
-    # Make predictions for the years since the first release
-    prediction_years = range(artist_songs['year'].min(), artist_songs['year'].max() + 1)
+    # Make predictions for the years since the first release up to 2023
+    first_release_year = artist_songs['year'].min()
+    prediction_years = range(first_release_year, 2024)  # Adjusted range up to 2023
     prediction_years_np = np.array(prediction_years).reshape(-1, 1)
     predictions = model.predict(prediction_years_np)
 
-    # Create separate lists for years and values
-    list_of_years = prediction_years
-    list_of_values = predictions.tolist()
+    # Convert the predictions from milliseconds to minutes and seconds
+    predictions = [format_duration(prediction) for prediction in predictions]
 
-    # Combine the lists into a single list
-    result_list = [list_of_years, list_of_values]
-    print(result_list)
-    return result_list
+    # Prepare data for Chart.js
+    chart_data = [{'x': int(year), 'y': prediction} for year, prediction in zip(prediction_years, predictions)]
+    print(chart_data)
+    return chart_data
+    
 
 
 

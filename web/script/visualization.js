@@ -5,6 +5,7 @@ let myChart = null;
 
 
 
+
 //create a canvas element for chart js
 function createCanvas(parent, canvasId) {
     const canvas = document.createElement('canvas');
@@ -74,7 +75,7 @@ async function plotTop5ExplicitArtists(year){
     //plot the graph
     console.log(details);
 
-    plotHorizontalBarGraph(details, 'topExplicitArtists', 'Songs')
+    plotHorizontalBarGraph(details, 'topExplicitArtists', 'Songs released: ')
 }
 
 async function updateTop5ExplicitArtists(){
@@ -93,12 +94,10 @@ async function updateTop5ExplicitArtists(){
         values: data[1]
     }
 
-    
-
     //destroy existing chart
     document.getElementById("topExplicitArtists").remove();
     createCanvas("topExplicitArtistsContainer", "topExplicitArtists");
-    plotHorizontalBarGraph(details, 'topExplicitArtists', 'Songs');
+    plotHorizontalBarGraph(details, 'topExplicitArtists', 'Songs released: ');
 
 }
 
@@ -120,8 +119,51 @@ async function plotTop10Songs(data){
 
 }
 
+//predict song length of the artist
+async function predictSongLength(artistName) {
+  //invoke python eel function
+  const temp = async () => {
+      return await eel.predict_artist_song_duration(artistName)();
+  };
 
+  const data = await temp();
 
+  // Convert time duration strings to total seconds
+  const valuesInSeconds = data.map(point => convertToSeconds(point.y));
+
+  const details = {
+    index: data.map(point => point.x),
+    values: valuesInSeconds
+  };
+
+  console.log(details);
+
+  //check if canvasSongLengthContainer has a child canvas
+  if(document.getElementById("canvasSongLengthContainer").querySelector('canvas') != null){
+    //remove the canvas
+    document.getElementById("canvasSongLengthContainer").querySelector('canvas').remove();
+  }
+
+  //create canvas
+  createCanvas("canvasSongLengthContainer", "canvasSongLength");
+
+  //plot the data
+  plotLineGraph(details, 'canvasSongLength', 'Song duration: ');
+
+}
+
+// Convert time duration string to total seconds
+function convertToSeconds(durationString) {
+  const [minutes, seconds] = durationString.split(':').map(Number);
+  return minutes * 60 + seconds;
+}
+
+// Convert total seconds to time duration string (MM:SS)
+function formatSecondsToTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
 
 
 
@@ -137,14 +179,14 @@ async function plotTop10Songs(data){
   --------------------------------------------
 */ 
 
-//LINE GRAPH CONSTRUCTOR
+//LINE GRAPH CONSTRUCTOR - OVERVIEW SECTION
 function plotLineGraph(data, element, label) {
     const ctx = document.getElementById(element).getContext('2d');
   
     const myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: data.index.map(num => num.toLocaleString('en-US')), // Convert to string without formatting
+        labels: data.index, // Convert to string without formatting
         datasets: [{
           label: label,
           data: data.values,
@@ -174,6 +216,62 @@ function plotLineGraph(data, element, label) {
       }
     });
   }
+
+//LINE GRAPH CONSTRUCTOR - ARTIST PROFILE SECTION
+function plotLineGraph(data, element, label) {
+  const ctx = document.getElementById(element).getContext('2d');
+
+  const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: data.index, // Convert to string without formatting
+      datasets: [{
+        label: label,
+        data: data.values,
+        backgroundColor: '#1DB954',
+      }]
+    },
+    options: {
+      animation: {
+        duration: 0
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          position: 'bottom',
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 10, // Adjust the limit as needed
+          },
+        },
+        y: {
+          beginAtZero: true,
+          // Use callback to format y-axis labels as time duration
+          ticks: {
+            callback: function (value, index, values) {
+              return formatSecondsToTime(value);
+            }
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: false // Set display to false to hide the title
+        }, 
+        tooltip: {
+          callbacks: {
+            // Use callback to format tooltip label as time duration
+            label: function (context) {
+              const value = context.raw;
+              return "Song duration: "+formatSecondsToTime(value);
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
   
 // HORIZONTAL BAR GRAPH CONSTRUCTOR
 function plotHorizontalBarGraph(data, element, label) {
