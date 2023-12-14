@@ -5,19 +5,29 @@ body {
     font-family: Poppins;
 }
 
+/* scroll bar */
+/* For WebKit browsers (like Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #4CAF50; /* Change the color to your preference */
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(247, 247, 247); /* Change the color to your preference */
+}
+
+
 #navbar {
     background-image: linear-gradient(to bottom, #c4c4c4, rgba(29, 211, 102, 0));
     height: 75px;
   }
 
-.app-title {
-    font-weight: bold;
-    color: #1dd366;
-    font-family: monospace;
-}
 
-.app-subtitle {
-    color: #1dd366;
+.btn-green {
+    background-color: #1dd366;
 }
 
 .w-30 {
@@ -27,8 +37,8 @@ body {
 
 /* Add rounded corners to the main container */
 .rounded {
-border-radius: 15px!important; /* override bootstrap radius */
-overflow: hidden; /* Ensure content doesn't overflow rounded corners */
+    border-radius: 15px!important;
+    overflow: hidden; 
 }
 
 .nav-link.active{
@@ -58,4 +68,5 @@ overflow: hidden; /* Ensure content doesn't overflow rounded corners */
     width: 200px;
     height: 200px;
     object-fit: cover;
+    border-radius: 3%;
 }

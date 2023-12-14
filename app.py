@@ -45,7 +45,7 @@ def filePicker():
     root.wm_attributes('-topmost', 1)
 
     file_path = filedialog.askopenfilename(
-        title="Select CSV/DBF file",
+        title="Select file...",
         filetypes=[("CSV files", "*.csv"), ("DBF files", "*.dbf"), ("All files", "*.*")]
     )
 

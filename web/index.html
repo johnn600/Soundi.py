@@ -52,9 +52,9 @@
   <!-- File upload -->
   <div class="m-4 d-flex flex-column align-items-center justify-content-center" id="fileInput">
     
+    <!-- doodle logo here -->
     <div class="d-flex flex-column align-items-center mb-5">
-      <h1 class="app-title">Soundi.py</h1>
-      <h3 class="app-subtitle">Spotify Dataset Analyzer</h3>
+      <img src="images/logo.png" alt="Soundi.py" class="img image-fluid" width="50%">
     </div>
     
     <div class="card w-30 rounded" >
@@ -66,10 +66,10 @@
   
         <div class="custom-file mt-3">
           <input title="File input" type="text" class="custom-file-input cursor-pointer" id="csvFile" width="100" accept=".csv" onclick="filePicker()">
-            <label class="custom-file-label" for="customFile" id="csvFileLabel">Select CSV/DFB file</label>
+            <label class="custom-file-label" for="customFile" id="csvFileLabel"></label>
         </div>
 
-        <button type="button" class="btn btn-primary btn-block mt-3" id="loadBtn" onclick="test()">Load</button>
+        <button type="button" class="btn btn-green btn-block mt-3 font-weight-bold" id="loadBtn" onclick="test()">Analyze</button>
 
         <!-- alert if no file selected -->
         <div class="alert alert-danger mt-3 text-center d-none" role="alert" id="alertMessage">
@@ -94,10 +94,19 @@
   <!-- Tab Contents -->
   <div class="tab-content d-none" id="mainContents">
 
+
     <!-- Overview -->
     <div class="tab-pane fade show active" id="content1">
       <div class="col-md-10 m-auto" id="section1">
-        <div class="w-100 align-items-center justify-content-center">
+
+        <!-- loading spinner -->
+        <div class="mt-5 d-flex justify-content-center align-items-center" id="loadingSpinnerOverview">
+          <div class="spinner-border text-dark" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
+        <div class="w-100 align-items-center justify-content-center d-none" id="overviewSection">
 
           <!-- Songs per year -->
           <div class="card p-3 mt-3 rounded">

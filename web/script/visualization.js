@@ -103,10 +103,13 @@ function plotLineGraph(data, element, label) {
         datasets: [{
           label: label,
           data: data.values,
-          backgroundColor: 'skyblue',
+          backgroundColor: '#1DB954',
         }]
       },
       options: {
+        animation: {
+          duration: 0
+        },
         scales: {
           x: {
             type: 'linear',
@@ -153,7 +156,7 @@ function plotHorizontalBarGraph(data, element, label) {
     },
     options: {
       animation: {
-        duration: 0 // general animation time
+        duration: 0
       },
       indexAxis: 'y',
       scales: {
@@ -199,6 +202,9 @@ function plotDonutGraph(data, element, label) {
       }]
     },
     options: {
+      animation: {
+        duration: 0
+      },
       plugins: {
         legend: {
           display: false
@@ -213,7 +219,13 @@ function plotDonutGraph(data, element, label) {
 
 
 //call the functions at once
-function analyzeDataset(){
-    plotSongsPerYear();
-    plotExplicitNonexplicitComparison();
+async function analyzeDataset(){
+    await plotSongsPerYear();
+    await plotExplicitNonexplicitComparison();
+
+    //show the overview section
+    document.getElementById("overviewSection").classList.remove("d-none");
+    //hide the spinner
+    document.getElementById("loadingSpinnerOverview").classList.add("d-none");
+    document.getElementById("loadingSpinnerOverview").classList.remove("d-flex");
 }
