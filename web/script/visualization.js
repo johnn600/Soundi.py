@@ -148,7 +148,7 @@ async function predictSongLength(artistName) {
   createCanvas("canvasSongLengthContainer", "canvasSongLength");
 
   //plot the data
-  plotLineGraph(details, 'canvasSongLength', 'Song duration: ');
+  plotLineGraphArtist(details, 'canvasSongLength', 'Song duration: ');
 
 }
 
@@ -207,6 +207,8 @@ function plotLineGraph(data, element, label) {
           label: label,
           data: data.values,
           backgroundColor: '#1DB954',
+          pointHoverRadius: 8,
+          tension: 0.4,
         }]
       },
       options: {
@@ -234,17 +236,18 @@ function plotLineGraph(data, element, label) {
   }
 
 //LINE GRAPH CONSTRUCTOR - ARTIST PROFILE SECTION
-function plotLineGraph(data, element, label) {
+function plotLineGraphArtist(data, element, label) {
   const ctx = document.getElementById(element).getContext('2d');
 
   const myChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: data.index, // Convert to string without formatting
+      labels: data.index, 
       datasets: [{
         label: label,
         data: data.values,
-        backgroundColor: '#1DB954',
+        borderColor: '#1DB954',
+        pointHoverRadius: 8,
       }]
     },
     options: {
@@ -257,7 +260,7 @@ function plotLineGraph(data, element, label) {
           position: 'bottom',
           ticks: {
             autoSkip: true,
-            maxTicksLimit: 10, // Adjust the limit as needed
+            maxTicksLimit: 10,
           },
         },
         y: {
@@ -385,7 +388,7 @@ function plotMixedChart(label, datasets, element) {
   const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: labels,
+      labels: label,
       datasets: [{
         type: 'scatter',
         label: datasets[0].label,

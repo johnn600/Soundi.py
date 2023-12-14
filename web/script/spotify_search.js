@@ -1,3 +1,4 @@
+//these are my keys, please don't be inlove with someone else
 const clientId = 'ede4783be3124ad6ae2bff3eae63a39c';
 const clientSecret = 'f97b9ebeb490444f8b39d1f1126c99d5';
 
@@ -57,8 +58,10 @@ async function searchSpotify(query) {
 
     const json = await response.json();
 
+    console.log(json);
+
     const artistName = json.artists.items[0].name;
-    const artistImageURL = json.artists.items[0].images[2].url;
+    const artistImageURL = json.artists.items[0].images[1].url;
     const artistPopularity = json.artists.items[0].popularity;
     const spotifyLink = json.artists.items[0].external_urls.spotify;
     const artistFollowers = json.artists.items[0].followers.total;

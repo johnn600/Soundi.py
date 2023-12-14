@@ -110,6 +110,7 @@
           </div>
         </div>
 
+        <!-- main contents -->
         <div class="w-100 align-items-center justify-content-center d-none" id="overviewSection">
 
 
@@ -127,7 +128,7 @@
             <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
       
               <div class="card-body position-relative">
-                <canvas id="songsPerYearChart" width="400" height="50"></canvas>
+                <canvas id="songsPerYearChart" width="400" height="70"></canvas>
               </div>     
           </div>
 
@@ -181,12 +182,27 @@
             </div>
           </div>
 
-          <!-- Linear Regression average tempo -->
-          <div class="card p-3 mt-3 mb-3 rounded col-md-8">
-            <h5 class="font-weight-bold mt-3 text-center">Linear regression: Average tempo (beats per minute)</h5>
-              <div class="card-body position-relative">
-                <canvas id="canvasAverageTempo" width="400" height="100"></canvas>
-              </div>     
+          <!-- AVERAGE TEMPO ACROSS THE YEARS -->
+          <div class="d-flex flex-row align-items-center">
+
+            <!-- linear regression chart -->
+            <div class="card p-3 mt-3 mb-3 rounded col-md-7">
+              <h5 class="font-weight-bold mt-3 text-center">Average tempo across the years</h5>
+                <div class="card-body position-relative">
+                  <canvas id="canvasAverageTempo" height="120"></canvas>
+                </div>     
+            </div>
+
+            <!-- some details -->
+            <div class="container mt-5">
+              <div class="card card-info">
+                <div class="card-body">
+                  <h5 class="card-title font-weight-bold">Tempo Information</h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, </p>
+                </div>
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -232,19 +248,21 @@
 
           <!-- Error messages -->
           <div class="container rounded mt-5 alert-warning text-center p-5 d-none font-weight-bold" id="searchError">
-            error messages here
+            <!-- to be filled by js -->
           </div>
 
-          <!-- artist details -->
+
+          <!-- ARTIST DETAILS -->
           <div class="container mt-4 d-none" id="artistInfo">
 
+            <!-- SPOTIFY DATA -->
             <div class="row no-gutters d-flex align-items-center justify-content-center mb-5 mt-5">
-              <!-- First column with square image -->
+              <!-- Artist image -->
               <div class="col-md-6 d-flex align-items-right justify-content-end">
                   <img src="#" class="card-img img img-fluid artist-thumbnail" alt="Artist image" id="infoArtistImage">
               </div>
               
-              <!-- Second column with text -->
+              <!-- basic details -->
               <div class="col-md-6">
                   <div class="card-body">
                       <h3 class="card-title font-weight-bold" id="infoArtistName">__</h3>
@@ -258,27 +276,24 @@
             
             <!-- top 10 popular songs -->
             <div class="card p-3 rounded" >
-                <h5 class="font-weight-bold text-center">Top 10 popular songs</h5>
-
+                <h5 class="font-weight-bold text-center mt-3">Top 10 popular songs</h5>
                 <!-- horizontal graph -->
-                <div id="canvasTop10Songs">
-                  <!-- canvas element to be created with JS -->
-                </div>
+                <div id="canvasTop10Songs"></div>
+                <p class="text-center mt-2"><small>*Data not reflective of current popular songs of the artist (2020 Spotify dataset)</small></p>
             </div>
 
             <!-- Predicted song length -->
-            <div class="card p-3 rounded mt-3 mb-5 col-md-6" >
-              <h5 class="font-weight-bold text-center">Predicted song length</h5>
+            <div class="card p-3 rounded mt-5 mb-5 col-md-6" >
+              <h5 class="font-weight-bold text-center mt-3">Predicted song length</h5>
 
               <!-- horizontal graph -->
-              <div id="canvasSongLengthContainer">
-                <!-- canvas element to be created with JS -->
+              <div id="canvasSongLengthContainer"></div>
 
-                <!-- warning text -->
-                <div class="alert alert-light mt-3 text-center d-none" role="alert" id="songLengthWarning">
-                  Few records exist to predict song length
-                </div>
+              <!-- warning text -->
+              <div class="alert alert-light mt-3 text-center d-none" role="alert" id="songLengthWarning">
+                Few records exist to predict song length
               </div>
+
           </div>
 
 
