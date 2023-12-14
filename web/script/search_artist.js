@@ -110,8 +110,7 @@ async function search() {
             document.getElementById('infoArtistSpotifyURL').href = spotifyLink;
             
             //visualize data
-            plotTop10Songs(data).then(() => {
-            });
+            plotTop10Songs(data);
 
             //show artist card
             document.getElementById('artistInfo').classList.remove('d-none');

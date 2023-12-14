@@ -94,8 +94,26 @@ def artist_top_songs_by_popularity(artist_name):
     return result_list
     
 @eel.expose
-def artist_search_spotify(query):
-    pass
+def explicit_vs_nonexplicit_comparison():
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Count the number of non-explicit and explicit songs
+    explicit_counts = df['explicit'].value_counts()
+
+    # Create separate lists for labels and values
+    list_of_labels = explicit_counts.index.tolist()
+    list_of_values = explicit_counts.values.tolist()
+
+    # change the labels from 'true' and 'false' to 'explicit' and 'non-explicit'
+    list_of_labels = ['Explicit' if x == True else 'Non-Explicit' for x in list_of_labels]
+
+    # Combine the lists into a single list
+    result_list = [list_of_labels, list_of_values]
+    return result_list
+
+#@eel.expose
+
 
 
 

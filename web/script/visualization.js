@@ -20,6 +20,13 @@ function createCanvas(parent, canvasId) {
 }
 
 
+
+//--------------------------------------------
+
+/*
+      OVERVIEW SECTION
+*/
+
 // released songs per year
 async function plotSongsPerYear(){
     const temp = async () => {
@@ -35,6 +42,27 @@ async function plotSongsPerYear(){
     plotLineGraph(details, 'songsPerYearChart', 'Songs released')
 }
 
+//explicit vs non-explicit comparison
+async function plotExplicitNonexplicitComparison(){
+    const temp = async () => {
+        return await eel.explicit_vs_nonexplicit_comparison()();
+    };
+    const data = await temp();
+    const details = {
+        index: data[0],
+        values: data[1]
+    }
+
+    //plot the graph
+    plotDonutGraph(details, 'explicitNonexplicitComparison', 'Songs')
+}
+
+
+
+/*
+      ARTIST PROFILE SECTION
+*/
+
 //top 10 popular songs of an artist
 async function plotTop10Songs(data){
     const details = {
@@ -46,6 +74,16 @@ async function plotTop10Songs(data){
     plotHorizontalBarGraph(details, 'artistTop10SongsChart', 'Popularity')
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
 /* 
@@ -89,9 +127,19 @@ function plotLineGraph(data, element, label) {
     });
   }
   
-//HORIZONTAL BAR GRAPH CONSTRUCTOR
+// HORIZONTAL BAR GRAPH CONSTRUCTOR
 function plotHorizontalBarGraph(data, element, label) {
   const ctx = document.getElementById(element).getContext('2d');
+
+  // Find the index of the largest value in the data array
+  const maxIndex = data.values.indexOf(Math.max(...data.values));
+
+  // Colors for Spotify logo (green) and Bootstrap's dark theme (black)
+  const spotifyGreen = '#1DB954';
+  const bootstrapDark = '#343a40';
+
+  // Create an array of background colors with Bootstrap's dark theme for all bars except the largest one (set to Spotify's green)
+  const backgroundColors = data.values.map((value, index) => index === maxIndex ? spotifyGreen : bootstrapDark);
 
   const myChart = new Chart(ctx, {
     type: 'bar',
@@ -100,10 +148,13 @@ function plotHorizontalBarGraph(data, element, label) {
       datasets: [{
         label: label,
         data: data.values,
-        backgroundColor: 'skyblue',
+        backgroundColor: backgroundColors,
       }]
     },
     options: {
+      animation: {
+        duration: 0 // general animation time
+      },
       indexAxis: 'y',
       scales: {
         x: { beginAtZero: true },
@@ -121,11 +172,42 @@ function plotHorizontalBarGraph(data, element, label) {
       }
     }
   });
-
 }
 
-  
+// DONUT GRAPH CONSTRUCTOR
+function plotDonutGraph(data, element, label) {
+  const ctx = document.getElementById(element).getContext('2d');
 
+  // Find the index of the minimum value in the data array
+  const minIndex = data.values.reduce((minIndex, currentValue, currentIndex, array) => currentValue < array[minIndex] ? currentIndex : minIndex, 0);
+
+  // Colors for Spotify logo (green) and Bootstrap's dark theme (black)
+  const spotifyGreen = '#1DB954';
+  const bootstrapDark = '#343a40';
+
+  // Create an array of background colors with Bootstrap's dark theme for all segments except the smallest one (set to Spotify's green)
+  const backgroundColors = data.values.map((value, index) => index === minIndex ? spotifyGreen : bootstrapDark);
+
+  const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: data.index,
+      datasets: [{
+        label: label,
+        data: data.values,
+        backgroundColor: backgroundColors,
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      cutout: '60%',
+    }
+  });
+}
 
 
 
@@ -133,5 +215,5 @@ function plotHorizontalBarGraph(data, element, label) {
 //call the functions at once
 function analyzeDataset(){
     plotSongsPerYear();
-    //plotTop10Songs();
+    plotExplicitNonexplicitComparison();
 }

@@ -69,7 +69,7 @@
             <label class="custom-file-label" for="customFile" id="csvFileLabel">Select CSV/DFB file</label>
         </div>
 
-        <button type="button" class="btn btn-primary btn-block mt-3" id="loadBtn" onclick="loadFile()">Load</button>
+        <button type="button" class="btn btn-primary btn-block mt-3" id="loadBtn" onclick="test()">Load</button>
 
         <!-- alert if no file selected -->
         <div class="alert alert-danger mt-3 text-center d-none" role="alert" id="alertMessage">
@@ -99,17 +99,46 @@
       <div class="col-md-10 m-auto" id="section1">
         <div class="w-100 align-items-center justify-content-center">
 
+          <!-- Songs per year -->
           <div class="card p-3 mt-3 rounded">
-            <div class="ratio ratio-2x1">
-              <div class="card-title font-weight-bold">
-                Number of Songs Released Per Year
-              </div>
+            <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
+      
               <div class="card-body position-relative">
-                <!-- Your main content goes here -->
                 <canvas id="songsPerYearChart" width="400" height="50"></canvas>
-              </div>
-            </div>
+              </div>     
           </div>
+
+          <!-- Explicit section -->
+          <div class="row">
+            <!-- explicit vs nonexplicit -->
+            <div class="col-md-4">
+                <div class="card p-3 mt-3 rounded">
+                    <h5 class="font-weight-bold mt-3 text-center">Explicit vs non-explicit</h5>
+                    <div class="card-body">
+                        <canvas id="explicitNonexplicitComparison" width="20" height="20"></canvas>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Another card - Card 2 -->
+            <div class="col-md-8">
+                <div class="card p-3 mt-3 rounded">
+                    <h5 class="font-weight-bold mt-3">Top explicit artists</h5>
+                    <!-- Content for the second card -->
+                    <!-- Add your content here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Songs per year -->
+        <div class="card p-3 mt-3 mb-3 rounded">
+          <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
+    
+            <div class="card-body position-relative">
+              <canvas id="e" width="400" height="50"></canvas>
+            </div>     
+        </div>
+        
 
           
 
@@ -177,7 +206,7 @@
 
                 <!-- top 10 popular songs -->
                 <div class="mt-5">
-                  <h5 class="font-weight-bold">Top 10 popular songs (from dataset)</h5>
+                  <h5 class="font-weight-bold">Top 10 popular songs</h5>
 
                   <!-- horizontal graph -->
                   <div id="canvasTop10Songs">
