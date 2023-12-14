@@ -353,7 +353,8 @@ function plotDonutGraph(data, element, label) {
       },
       plugins: {
         legend: {
-          display: false
+          display: true,
+          position: 'bottom',
         }
       },
       cutout: '60%',

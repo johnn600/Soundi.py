@@ -112,14 +112,35 @@ async function search() {
             //visualize data
             plotTop10Songs(data);
 
+            //check if songLengthWarning has class d-none
+            if (!document.getElementById('songLengthWarning').classList.contains('d-none')) {
+                //hide songLengthWarning
+                document.getElementById('songLengthWarning').classList.add('d-none');
+            }
+
+            //predictions here
+            try {
+                await predictSongLength(artistName).catch(error => {
+                    //this results when there is not enough data to make a prediction
+
+                    //delete the canvas if present 
+                    const parentDiv = document.getElementById('canvasSongLengthContainer');
+                    if (parentDiv.querySelector('canvas') != null) {
+                        parentDiv.removeChild(parentDiv.querySelector('canvas'));
+                    }
+
+                    //show the error message
+                    document.getElementById('songLengthWarning').classList.remove('d-none');
+                });
+            } catch (error) {
+                console.log("An error occurred outside the promise:", error);
+            }
+
             //show artist card
             document.getElementById('artistInfo').classList.remove('d-none');
             
             //hide loading spinner after loading data
             hideLoadingSpinner();
-
-            //predictions here
-            predictSongLength(artistName);
         }
     }
 }

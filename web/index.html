@@ -236,13 +236,18 @@
                 </div>
             </div>
 
-            <!-- top 10 popular songs -->
-            <div class="card p-3 rounded mt-3 mb-5" >
+            <!-- Predicted song length -->
+            <div class="card p-3 rounded mt-3 mb-5 col-md-6" >
               <h5 class="font-weight-bold text-center">Predicted song length</h5>
 
               <!-- horizontal graph -->
               <div id="canvasSongLengthContainer">
                 <!-- canvas element to be created with JS -->
+
+                <!-- warning text -->
+                <div class="alert alert-light mt-3 text-center d-none" role="alert" id="songLengthWarning">
+                  Few records exist to predict song length
+                </div>
               </div>
           </div>
 
