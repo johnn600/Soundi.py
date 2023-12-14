@@ -57,8 +57,8 @@
       <img src="images/logo.png" alt="Soundi.py" class="img image-fluid" width="50%">
     </div>
     
-    <div class="card w-30 rounded" >
-      <div class="card-body">
+    <div class="card rounded" style="width: 35%;">
+      <div class="card-body d-flex flex-column align-items-center p-5">
         <div class="d-flex flex-column justify-content-center align-items-center mt-3">
           <i class="fa-solid fa-file-import fa-2xl"></i>
           <h5 class="mt-4">Load dataset</h5>
@@ -69,7 +69,7 @@
             <label class="custom-file-label" for="customFile" id="csvFileLabel"></label>
         </div>
 
-        <button type="button" class="btn btn-green btn-block mt-3 font-weight-bold" id="loadBtn" onclick="test()">Analyze</button>
+        <button type="button" class="btn btn-green btn-block mt-3 font-weight-bold rounded-pill" id="loadBtn" onclick="test()">Analyze</button>
 
         <!-- alert if no file selected -->
         <div class="alert alert-danger mt-3 text-center d-none" role="alert" id="alertMessage">
@@ -100,7 +100,7 @@
                 Overview Section
       -------------------------------------
     -->
-    <div class="tab-pane fade show active" id="content1">
+    <div class="tab-pane fade show active mb-5" id="content1">
       <div class="col-md-10 m-auto" id="section1">
 
         <!-- loading spinner -->
@@ -112,16 +112,6 @@
 
         <!-- main contents -->
         <div class="w-100 align-items-center justify-content-center d-none" id="overviewSection">
-
-
-          <div class="container container-fluid mt-5">
-            <div class="flex-row align-items-left justify-content-start">
-              
-              <h4 class="font-weight-bold">Analysis</h4>
-              <hr class="flex-grow-1">
-            </div>
-          </div>
-
 
           <!-- Songs released per year -->
           <div class="card p-3 mt-3 rounded">
@@ -184,23 +174,55 @@
 
           <!-- AVERAGE TEMPO ACROSS THE YEARS -->
           <div class="d-flex flex-row align-items-center">
-
             <!-- linear regression chart -->
             <div class="card p-3 mt-3 mb-3 rounded col-md-7">
               <h5 class="font-weight-bold mt-3 text-center">Average tempo across the years</h5>
-                <div class="card-body position-relative">
-                  <canvas id="canvasAverageTempo" height="120"></canvas>
-                </div>     
-            </div>
-
-            <!-- some details -->
-            <div class="container mt-5">
-              <div class="card card-info">
-                <div class="card-body">
-                  <h5 class="card-title font-weight-bold">Tempo Information</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, </p>
-                </div>
+              <div class="card-body position-relative">
+                <canvas id="canvasAverageTempo" height="110"></canvas>
               </div>
+              <!-- mean squared error -->
+              <p class="text-center"><small>Mean squared error: <span id="mseTempo"></span></small></p>
+            </div>
+            <!-- some details -->
+            <div class="container container-fluid ml-2">
+              <h5 class="font-weight-bold">Tempo (Beats Per Minute)</h5>
+              <p>
+                Tempo in music refers to the speed at which a piece of music is played. 
+                It measures how fast or slow the pulse of the music is, and 
+                it is typically expressed in beats per minute (BPM). Imagine a metronome 
+                ticking away, helping musicians stay in time. The tempo determines how 
+                quickly or leisurely those metronome ticks occur.
+                <!-- new line-->
+                <br><br>
+                Waiting sa input ni Zach
+              </p>
+            </div>
+          </div>
+
+          <!-- AVERAGE LOUDNESS ACROSS THE YEARS -->
+          <div class="d-flex flex-row align-items-center">
+            <!-- some details -->
+            <div class="container container-fluid">
+              <h5 class="font-weight-bold">Loudness (dB)</h5>
+              <p>
+                THIS IS FILLER TEXT
+                <br><br>
+                Loudness in music refers to the volume or intensity of 
+                sound. It represents how soft or loud a musical passage 
+                or performance is. Music can have various dynamic levels, 
+                ranging from very soft to very loud.
+                <br><br>
+                Waiting sa input ni Zach
+              </p>
+            </div>
+            <!-- linear regression chart -->
+            <div class="card p-3 mt-3 mb-3 rounded col-md-7">
+              <h5 class="font-weight-bold mt-3 text-center">Average loudness across the years</h5>
+              <div class="card-body position-relative">
+                <canvas id="canvasAverageLoudness" height="110"></canvas>
+              </div>  
+              <!-- mean squared error -->
+              <p class="text-center"><small>Mean squared error: <span id="mseLoudness"></span></small></p>   
             </div>
 
           </div>
@@ -221,12 +243,12 @@
       -------------------------------------
     -->
 
-    <div class="tab-pane fade" id="content2">
+    <div class="tab-pane fade mb-5" id="content2">
       <div class="col-md-10 m-auto" id="section2">
         <div class="w-100 align-items-center justify-content-center mt-3">
 
           <!-- Search bar -->
-          <div class="mt-5 d-flex align-items-center justify-content-center">
+          <div class="mt-2 d-flex align-items-center justify-content-center">
             <form onsubmit="event.preventDefault(); search();">
               <div class="input-group">
                   <input type="text" class="form-control" placeholder="Search artist" id="artistName">
@@ -283,7 +305,7 @@
             </div>
 
             <!-- Predicted song length -->
-            <div class="card p-3 rounded mt-5 mb-5 col-md-6" >
+            <div class="card p-3 rounded mt-5 col-md-6" >
               <h5 class="font-weight-bold text-center mt-3">Predicted song length</h5>
 
               <!-- horizontal graph -->

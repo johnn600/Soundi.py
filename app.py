@@ -4,12 +4,11 @@
 
 
 
-#Importing libraries
+#Import libraries
 import eel
 import ctypes
 import os
 from tkinter import Tk, filedialog
-import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -196,6 +195,12 @@ def predict_artist_song_duration(artist_name):
     return chart_data
     
 
+'''
+    --------------------------------------
+            LINEAR REGRESSION CODES
+    --------------------------------------    
+'''
+
 # linear regression for average tempo
 @eel.expose
 def linear_regression_average_tempo():
@@ -229,28 +234,58 @@ def linear_regression_average_tempo():
         'labels': X_test['year'].tolist(),
         'datasets': [
             {
-                'type': 'scatter',
-                'label': 'Actual Tempo',
                 'data': y_test.tolist(),
-                'backgroundColor': 'rgba(255, 99, 132, 0.2)',
-                'borderColor': '#343a40',
-                'pointRadius': 5,
-                'pointHoverRadius': 8,
             },
             {
-                'type': 'line',
-                'label': 'Linear Regression Prediction',
                 'data': y_pred.tolist(),
-                'fill': False,
-                'borderColor': '#1DB954',
             },
-        ]
+        ],
+        'mse': mse
     }
-
-    print(chart_data)
     return json.dumps(chart_data)
 
+# linear regression for loudness
+@eel.expose
+def linear_regression_average_loudness():
+    # Read the dataset into a pandas DataFrame
+    df = pd.read_csv(filePath)
 
+    # Group by 'year' and calculate the average loudness for each year
+    average_loudness_by_year = df.groupby('year')['loudness'].mean().reset_index()
+
+    # Extract features and target variable
+    X = average_loudness_by_year[['year']]
+    y = average_loudness_by_year['loudness']
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42)
+
+    # Initialize the linear regression model
+    model = LinearRegression()
+
+    # Fit the model on the training data
+    model.fit(X_train, y_train)
+
+    # Make predictions on the test data
+    y_pred = model.predict(X_test)
+
+    # Calculate the Mean Squared Error
+    mse = mean_squared_error(y_test, y_pred)
+
+    # Create Chart JS data format
+    chart_data = {
+        'labels': X_test['year'].tolist(),
+        'datasets': [
+            {
+                'data': y_test.tolist(),
+            },
+            {
+                'data': y_pred.tolist(),
+            },
+        ],
+        'mse': mse
+    }
+    return json.dumps(chart_data)
 
 
 
