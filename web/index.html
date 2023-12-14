@@ -114,12 +114,44 @@
         <div class="w-100 align-items-center justify-content-center d-none" id="overviewSection">
 
           <!-- Songs released per year -->
-          <div class="card p-3 mt-3 rounded">
+          <div class="card p-3 mt-5 rounded">
             <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
       
               <div class="card-body position-relative">
                 <canvas id="songsPerYearChart" width="400" height="70"></canvas>
               </div>     
+          </div>
+
+          <!-- Keys distribution -->
+          <div class="row align-items-center">
+            
+            <!-- Polar area chart -->
+            <div class="col-sm-7 col-lg-6">
+              <div class="card p-3 mt-3 rounded">
+                  <h5 class="font-weight-bold mt-3 text-center">Musical key share</h5>
+                  <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                      <canvas id="musicalKeyShareChart" width="320"></canvas>
+                      <small class="mt-3 text-center">Among all keys, 
+                        <span class="font-weight-bold" id="mostCommonKey"></span> is the most common key while
+                        <span class="font-weight-bold" id="leastCommonKey"></span> is the least common key used in music.
+                      </small>
+                  </div>
+              </div>
+            </div>
+
+            <!-- some info -->
+            <div class="col-sm-5 col-lg-6">
+              <div class="container container-fluid">
+                <h5 class="font-weight-bold">Musical keys</h5>
+                <p>
+                  Musical keys are a central part of music theory. It forms the basis of a music 
+                  composition in classical, Western art, and Western pop music.
+                  <br><br>
+                </p>
+                <h6>Top 3 artist</h6>
+              </div>
+            </div>
+
           </div>
 
           <!-- Explicit section -->
@@ -173,7 +205,7 @@
           </div>
 
           <!-- AVERAGE TEMPO ACROSS THE YEARS -->
-          <div class="d-flex flex-row align-items-center">
+          <div class="d-flex flex-row align-items-center mb-3 mt-3">
             <!-- linear regression chart -->
             <div class="card p-3 mt-3 mb-3 rounded col-md-7">
               <h5 class="font-weight-bold mt-3 text-center">Average tempo across the years</h5>

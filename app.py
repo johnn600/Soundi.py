@@ -65,6 +65,7 @@ def filePicker():
 def returnFileDetails():
     return fileName, filePath
 
+# OVERVIEW SECTION
 @eel.expose
 def released_songs_per_year():
     # Load the dataset
@@ -82,23 +83,38 @@ def released_songs_per_year():
     return result_list
 
 @eel.expose
-def artist_top_songs_by_popularity(artist_name):
+def musical_key_share():
     # Load the dataset
     df = pd.read_csv(filePath)
 
-    # Filter songs by the given artist
-    artist_songs = df[df['artists'].apply(lambda x: artist_name in x)]
+    # Count the number of songs per key
+    key_counts = df['key'].value_counts()
 
-    # Sort songs by popularity in descending order
-    top_songs = artist_songs.sort_values(by='popularity', ascending=False).head(10)
-
-    # Create separate lists for song names and popularity values
-    list_of_songs = top_songs['name'].tolist()
-    list_of_popularity = top_songs['popularity'].tolist()
+    # Create separate lists for labels and values
+    list_of_labels = key_counts.index.tolist()
+    list_of_values = key_counts.values.tolist()
 
     # Combine the lists into a single list
-    result_list = [list_of_songs, list_of_popularity]
+    result_list = [list_of_labels, list_of_values]
     return result_list
+
+@eel.expose
+def least_common_key_popular_artists():
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Filter the dataset for songs with the key of C
+    key_of_C_songs = df[df['key'] == 'D♯/E♭']
+
+    # Group by artists and count the number of songs in the key of C
+    artists_key_of_C_count = key_of_C_songs.groupby('artists').size().reset_index(name='count')
+
+    # Sort the artists by the count in descending order
+    top_artists_key_of_C = artists_key_of_C_count.sort_values(by='count', ascending=False).head(3)
+
+    # create a json object encoded in utf-8
+    json_object = top_artists_key_of_C.to_json(orient='records', force_ascii=False)
+    return json_object
     
 @eel.expose
 def explicit_vs_nonexplicit_comparison():
@@ -119,18 +135,34 @@ def explicit_vs_nonexplicit_comparison():
     result_list = [list_of_labels, list_of_values]
     return result_list
 
+# ARTIST SECTION
+@eel.expose
+def artist_top_songs_by_popularity(artist_name):
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Filter songs by the given artist
+    artist_songs = df[df['artists'].apply(lambda x: artist_name in x)]
+
+    # Sort songs by popularity in descending order
+    top_songs = artist_songs.sort_values(by='popularity', ascending=False).head(10)
+
+    # Create separate lists for song names and popularity values
+    list_of_songs = top_songs['name'].tolist()
+    list_of_popularity = top_songs['popularity'].tolist()
+
+    # Combine the lists into a single list
+    result_list = [list_of_songs, list_of_popularity]
+    return result_list
+
 @eel.expose
 def top_explicit_artists(year):
     # Load the dataset
     df = pd.read_csv(filePath)
 
-    print(filePath)
-    print(year)
 
     # Filter songs for the given year
     year_songs = df[df['year'] == int(year)]
-
-    print(year_songs)
 
     # Count the number of explicit songs released by each artist
     explicit_artist_counts = year_songs[year_songs['explicit'] == 1]['artists'].explode().value_counts()
@@ -144,8 +176,6 @@ def top_explicit_artists(year):
 
     # Combine the lists into a single list
     result_list = [list_of_labels, list_of_values]
-
-    print(result_list)
     return result_list
 
 #song length prediction for an artist
@@ -193,7 +223,7 @@ def predict_artist_song_duration(artist_name):
     # Prepare data for Chart.js
     chart_data = [{'x': int(year), 'y': prediction} for year, prediction in zip(prediction_years, predictions)]
     return chart_data
-    
+
 
 '''
     --------------------------------------
@@ -215,7 +245,7 @@ def linear_regression_average_tempo():
     y = average_tempo_by_year['tempo']
 
     # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.35, random_state=42)
 
     # Initialize the linear regression model
     model = LinearRegression()
@@ -258,7 +288,7 @@ def linear_regression_average_loudness():
     y = average_loudness_by_year['loudness']
 
     # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.35, random_state=42)
 
     # Initialize the linear regression model
     model = LinearRegression()

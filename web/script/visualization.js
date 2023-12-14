@@ -47,6 +47,28 @@ async function plotSongsPerYear(){
     plotLineGraph(details, 'songsPerYearChart', 'Songs released')
 }
 
+//musical key share
+async function plotMusicalKeyShare(){
+    const temp = async () => {
+        return await eel.musical_key_share()();
+    };
+    const data = await temp();
+    const details = {
+        index: data[0],
+        values: data[1]
+    }
+
+    //plot the graph
+    plotPolarAreaGraph(details, 'musicalKeyShareChart', 'Musical Keys')
+
+    //update mostCommonKey innerHTML
+    document.getElementById("mostCommonKey").innerHTML = details.index[0];
+
+    //update leastCommonKey innerHTML
+    document.getElementById("leastCommonKey").innerHTML = details.index[details.index.length-1];
+  }
+
+
 //explicit vs non-explicit comparison
 async function plotExplicitNonexplicitComparison(){
     const temp = async () => {
@@ -238,6 +260,7 @@ function plotLineGraph(data, element, label) {
         }]
       },
       options: {
+        locale: 'en-PH',
         animation: {
           duration: 0
         },
@@ -453,11 +476,61 @@ function plotMixedChart(label, datasets, element) {
   });
 }
 
+// POLAR AREA GRAPH CONSTRUCTOR - MUSIC KEYS
+function plotPolarAreaGraph(data, element, label) {
+  const ctx = document.getElementById(element).getContext('2d');
+
+  const myChart = new Chart(ctx, {
+    type: 'polarArea',
+    data: {
+      labels: data.index,
+      datasets: [{
+        label: label,
+        data: data.values,
+        backgroundColor: [
+          '#1DB954',
+          '#050606',
+          '#0a0c0d',
+          '#101113',
+          '#15171a',
+          '#1a1d20',
+          '#1f2326',
+          '#24292d',
+          '#2a2e33',
+          '#2f343a',
+          '#343a40',
+          '#484e53',
+        ],
+      }]
+    },
+    options: {
+      animation: {
+        duration: 0
+      },
+      responsive: false,
+      plugins: {
+        legend: {
+          display: false,
+          position: 'bottom',
+        },
+        tooltip: {
+          mode: 'index',
+          callbacks: {
+            afterLabel: function (tooltipItem) {
+              return 'tracks';
+            }
+          }
+        }
+      },
+    }
+  });
+}
 
 
 //call the functions at once
 async function analyzeDataset(){
     await plotSongsPerYear();
+    await plotMusicalKeyShare();
     await plotExplicitNonexplicitComparison();
     await plotTop5ExplicitArtists(2020);
     await plotLinearRegressionAverageTempo();
