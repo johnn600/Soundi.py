@@ -57,6 +57,24 @@ async function plotExplicitNonexplicitComparison(){
     plotDonutGraph(details, 'explicitNonexplicitComparison', 'Songs')
 }
 
+//top 5 explicit artists
+async function plotTop5ExplicitArtists(year){
+    const temp = async () => {
+        return await eel.top_explicit_artists(year)();
+    };
+    const data = await temp();
+    const details = {
+        //convert the index to string
+        index : data[0].map(String),
+        values: data[1]
+    }
+
+    //plot the graph
+    console.log(details);
+
+    plotHorizontalBarGraph(details, 'topExplicitArtists', 'Songs')
+}
+
 
 
 /*
@@ -88,7 +106,7 @@ async function plotTop10Songs(data){
 
 /* 
   --------------------------------------------
-    GRAPHS FOR DATA VISUALIZATION
+    GRAPH CONSTRUCTOR FOR DATA VISUALIZATION
   --------------------------------------------
 */ 
 
@@ -222,6 +240,7 @@ function plotDonutGraph(data, element, label) {
 async function analyzeDataset(){
     await plotSongsPerYear();
     await plotExplicitNonexplicitComparison();
+    await plotTop5ExplicitArtists(2020);
 
     //show the overview section
     document.getElementById("overviewSection").classList.remove("d-none");

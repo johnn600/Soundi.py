@@ -32,6 +32,9 @@ eel.init('web', allowed_extensions=['.js', '.html'],
          excluded_prefixes=excluded)
 
 
+
+
+
 '''
     --------------------------------------
     python link to js (BACKEND CODES HERE)
@@ -112,7 +115,30 @@ def explicit_vs_nonexplicit_comparison():
     result_list = [list_of_labels, list_of_values]
     return result_list
 
-#@eel.expose
+@eel.expose
+def top_explicit_artists(year):
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Filter songs for the given year
+    year_songs = df[df['year'] == year]
+
+    # Count the number of explicit songs released by each artist
+    explicit_artist_counts = year_songs[year_songs['explicit'] == 1]['artists'].explode().value_counts()
+
+    # Select the top 5 artists
+    top_explicit_artists = explicit_artist_counts.head(5)
+
+    # Create separate lists for labels and values
+    list_of_labels = top_explicit_artists.index.tolist()
+    list_of_values = top_explicit_artists.values.tolist()
+
+    # Combine the lists into a single list
+    result_list = [list_of_labels, list_of_values]
+
+    print(result_list)
+    return result_list
+
 
 
 

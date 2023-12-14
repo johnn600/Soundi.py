@@ -129,24 +129,34 @@
                 </div>
             </div>
         
-            <!-- Another card - Card 2 -->
+            <!-- top explicit artists -->
             <div class="col-md-8">
                 <div class="card p-3 mt-3 rounded">
                     <h5 class="font-weight-bold mt-3">Top explicit artists</h5>
-                    <!-- Content for the second card -->
-                    <!-- Add your content here -->
+
+                    <!-- loading spinner -->
+                    <div class="mt-5 d-flex justify-content-center align-items-center d-none" id="loadingSpinnerTopExplicitArtists">
+                      <div class="spinner-border text-dark" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </div>
+
+                    <div class="card-body">
+                      <canvas id="topExplicitArtists" width="20" height="20"></canvas>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Songs per year -->
+            <div class="card p-3 mt-3 mb-3 rounded">
+              <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
+        
+                <div class="card-body position-relative">
+                  <canvas id="e" width="400" height="50"></canvas>
+                </div>     
             </div>
         </div>
 
-        <!-- Songs per year -->
-        <div class="card p-3 mt-3 mb-3 rounded">
-          <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
-    
-            <div class="card-body position-relative">
-              <canvas id="e" width="400" height="50"></canvas>
-            </div>     
-        </div>
         
 
           
