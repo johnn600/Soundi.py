@@ -11,6 +11,9 @@ import os
 from tkinter import Tk, filedialog
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.model_selection import train_test_split
+import numpy as np
+from sklearn.linear_model import LinearRegression
 
 
 
@@ -120,8 +123,13 @@ def top_explicit_artists(year):
     # Load the dataset
     df = pd.read_csv(filePath)
 
+    print(filePath)
+    print(year)
+
     # Filter songs for the given year
-    year_songs = df[df['year'] == year]
+    year_songs = df[df['year'] == int(year)]
+
+    print(year_songs)
 
     # Count the number of explicit songs released by each artist
     explicit_artist_counts = year_songs[year_songs['explicit'] == 1]['artists'].explode().value_counts()
@@ -139,8 +147,48 @@ def top_explicit_artists(year):
     print(result_list)
     return result_list
 
+#song length prediction for an artist
+@eel.expose
+def predict_artist_song_duration(artist_name):
+    # Load the dataset
+    df = pd.read_csv(filePath)
 
+    # Filter data for the specific artist
+    artist_songs = df[df['artists'].apply(lambda x: artist_name in x)]
 
+    if artist_songs.empty:
+        print(f"No data found for {artist_name}")
+        return None
+
+    # Extract relevant columns for the model (year and duration_ms)
+    data = artist_songs[['year', 'duration_ms']]
+
+    # Split the data into training and testing sets
+    train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
+
+    # Separate features (X) and target variable (y)
+    X_train, y_train = train_data[['year']], train_data['duration_ms']
+    X_test, y_test = test_data[['year']], test_data['duration_ms']
+
+    # Create a linear regression model
+    model = LinearRegression()
+
+    # Train the model
+    model.fit(X_train, y_train)
+
+    # Make predictions for the years since the first release
+    prediction_years = range(artist_songs['year'].min(), artist_songs['year'].max() + 1)
+    prediction_years_np = np.array(prediction_years).reshape(-1, 1)
+    predictions = model.predict(prediction_years_np)
+
+    # Create separate lists for years and values
+    list_of_years = prediction_years
+    list_of_values = predictions.tolist()
+
+    # Combine the lists into a single list
+    result_list = [list_of_years, list_of_values]
+    print(result_list)
+    return result_list
 
 
 

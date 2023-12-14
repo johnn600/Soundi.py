@@ -3,6 +3,8 @@
 //global variables
 let myChart = null;
 
+
+
 //create a canvas element for chart js
 function createCanvas(parent, canvasId) {
     const canvas = document.createElement('canvas');
@@ -73,6 +75,31 @@ async function plotTop5ExplicitArtists(year){
     console.log(details);
 
     plotHorizontalBarGraph(details, 'topExplicitArtists', 'Songs')
+}
+
+async function updateTop5ExplicitArtists(){
+    //get the year
+    const year = document.getElementById("topExplicitArtistsYear").value;
+    console.log(year);
+    
+    //get the data
+    const temp = async () => {
+        return await eel.top_explicit_artists(year)();
+    };
+    const data = await temp();
+    const details = {
+        //convert the index to string
+        index : data[0].map(String),
+        values: data[1]
+    }
+
+    
+
+    //destroy existing chart
+    document.getElementById("topExplicitArtists").remove();
+    createCanvas("topExplicitArtistsContainer", "topExplicitArtists");
+    plotHorizontalBarGraph(details, 'topExplicitArtists', 'Songs');
+
 }
 
 
@@ -174,7 +201,10 @@ function plotHorizontalBarGraph(data, element, label) {
     },
     options: {
       animation: {
-        duration: 0
+        duration: 0,
+      },
+      options: {
+        maintainAspectRatio: false,
       },
       indexAxis: 'y',
       scales: {

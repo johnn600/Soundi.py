@@ -118,13 +118,13 @@
           </div>
 
           <!-- Explicit section -->
-          <div class="row">
+          <div class="row align-items-center">
             <!-- explicit vs nonexplicit -->
             <div class="col-md-4">
                 <div class="card p-3 mt-3 rounded">
                     <h5 class="font-weight-bold mt-3 text-center">Explicit vs non-explicit</h5>
                     <div class="card-body">
-                        <canvas id="explicitNonexplicitComparison" width="20" height="20"></canvas>
+                        <canvas id="explicitNonexplicitComparison" height="19"></canvas>
                     </div>
                 </div>
             </div>
@@ -132,37 +132,40 @@
             <!-- top explicit artists -->
             <div class="col-md-8">
                 <div class="card p-3 mt-3 rounded">
-                    <h5 class="font-weight-bold mt-3">Top explicit artists</h5>
+                    <div class="d-flex flex-row row align-items-center p-3">
+                      <h5 class="font-weight-bold mt-3">Top explicit artists</h5>
 
-                    <!-- loading spinner -->
-                    <div class="mt-5 d-flex justify-content-center align-items-center d-none" id="loadingSpinnerTopExplicitArtists">
-                      <div class="spinner-border text-dark" role="status">
-                        <span class="sr-only">Loading...</span>
+                      <!-- year input -->
+                      <div class="input-group ml-auto w-30">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1">Year</span>
+                        </div>
+                        <input type="number" class="form-control" placeholder="Year" id="topExplicitArtistsYear" 
+                            min="1920" max="2020" value="2020" onchange="event.preventDefault(); updateTop5ExplicitArtists()">
                       </div>
+
                     </div>
 
-                    <div class="card-body">
-                      <canvas id="topExplicitArtists" width="20" height="20"></canvas>
+                    <div id="topExplicitArtistsContainer">
+                      <canvas id="topExplicitArtists" width="20" height="8"></canvas>
                     </div>
                 </div>
             </div>
-
-            <!-- Songs per year -->
-            <div class="card p-3 mt-3 mb-3 rounded">
-              <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
-        
-                <div class="card-body position-relative">
-                  <canvas id="e" width="400" height="50"></canvas>
-                </div>     
-            </div>
-        </div>
-
-        
-
+          </div>
           
 
+          <!-- Songs per year -->
+          <div class="card p-3 mt-3 mb-3 rounded">
+            <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
+      
+              <div class="card-body position-relative">
+                <canvas id="e" width="400" height="50"></canvas>
+              </div>     
+          </div>
 
         </div>
+
+  
       </div>
     </div>
 
@@ -203,25 +206,28 @@
           </div>
 
           <!-- artist details -->
-          <div class="container mt-4">
-            <div class="card p-5 rounded d-none" id="artistInfo">
-                <div class="row no-gutters d-flex align-items-center justify-content-center">
-                    <!-- First column with square image -->
-                    <div class="col-md-6 d-flex align-items-right justify-content-end">
-                        <img src="#" class="card-img img img-fluid artist-thumbnail" alt="Artist image" id="infoArtistImage">
-                    </div>
-                    
-                    <!-- Second column with text -->
-                    <div class="col-md-6">
-                        <div class="card-body">
-                            <h3 class="card-title font-weight-bold" id="infoArtistName">__</h3>
-                            <div class="card-text">Popularity: <span id="infoArtistPopularity">0</span></div>
-                            <div class="card-text">Followers: <span id="infoArtistFollowers">0</span></div>
-                            <div><span id="infoArtistGenres"></span></div>
-                            <a title="Spotify link" href="#" id="infoArtistSpotifyURL" target="_blank"><i class="fa-brands fa-spotify fa-xl mt-4" style="color: #1dd366;"></i></a>
-                        </div>
-                    </div>
-                </div>
+          <div class="container mt-4 d-none" id="artistInfo">
+
+            <div class="row no-gutters d-flex align-items-center justify-content-center mb-5 mt-5">
+              <!-- First column with square image -->
+              <div class="col-md-6 d-flex align-items-right justify-content-end">
+                  <img src="#" class="card-img img img-fluid artist-thumbnail" alt="Artist image" id="infoArtistImage">
+              </div>
+              
+              <!-- Second column with text -->
+              <div class="col-md-6">
+                  <div class="card-body">
+                      <h3 class="card-title font-weight-bold" id="infoArtistName">__</h3>
+                      <div class="card-text">Popularity: <span id="infoArtistPopularity">0</span></div>
+                      <div class="card-text">Followers: <span id="infoArtistFollowers">0</span></div>
+                      <div><span id="infoArtistGenres"></span></div>
+                      <a title="Spotify link" href="#" id="infoArtistSpotifyURL" target="_blank"><i class="fa-brands fa-spotify fa-xl mt-4" style="color: #1dd366;"></i></a>
+                  </div>
+              </div>
+            </div>
+
+            <div class="card p-5 rounded" >
+                
 
                 <!-- top 10 popular songs -->
                 <div class="mt-5">
@@ -232,42 +238,11 @@
                     <!-- canvas element to be created with JS -->
                   </div>
                 </div>
-
-
-
             </div>
           </div>
-
-          <!--- 
-          <div class="card p-3 mt-3">
-            <div class="d-flex align-items-center justify-content-space-evenly">
-              <h3 class="mr-auto">Artist's Top 10 Popular Songs</h3>
-              
-              < !-- create a code for search bar with icon inside -- >
-              <form onsubmit="event.preventDefault(); search();">
-                  <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search artist" id="artistName">
-                      <div class="input-group-append">
-                          <button title="Search" class="btn btn-primary" type="submit">
-                              <i class="fa-solid fa-magnifying-glass"></i>
-                          </button>
-                      </div>
-                  </div>
-              </form>
-            </div>
-          -->
 
               
             
-          </div>
-
-
-
-
-
-
-
-
 
         </div>
       </div>
