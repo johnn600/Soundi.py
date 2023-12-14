@@ -112,6 +112,16 @@
 
         <div class="w-100 align-items-center justify-content-center d-none" id="overviewSection">
 
+
+          <div class="container container-fluid mt-5">
+            <div class="flex-row align-items-left justify-content-start">
+              
+              <h4 class="font-weight-bold">Analysis</h4>
+              <hr class="flex-grow-1">
+            </div>
+          </div>
+
+
           <!-- Songs released per year -->
           <div class="card p-3 mt-3 rounded">
             <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
@@ -158,7 +168,11 @@
           </div>
           
 
-          <!-- Linear regression : average tempo -->
+          <!-- 
+            -------------------------------------
+                      ANALYSIS SECTION
+            -------------------------------------
+           -->
           <div class="container mt-5">
             <div class="d-flex flex-row align-items-center">
               <hr class="flex-grow-1">
@@ -167,11 +181,11 @@
             </div>
           </div>
 
-          <div class="card p-3 mt-3 mb-3 rounded">
-            <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
-      
+          <!-- Linear Regression average tempo -->
+          <div class="card p-3 mt-3 mb-3 rounded col-md-8">
+            <h5 class="font-weight-bold mt-3 text-center">Linear regression: Average tempo (beats per minute)</h5>
               <div class="card-body position-relative">
-                <canvas id="e" width="400" height="50"></canvas>
+                <canvas id="canvasAverageTempo" width="400" height="100"></canvas>
               </div>     
           </div>
 
@@ -217,7 +231,7 @@
           </div>
 
           <!-- Error messages -->
-          <div class="container rounded alert-danger mt-5 text-center p-5 d-none" id="searchError">
+          <div class="container rounded mt-5 alert-warning text-center p-5 d-none font-weight-bold" id="searchError">
             error messages here
           </div>
 

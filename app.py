@@ -193,7 +193,6 @@ def predict_artist_song_duration(artist_name):
 
     # Prepare data for Chart.js
     chart_data = [{'x': int(year), 'y': prediction} for year, prediction in zip(prediction_years, predictions)]
-    print(chart_data)
     return chart_data
     
 
@@ -211,7 +210,7 @@ def linear_regression_average_tempo():
     y = average_tempo_by_year['tempo']
 
     # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42)
 
     # Initialize the linear regression model
     model = LinearRegression()
@@ -234,7 +233,7 @@ def linear_regression_average_tempo():
                 'label': 'Actual Tempo',
                 'data': y_test.tolist(),
                 'backgroundColor': 'rgba(255, 99, 132, 0.2)',
-                'borderColor': 'rgb(255, 99, 132)',
+                'borderColor': '#343a40',
                 'pointRadius': 5,
                 'pointHoverRadius': 8,
             },
@@ -243,11 +242,9 @@ def linear_regression_average_tempo():
                 'label': 'Linear Regression Prediction',
                 'data': y_pred.tolist(),
                 'fill': False,
-                'borderColor': 'rgb(54, 162, 235)',
+                'borderColor': '#1DB954',
             },
-        ],
-        'coefficients': model.coef_.tolist(),
-        'mean_squared_error': mse,
+        ]
     }
 
     print(chart_data)

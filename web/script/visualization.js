@@ -165,6 +165,22 @@ function formatSecondsToTime(totalSeconds) {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
+//plot linear regression average tempo
+async function plotLinearRegressionAverageTempo(){
+    //invoke python eel function
+    const temp = async () => {
+        return await eel.linear_regression_average_tempo()();
+    };
+    const data = JSON.parse(await temp());
+
+    const labels  = data['labels'];
+    const datasets = data['datasets'];
+
+    console.log(labels, datasets);
+
+    //plot the graph
+    plotMixedChart(labels, datasets, 'canvasAverageTempo')
+}
 
 
 
@@ -362,6 +378,51 @@ function plotDonutGraph(data, element, label) {
   });
 }
 
+// MIXED CHART CONSTRUCTOR
+function plotMixedChart(label, datasets, element) {
+  const ctx = document.getElementById(element).getContext('2d');
+
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        type: 'scatter',
+        label: datasets[0].label,
+        data: datasets[0].data,
+        backgroundColor: 'rgba(52, 58, 64, 0.5)',
+        'pointHoverRadius': 8,
+      }, {
+        type: 'line',
+        label: datasets[1].label,
+        data: datasets[1].data,
+        borderColor: '#1DB954',
+        fill: false,
+      }]
+    },
+    options: {
+      animation: {
+        duration: 0
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          position: 'bottom',
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 10,
+          },
+        },
+        y: { beginAtZero: false }
+      },
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    }
+  });
+}
 
 
 
@@ -370,6 +431,7 @@ async function analyzeDataset(){
     await plotSongsPerYear();
     await plotExplicitNonexplicitComparison();
     await plotTop5ExplicitArtists(2020);
+    await plotLinearRegressionAverageTempo();
 
     //show the overview section
     document.getElementById("overviewSection").classList.remove("d-none");
