@@ -14,6 +14,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import numpy as np
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+import json
 
 
 
@@ -148,7 +150,6 @@ def top_explicit_artists(year):
     return result_list
 
 #song length prediction for an artist
-
 def format_duration(milliseconds):
     seconds = milliseconds / 1000
     minutes, seconds = divmod(seconds, 60)
@@ -195,6 +196,63 @@ def predict_artist_song_duration(artist_name):
     print(chart_data)
     return chart_data
     
+
+# linear regression for average tempo
+@eel.expose
+def linear_regression_average_tempo():
+    # Read the dataset into a pandas DataFrame
+    df = pd.read_csv(filePath)
+
+    # Group by 'year' and calculate the average tempo for each year
+    average_tempo_by_year = df.groupby('year')['tempo'].mean().reset_index()
+
+    # Extract features and target variable
+    X = average_tempo_by_year[['year']]
+    y = average_tempo_by_year['tempo']
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Initialize the linear regression model
+    model = LinearRegression()
+
+    # Fit the model on the training data
+    model.fit(X_train, y_train)
+
+    # Make predictions on the test data
+    y_pred = model.predict(X_test)
+
+    # Calculate the Mean Squared Error
+    mse = mean_squared_error(y_test, y_pred)
+
+    # Create Chart JS data format
+    chart_data = {
+        'labels': X_test['year'].tolist(),
+        'datasets': [
+            {
+                'type': 'scatter',
+                'label': 'Actual Tempo',
+                'data': y_test.tolist(),
+                'backgroundColor': 'rgba(255, 99, 132, 0.2)',
+                'borderColor': 'rgb(255, 99, 132)',
+                'pointRadius': 5,
+                'pointHoverRadius': 8,
+            },
+            {
+                'type': 'line',
+                'label': 'Linear Regression Prediction',
+                'data': y_pred.tolist(),
+                'fill': False,
+                'borderColor': 'rgb(54, 162, 235)',
+            },
+        ],
+        'coefficients': model.coef_.tolist(),
+        'mean_squared_error': mse,
+    }
+
+    print(chart_data)
+    return json.dumps(chart_data)
+
 
 
 
