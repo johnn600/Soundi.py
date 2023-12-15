@@ -1,23 +1,28 @@
 # Soundi.py 
 **Spotify Dataset Analyzer**\
 **John Rey Vilbar | Zach Jacob Feldan | Ruby Jane Facurib**\
-**ITD105 Big Data Analytics**\
+**ITD105 Big Data Analytics**
 
 
 ### Overview
 Soundi.py is a sophisticated platform designed for the analysis of Spotify datasets. This application focuses on providing insights into the music details contained in the database, offering valuable information on the number of songs released each year and highlighting the top songs of each artist.
 
 ### Dependencies
-* Python eel
+* [Python Eel](https://github.com/python-eel/Eel)
 * Pandas
 * Numpy
 * sklearn
 * ctypes
 
+### Dataset
+This project uses the Kaggle dataset by Vatsal Mavani, which can be found [here](https://www.kaggle.com/datasets/vatsalmavani/spotify-dataset/data). 
+
 ### Setting up
 1. Install the needed dependencies
-2. Execute the `app.py` file
-3. Before loading to the web app, clean the csv file first busing the `clean.py` file
+2. Use the dataset (`data.csv`) provided in the Kaggle link above
+2. Before loading to the web app, clean the csv file first busing the `clean.py` file
+3. Execute the `app.py` file
+
 
 ### Instructions
 1. Upon launching the application, you will be prompted to upload your dataset.
