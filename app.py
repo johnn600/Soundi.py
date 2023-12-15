@@ -318,6 +318,91 @@ def linear_regression_average_loudness():
     }
     return json.dumps(chart_data)
 
+# linear regression for acousticness
+@eel.expose
+def linear_regression_average_acousticness():
+    # Read the dataset into a pandas DataFrame
+    df = pd.read_csv(filePath)
+
+    # Group by 'year' and calculate the average acousticness for each year
+    average_acousticness_by_year = df.groupby('year')['acousticness'].mean().reset_index()
+
+    # Extract features and target variable
+    X = average_acousticness_by_year[['year']]
+    y = average_acousticness_by_year['acousticness']
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.35, random_state=42)
+
+    # Initialize the linear regression model
+    model = LinearRegression()
+
+    # Fit the model on the training data
+    model.fit(X_train, y_train)
+
+    # Make predictions on the test data
+    y_pred = model.predict(X_test)
+
+    # Calculate the Mean Squared Error
+    mse = mean_squared_error(y_test, y_pred)
+
+    # Create Chart JS data format
+    chart_data = {
+        'labels': X_test['year'].tolist(),
+        'datasets': [
+            {
+                'data': y_test.tolist(),
+            },
+            {
+                'data': y_pred.tolist(),
+            },
+        ],
+        'mse': mse
+    }
+    return json.dumps(chart_data)
+
+# linear regression for danceability
+@eel.expose
+def linear_regression_average_danceability():
+    # Read the dataset into a pandas DataFrame
+    df = pd.read_csv(filePath)
+
+    # Group by 'year' and calculate the average danceability for each year
+    average_danceability_by_year = df.groupby('year')['danceability'].mean().reset_index()
+
+    # Extract features and target variable
+    X = average_danceability_by_year[['year']]
+    y = average_danceability_by_year['danceability']
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.35, random_state=42)
+
+    # Initialize the linear regression model
+    model = LinearRegression()
+
+    # Fit the model on the training data
+    model.fit(X_train, y_train)
+
+    # Make predictions on the test data
+    y_pred = model.predict(X_test)
+
+    # Calculate the Mean Squared Error
+    mse = mean_squared_error(y_test, y_pred)
+
+    # Create Chart JS data format
+    chart_data = {
+        'labels': X_test['year'].tolist(),
+        'datasets': [
+            {
+                'data': y_test.tolist(),
+            },
+            {
+                'data': y_pred.tolist(),
+            },
+        ],
+        'mse': mse
+    }
+    return json.dumps(chart_data)
 
 
 

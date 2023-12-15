@@ -149,7 +149,7 @@
                   <br><br>
                 </p>
 
-                <!-- TOP ARTIST -->
+                <!-- TOP ARTIST PER KEY -->
                 <div class="card h-50 py-4 rounded d-flex flex-column">
                   <div class="d-flex flex-row justify-content-center"> 
                     <h6 class="font-weight-bold mr-3 mt-2">Top artist in </h6>
@@ -253,34 +253,34 @@
             </div>
             <!-- some details -->
             <div class="container container-fluid ml-2">
-              <h5 class="font-weight-bold">Tempo (Beats Per Minute)</h5>
+              <h5 class="font-weight-bold">Tempo (BPM)</h5>
               <p>
                 Tempo in music refers to the speed at which a piece of music is played. 
                 It measures how fast or slow the pulse of the music is, and 
-                it is typically expressed in beats per minute (BPM). Imagine a metronome 
-                ticking away, helping musicians stay in time. The tempo determines how 
-                quickly or leisurely those metronome ticks occur.
-                <!-- new line-->
-                <br><br>
-                Waiting sa input ni Zach
+                it is typically expressed in beats per minute.<br><br>
+                The model predicts a continued increase in tempo across the years. This aligns
+                with the observed trends of increasing tempo in popular music which could be influenced by changes in musical 
+                style, cultural preferences, and advances in technology that allow for faster production and editing of 
+                music.
               </p>
             </div>
           </div>
 
           <!-- AVERAGE LOUDNESS ACROSS THE YEARS -->
-          <div class="d-flex flex-row align-items-center">
+          <div class="d-flex flex-row align-items-center mb-3 mt-3">
             <!-- some details -->
             <div class="container container-fluid">
               <h5 class="font-weight-bold">Loudness (dB)</h5>
               <p>
-                THIS IS FILLER TEXT
-                <br><br>
                 Loudness in music refers to the volume or intensity of 
                 sound. It represents how soft or loud a musical passage 
                 or performance is. Music can have various dynamic levels, 
                 ranging from very soft to very loud.
                 <br><br>
-                Waiting sa input ni Zach
+                The model forecasts a steady increase in loudness throughout the years.
+                This could be indicative of the 'loudness war' in the music industry, where
+                there is a competitive drive to produce music at higher volumes to grab
+                listeners' attention.
               </p>
             </div>
             <!-- linear regression chart -->
@@ -292,7 +292,34 @@
               <!-- mean squared error -->
               <p class="text-center"><small>Mean squared error: <span id="mseLoudness"></span></small></p>   
             </div>
+          </div>
 
+          <!-- AVERAGE ACOUSTICNESS ACROSS THE YEARS -->
+          <div class="d-flex flex-row align-items-center mb-3 mt-3">
+            <!-- linear regression chart -->
+            <div class="card p-3 mt-3 mb-3 rounded col-md-7">
+              <h5 class="font-weight-bold mt-3 text-center">Acousticness of songs across the years</h5>
+              <div class="card-body position-relative">
+                <canvas id="canvasAverageAcousticness" height="110"></canvas>
+              </div>
+              <!-- mean squared error -->
+              <p class="text-center"><small>Mean squared error: <span id="mseAcousticness"></span></small></p>
+            </div>
+            <!-- some details -->
+            <div class="container container-fluid ml-2">
+              <h5 class="font-weight-bold">Acousticness</h5>
+              <p>
+                Acousticness in music refers to the degree to which a musical track or piece is 
+                characterized by acoustic (non-electronic) elements. It is a measure used
+                in music analysis and classification to quantify the acoustic nature of a 
+                recording.<br><br>
+                The model shows a continued decrease in acousticness across the years.
+                This could be due to the increasing popularity of electronic music, which
+                could reflect a shift towards more electronic and less organic sounds in music.
+                Some of the artists that have contributed to this trend include Tiësto, 
+                Skrillex, and Alan Walker.
+              </p>
+            </div>
           </div>
 
         </div>
@@ -381,7 +408,7 @@
 
               <!-- warning text -->
               <div class="alert alert-light mt-3 text-center d-none" role="alert" id="songLengthWarning">
-                Few records exist to predict song length
+                Few records exist to predict song length with higher confidence.
               </div>
 
           </div>
