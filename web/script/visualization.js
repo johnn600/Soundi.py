@@ -201,6 +201,25 @@ async function plotLinearRegressionAverageAcousticness(){
   document.getElementById("mseAcousticness").innerHTML = mse.toFixed(2);
 }
 
+//linear regression danceability
+async function plotLinearRegressionAverageDanceability(){
+  //invoke python eel function
+  const temp = async () => {
+      return await eel.linear_regression_average_danceability()();
+  };
+  const data = JSON.parse(await temp());
+
+  const labels  = data['labels'];
+  const datasets = data['datasets'];
+  const mse = data['mse'];
+
+  //plot the graph
+  plotMixedChart(labels, datasets, 'canvasAverageDanceability');
+
+  //update the mse value in mseTempo and round it to 2 decimal places
+  document.getElementById("mseDanceability").innerHTML = mse.toFixed(2);
+}
+
 
 
 /*
@@ -575,6 +594,7 @@ async function analyzeDataset(){
     await plotLinearRegressionAverageTempo();
     await plotLinearRegressionAverageLoudness();
     await plotLinearRegressionAverageAcousticness();
+    await plotLinearRegressionAverageDanceability();
 
 
     //show the overview section

@@ -322,6 +322,31 @@
             </div>
           </div>
 
+          <!-- AVERAGE DANCEABILITY ACROSS THE YEARS -->
+          <div class="d-flex flex-row align-items-center mb-3 mt-3">
+            <!-- some details -->
+            <div class="container container-fluid">
+              <h5 class="font-weight-bold">Danceability</h5>
+              <p>
+                Danceability is a measure to describe how suitable a track is for dancing.
+                It is a subjective and qualitative term that considers various musical aspects of a song.
+                <br><br>
+                The model shows a gradual increase in danceability across the years. It suggests a 
+                trend towards more danceable music, which could be due to the increasing popularity of
+                upbeat and energetic music in recent years.
+              </p>
+            </div>
+            <!-- linear regression chart -->
+            <div class="card p-3 mt-3 mb-3 rounded col-md-7">
+              <h5 class="font-weight-bold mt-3 text-center">Song's danceability across the years</h5>
+              <div class="card-body position-relative">
+                <canvas id="canvasAverageDanceability" height="110"></canvas>
+              </div>  
+              <!-- mean squared error -->
+              <p class="text-center"><small>Mean squared error: <span id="mseDanceability"></span></small></p>   
+            </div>
+          </div>
+
         </div>
 
   

@@ -12,7 +12,7 @@ from tkinter import Tk, filedialog
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import numpy as np
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.metrics import mean_squared_error
 import json
 
@@ -361,7 +361,9 @@ def linear_regression_average_acousticness():
     }
     return json.dumps(chart_data)
 
-# linear regression for danceability
+# linear regression for danceability with Ridge regularization
+# gidagdagan nako'g regularization kay basi nag-overfit ang model
+# since 0.00 iyang MSE. But it turns out na perfect fit daw ang model
 @eel.expose
 def linear_regression_average_danceability():
     # Read the dataset into a pandas DataFrame
@@ -377,8 +379,9 @@ def linear_regression_average_danceability():
     # Split the data into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.35, random_state=42)
 
-    # Initialize the linear regression model
-    model = LinearRegression()
+    # Initialize the linear regression model with Ridge regularization
+    alpha = 2.0  # You can adjust the regularization strength (alpha) as needed
+    model = Ridge(alpha=alpha)
 
     # Fit the model on the training data
     model.fit(X_train, y_train)
@@ -403,7 +406,6 @@ def linear_regression_average_danceability():
         'mse': mse
     }
     return json.dumps(chart_data)
-
 
 
 
