@@ -1,7 +1,7 @@
 # Soundi.py 
-**Spotify Dataset Analyzer** 
-**John Rey Vilbar | Zach Jacob Feldan | Ruby Jane Facurib** 
-**ITD105 Big Data Analytics** 
+**Spotify Dataset Analyzer**\
+**John Rey Vilbar | Zach Jacob Feldan | Ruby Jane Facurib**\
+**ITD105 Big Data Analytics**\
 
 
 ### Overview
