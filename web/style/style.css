@@ -5,6 +5,10 @@ body {
     font-family: Poppins;
 }
 
+.bg-spotify{
+    background-color: #67d694;
+}
+
 /* scroll bar */
 /* For WebKit browsers (like Chrome, Safari) */
 ::-webkit-scrollbar {
@@ -75,7 +79,26 @@ input::-webkit-inner-spin-button {
     height: 200px;
     object-fit: cover;
     border-radius: 3%;
+    transform: scale(1);
+    transition: 0.5s;
 }
+
+.artist-thumbnail:hover {
+    transform: scale(1.05);
+    transition: 0.5s;
+}
+
+#topArtistInKeyImage{
+    background-color: #1dd366;
+    width: 140px;
+    height: 140px;
+}
+
+@media (min-width: 1200px) {
+    #topArtistInKeySongCount {
+      text-align: left;
+    }
+  }
 
 #progressBarContainer {
     width: 50%;

@@ -57,9 +57,6 @@ async function searchSpotify(query) {
     }
 
     const json = await response.json();
-
-    console.log(json);
-
     const artistName = json.artists.items[0].name;
     const artistImageURL = json.artists.items[0].images[1].url;
     const artistPopularity = json.artists.items[0].popularity;
@@ -68,7 +65,6 @@ async function searchSpotify(query) {
     const artistGenres = json.artists.items[0].genres;
 
     const artistInfo = [artistName, artistImageURL, artistPopularity, spotifyLink, artistFollowers, artistGenres];
-    console.log(artistInfo);
     return artistInfo;
 }
 

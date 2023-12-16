@@ -78,25 +78,35 @@ async function plotMusicalKeyShare(){
     document.getElementById("leastCommonKey").innerHTML = details.index[details.index.length-1];
   }
 
-  //top artist in key
-  async function getTopArtistInKey(key){    
-    const temp = async () => {
-        return await eel.top_artist_in_key(key)();
-    };
-    const data = await temp();
-    const info = JSON.parse(data)[0]['artists'];
-    const name = info.replace(/\[|\]|'/g, '');
-     
-    //set innerHTML of topArtistInKey
-    document.getElementById("topArtistInKey").innerHTML = name;
-  }
+//top artist in key
+async function getTopArtistInKey(key){    
+  const temp = async () => {
+      return await eel.top_artist_in_key(key)();
+  };
+  const data = await temp();
+  const info = JSON.parse(data)[0]['artists'];
+  const count = JSON.parse(data)[0]['count'];
+  const name = info.replace(/\[|\]|'/g, '');
 
-  //onchange event for topArtistInKey
+  //get the artist image from spotify
+  const query = await searchSpotify(name)
+  const artistImageURL = query[1];
+
+  //set the src of topArtistInKeyImage
+  document.getElementById("topArtistInKeyImage").src = artistImageURL;
+    
+  //set innerHTML of topArtistInKey
+  document.getElementById("topArtistInKey").innerHTML = name;
+  //set innerHTML of topArtistInKeySongCount
+  document.getElementById("topArtistInKeySongCount").innerHTML = count + " songs";
+}
+
+//onchange event for topArtistInKey
 function updateTopArtistInKey(){
-    //get the key
-    const key = document.getElementById("selectKey").value;
-    getTopArtistInKey(key);
-  }
+  //get the key
+  const key = document.getElementById("selectKey").value;
+  getTopArtistInKey(key);
+}
 
 //explicit vs non-explicit comparison
 async function plotExplicitNonexplicitComparison(){
@@ -115,42 +125,71 @@ async function plotExplicitNonexplicitComparison(){
 
 //top 5 explicit artists
 async function plotTop5ExplicitArtists(year){
-    const temp = async () => {
-        return await eel.top_explicit_artists(year)();
-    };
-    const data = await temp();
-    const details = {
-        //convert the index to string
-        index : data[0].map(String),
-        values: data[1]
-    }
+  const temp = async () => {
+      return await eel.top_explicit_artists(year)();
+  };
+  const data = await temp();
+  
+  // Flatten the array of arrays and remove quotes and square brackets
+  const artistNames = data[0].flat().map(artist => artist.replace(/['"\[\]]/g, ''));
 
-    //plot the graph
-    console.log(details);
+  const details = {
+      // Convert the index to string
+      index: artistNames.map(String),
+      values: data[1]
+  }
 
-    plotHorizontalBarGraph(details, 'topExplicitArtists', 'Songs released: ')
+  // Plot the graph
+  plotHorizontalBarGraph(details, 'topExplicitArtists', 'Songs released: ');
 }
 
 async function updateTop5ExplicitArtists(){
     //get the year
     const year = document.getElementById("topExplicitArtistsYear").value;
-    console.log(year);
+
+    //check if value is not less than 1920 or greater than 2020
+    if(year < 1920){
+        //set the value to 1920
+        document.getElementById("topExplicitArtistsYear").value = 1920;
+        return false;
+    } else if(year > 2020){
+        //set the value to 2020
+        document.getElementById("topExplicitArtistsYear").value = 2020;
+        return false;
+    }
     
     //get the data
     const temp = async () => {
         return await eel.top_explicit_artists(year)();
     };
+
     const data = await temp();
+
+    // Flatten the array of arrays and remove quotes and square brackets
+    const artistNames = data[0].flat().map(artist => artist.replace(/['"\[\]]/g, ''));
     const details = {
         //convert the index to string
-        index : data[0].map(String),
+        index : artistNames.map(String),
         values: data[1]
+    }
+
+    console.log(details.index.length);
+    //hide the canvas if index length is 0
+    if(details.index.length == 0){
+        document.getElementById("topExplicitArtists").classList.add("d-none");
+        document.getElementById("topExplicitArtists").classList.remove("d-flex");
+        //show topExplicitArtistsWarning
+        document.getElementById("topExplicitArtistsWarning").classList.remove("d-none");
+        return false;
+    } else {
+      //hide topExplicitArtistsWarning
+      document.getElementById("topExplicitArtistsWarning").classList.add("d-none");
     }
 
     //destroy existing chart
     document.getElementById("topExplicitArtists").remove();
     createCanvas("topExplicitArtistsContainer", "topExplicitArtists");
-    plotHorizontalBarGraph(details, 'topExplicitArtists', 'Songs released: ');
+    plotHorizontalBarGraph(details, 'topExplicitArtists', 'Explicit songs released');
 
 }
 
@@ -437,6 +476,7 @@ function plotHorizontalBarGraph(data, element, label) {
       },
       options: {
         maintainAspectRatio: false,
+        responsive: true,
       },
       indexAxis: 'y',
       scales: {
@@ -593,6 +633,47 @@ function plotPolarAreaGraph(data, element, label) {
 }
 
 
+
+const functionsToExecute = [
+  plotSongsPerYear,
+  plotMusicalKeyShare,
+  () => getTopArtistInKey('C'),
+  plotExplicitNonexplicitComparison,
+  () => plotTop5ExplicitArtists(2020),
+  plotLinearRegressionAverageTempo,
+  plotLinearRegressionAverageLoudness,
+  plotLinearRegressionAverageAcousticness,
+  plotLinearRegressionAverageDanceability
+];
+
+
+async function analyzeDataset() {
+  const totalFunctions = functionsToExecute.length;
+  let completedFunctions = 0;
+
+  for (const func of functionsToExecute) {
+    await func();
+    completedFunctions++;
+    const progress = (completedFunctions / totalFunctions) * 100;
+    updateProgressBar(progress);
+  }
+
+  // Set progress to 100% when all functions are completed
+  updateProgressBar(100);
+  // Wait for 1 second before showing the overview section
+  await new Promise(r => setTimeout(r, 1000));
+
+  // Show the overview section
+  document.getElementById("overviewSection").classList.remove("d-none");
+  // Hide the spinner
+  document.getElementById("loadingSpinnerOverview").classList.add("d-none");
+  document.getElementById("loadingSpinnerOverview").classList.remove("d-flex");
+  // Set progress to 100% when all functions are complete
+  updateProgressBar(100);
+}
+
+
+/* 
 //execute on page load
 async function analyzeDataset() {
   await plotSongsPerYear();
@@ -625,4 +706,4 @@ async function analyzeDataset() {
   document.getElementById("loadingSpinnerOverview").classList.add("d-none");
   document.getElementById("loadingSpinnerOverview").classList.remove("d-flex");
 
-}
+} */

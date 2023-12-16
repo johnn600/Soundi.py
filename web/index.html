@@ -125,7 +125,7 @@
           </div>
 
           <!-- Keys distribution -->
-          <div class="row align-items-center">
+          <div class="row align-items-center mt-5">
             
             <!-- Polar area chart -->
             <div class="col-sm-7 col-lg-6">
@@ -141,7 +141,7 @@
               </div>
             </div>
 
-            <!-- some info -->
+            <!-- side info -->
             <div class="col-sm-5 col-lg-6">
               <div class="container container-fluid">
                 <h5 class="font-weight-bold">Musical keys</h5>
@@ -152,9 +152,9 @@
                 </p>
 
                 <!-- TOP ARTIST PER KEY -->
-                <div class="card h-50 py-4 rounded d-flex flex-column">
+                <div class="card h-50 p-3 rounded d-flex flex-column">
                   <div class="d-flex flex-row justify-content-center"> 
-                    <h6 class="font-weight-bold mr-3 mt-2">Top artist in </h6>
+                    <h6 class="font-weight-bold mr-3 mt-2">Artist with most tracks in</h6>
                     
                     <!-- dropdown -->
                     <div class="input-group " style="width: 35%;">
@@ -176,12 +176,18 @@
                   </div>
                   <!-- add hr -->
                   <hr class="mt-3 mb-3">
-                  
-                  <!-- top artist name -->
-                  <h3 class="text-center font-weight-bold" id="topArtistInKey"></h3>
-                  <small class="text-center">since 1950</small>
-                
 
+                  <!-- Artist image -->
+                  <div class="d-flex flex-xl-row flex-sm-column align-items-center justify-content-center">
+                    <img src="#" class="card-img img img-fluid artist-thumbnail mb-sm-3 mb-xl-0" alt="Artist image" id="topArtistInKeyImage">
+                  
+                    <div class="d-flex flex-sm-column ml-xl-4">
+                      <!-- top artist name -->
+                      <h3 class="text-center font-weight-bold" id="topArtistInKey"></h3>
+                      <!-- song count -->
+                      <p class="text-center text-xl-left" id="topArtistInKeySongCount"></p>
+                    </div>
+                  </div>
                 </div>
 
 
@@ -222,7 +228,13 @@
                     </div>
 
                     <div id="topExplicitArtistsContainer">
-                      <canvas id="topExplicitArtists" width="20" height="8"></canvas>
+
+                      <!-- warning text when no data is returned -->
+                      <div class="alert alert-light mt-3 text-center d-none" role="alert" id="topExplicitArtistsWarning">
+                        No record for this year
+                      </div>
+
+                      <canvas id="topExplicitArtists" height="90"></canvas>
                     </div>
                 </div>
             </div>
