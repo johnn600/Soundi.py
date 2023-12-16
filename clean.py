@@ -29,11 +29,7 @@ df['key'] = df['key'].map(key_mapping)
 df['tempo'] = df['tempo'].round().astype(int)
 
 # Extract the first artist from the lists in 'artists' column
-df['artists'] = df['artists'].apply(lambda x: eval(x)[0] if pd.notna(x) else x)
-
-# Convert 'artists' column to strings
-df['artists'] = df['artists'].apply(str)
-data_w_genres_df['artists'] = data_w_genres_df['artists'].apply(str)
+df['artists'] = df['artists'].apply(lambda x: x.strip("[]").split(",")[0].strip("'") if pd.notna(x) else x)
 
 # Merge the datasets based on the 'artists' column
 merged_df = pd.merge(df, data_w_genres_df[['artists', 'genres']], on='artists', how='left')

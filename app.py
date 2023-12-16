@@ -142,8 +142,11 @@ def artist_top_songs_by_popularity(artist_name):
     # Load the dataset
     df = pd.read_csv(filePath)
 
+    # Check for NaN values in the 'artists' column and replace them with an empty string
+    df['artists'] = df['artists'].fillna('')
+
     # Filter songs by the given artist
-    artist_songs = df[df['artists'].apply(lambda x: artist_name in x)]
+    artist_songs = df[df['artists'].str.contains(artist_name, case=False)]
 
     # Sort songs by popularity in descending order
     top_songs = artist_songs.sort_values(by='popularity', ascending=False).head(10)
@@ -155,6 +158,8 @@ def artist_top_songs_by_popularity(artist_name):
     # Combine the lists into a single list
     result_list = [list_of_songs, list_of_popularity]
     return result_list
+
+
 
 @eel.expose
 def top_explicit_artists(year):
