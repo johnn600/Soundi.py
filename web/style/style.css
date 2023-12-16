@@ -77,3 +77,26 @@ input::-webkit-inner-spin-button {
     border-radius: 3%;
 }
 
+#progressBarContainer {
+    width: 50%;
+    margin: 20px auto;
+  }
+
+  #progressBar {
+    width: 100%;
+    height: 15px; /* Set the height of the progress bar */
+    border-radius: 10px; /* Optional: Add rounded corners */
+    background-color: #eee; /* Set the background color */
+  }
+
+  #progressBar::-webkit-progress-bar {
+    background-color: #eee; /* Set the background color for the progress bar container */
+    border-radius: 10px;
+  }
+
+  #progressBar::-webkit-progress-value {
+    background-color: #484e53; /* Set the progress color */
+    border-radius: 10px; /* Optional: Add rounded corners to the progress bar */
+    transition: width 0.5s ease-in-out; /* Animation duration and easing */
+
+  }

@@ -6,6 +6,13 @@
 let myChart = null;
 
 
+
+/* 
+  --------------------------------------------
+              UI RELATED FUNCTIONS
+  --------------------------------------------
+*/
+
 //create a canvas element for chart js
 function createCanvas(parent, canvasId) {
     const canvas = document.createElement('canvas');
@@ -22,13 +29,16 @@ function createCanvas(parent, canvasId) {
     console.log("canvas created");
 }
 
-
+// progress bar update function
+function updateProgressBar(value) {
+  document.getElementById("progressBar").value = value;
+}
 
 
 
 /*
   --------------------------------------------
-      OVERVIEW SECTION
+              OVERVIEW SECTION
   --------------------------------------------
 */
 
@@ -397,7 +407,6 @@ function plotLineGraphArtist(data, element, label) {
   });
 }
 
-  
 // HORIZONTAL BAR GRAPH CONSTRUCTOR
 function plotHorizontalBarGraph(data, element, label) {
   const ctx = document.getElementById(element).getContext('2d');
@@ -584,22 +593,36 @@ function plotPolarAreaGraph(data, element, label) {
 }
 
 
-//call the functions at once
-async function analyzeDataset(){
-    await plotSongsPerYear();
-    await plotMusicalKeyShare();
-    await getTopArtistInKey('C');
-    await plotExplicitNonexplicitComparison();
-    await plotTop5ExplicitArtists(2020);
-    await plotLinearRegressionAverageTempo();
-    await plotLinearRegressionAverageLoudness();
-    await plotLinearRegressionAverageAcousticness();
-    await plotLinearRegressionAverageDanceability();
+//execute on page load
+async function analyzeDataset() {
+  await plotSongsPerYear();
+  updateProgressBar(10);
+  await plotMusicalKeyShare();
+  updateProgressBar(20);
+  await getTopArtistInKey('C');
+  updateProgressBar(30);
+  await plotExplicitNonexplicitComparison();
+  updateProgressBar(40);
+  await plotTop5ExplicitArtists(2020);
+  updateProgressBar(50);
+  await plotLinearRegressionAverageTempo();
+  updateProgressBar(60);
+  await plotLinearRegressionAverageLoudness();
+  updateProgressBar(70);
+  await plotLinearRegressionAverageAcousticness();
+  updateProgressBar(80);
+  await plotLinearRegressionAverageDanceability();
+  updateProgressBar(90);
 
+  // Set progress to 100% when all functions are complete
+  updateProgressBar(100);
+  // Wait for 1 second before showing the overview section
+  await new Promise(r => setTimeout(r, 1000));
 
-    //show the overview section
-    document.getElementById("overviewSection").classList.remove("d-none");
-    //hide the spinner
-    document.getElementById("loadingSpinnerOverview").classList.add("d-none");
-    document.getElementById("loadingSpinnerOverview").classList.remove("d-flex");
+  // Show the overview section
+  document.getElementById("overviewSection").classList.remove("d-none");
+  // Hide the spinner
+  document.getElementById("loadingSpinnerOverview").classList.add("d-none");
+  document.getElementById("loadingSpinnerOverview").classList.remove("d-flex");
+
 }

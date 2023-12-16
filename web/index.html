@@ -42,7 +42,7 @@
 
   <!--
     -------------------------------------
-     MAIN CONTENTS
+     DASHBOARD CONTENTS
     -------------------------------------
   -->
 
@@ -103,11 +103,13 @@
     <div class="tab-pane fade show active mb-5" id="content1">
       <div class="col-md-10 m-auto" id="section1">
 
-        <!-- loading spinner -->
-        <div class="mt-5 d-flex justify-content-center align-items-center" id="loadingSpinnerOverview">
-          <div class="spinner-border text-dark" role="status">
-            <span class="sr-only">Loading...</span>
+        <!-- PAGE LOAD PROGRESS BAR -->
+        <div class="mt-5 d-flex flex-column justify-content-center align-items-center w-100" id="loadingSpinnerOverview">          
+          <h5 class="mt-5">Analyzing the dataset...</h5>
+          <div id="progressBarContainer">
+            <progress id="progressBar" value="0" max="100"></progress>
           </div>
+
         </div>
 
         <!-- main contents -->
@@ -145,7 +147,7 @@
                 <h5 class="font-weight-bold">Musical keys</h5>
                 <p>
                   Musical keys are a central part of music theory. It forms the basis of a music 
-                  composition in classical, Western art, and Western pop music.
+                  composition from classical up to the Western pop music.
                   <br><br>
                 </p>
 
