@@ -1,13 +1,11 @@
 import pandas as pd
-import numpy as np
 
+file1 = r"C:\Users\Admin\Desktop\Spotify viz\Dataset\data.csv"
+file2 = r'C:\Users\Admin\Desktop\Spotify viz\Dataset\data_w_genres.csv'
 
-
-#file_path = r"C:\Users\Admin\Desktop\Spotify viz\Dataset 1\data.csv"
-file_path = r"FILE PATH OF YOUR DATASET"
-
-# Load the dataset
-df = pd.read_csv(file_path)
+# Load the datasets
+df = pd.read_csv(file1)
+data_w_genres_df = pd.read_csv(file2)
 
 # Display basic information about the dataset
 print(df.info())
@@ -30,9 +28,18 @@ df['key'] = df['key'].map(key_mapping)
 # Round values in 'tempo' column to the nearest integer
 df['tempo'] = df['tempo'].round().astype(int)
 
+# Extract the first artist from the lists in 'artists' column
+df['artists'] = df['artists'].apply(lambda x: eval(x)[0] if pd.notna(x) else x)
+
+# Convert 'artists' column to strings
+df['artists'] = df['artists'].apply(str)
+data_w_genres_df['artists'] = data_w_genres_df['artists'].apply(str)
+
+# Merge the datasets based on the 'artists' column
+merged_df = pd.merge(df, data_w_genres_df[['artists', 'genres']], on='artists', how='left')
+
 # Optionally, you can sort the dataframe based on a specific column
-df = df.sort_values(by=['year', 'popularity'], ascending=[True, False])
+merged_df = merged_df.sort_values(by=['year', 'popularity'], ascending=[True, False])
 
-# Save the cleaned dataset to a new CSV file
-df.to_csv(r"C:\Users\Admin\Desktop\Spotify viz\Dataset 1\cleaned_data.csv", index=False)
-
+# Save the cleaned and merged dataset to a new CSV file
+merged_df.to_csv(r"C:\Users\Admin\Desktop\Spotify viz\Dataset\cleaned_and_merged_data.csv", index=False)

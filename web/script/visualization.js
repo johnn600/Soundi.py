@@ -25,8 +25,6 @@ function createCanvas(parent, canvasId) {
   
     // Append the canvas element as a child to the div
     parentDiv.appendChild(canvas);
-
-    console.log("canvas created");
 }
 
 // progress bar update function
@@ -173,7 +171,6 @@ async function updateTop5ExplicitArtists(){
         values: data[1]
     }
 
-    console.log(details.index.length);
     //hide the canvas if index length is 0
     if(details.index.length == 0){
         document.getElementById("topExplicitArtists").classList.add("d-none");
@@ -305,8 +302,6 @@ async function predictSongLength(artistName) {
     index: data.map(point => point.x),
     values: valuesInSeconds
   };
-
-  console.log(details);
 
   //check if canvasSongLengthContainer has a child canvas
   if(document.getElementById("canvasSongLengthContainer").querySelector('canvas') != null){
