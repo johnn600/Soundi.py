@@ -286,36 +286,7 @@ async function plotTop10Songs(data){
 
 }
 
-//predict song length of the artist
-async function predictSongLength(artistName) {
-  //invoke python eel function
-  const temp = async () => {
-      return await eel.predict_artist_song_duration(artistName)();
-  };
 
-  const data = await temp();
-
-  // Convert time duration strings to total seconds
-  const valuesInSeconds = data.map(point => convertToSeconds(point.y));
-
-  const details = {
-    index: data.map(point => point.x),
-    values: valuesInSeconds
-  };
-
-  //check if canvasSongLengthContainer has a child canvas
-  if(document.getElementById("canvasSongLengthContainer").querySelector('canvas') != null){
-    //remove the canvas
-    document.getElementById("canvasSongLengthContainer").querySelector('canvas').remove();
-  }
-
-  //create canvas
-  createCanvas("canvasSongLengthContainer", "canvasSongLength");
-
-  //plot the data
-  plotLineGraphArtist(details, 'canvasSongLength', 'Song duration: ');
-
-}
 
 // Convert time duration string to total seconds
 function convertToSeconds(durationString) {

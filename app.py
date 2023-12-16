@@ -65,6 +65,7 @@ def filePicker():
 def returnFileDetails():
     return fileName, filePath
 
+# --------------------------------------
 # OVERVIEW SECTION
 @eel.expose
 def released_songs_per_year():
@@ -136,6 +137,9 @@ def explicit_vs_nonexplicit_comparison():
     result_list = [list_of_labels, list_of_values]
     return result_list
 
+
+
+# --------------------------------------
 # ARTIST SECTION
 @eel.expose
 def artist_top_songs_by_popularity(artist_name):
@@ -159,6 +163,61 @@ def artist_top_songs_by_popularity(artist_name):
     result_list = [list_of_songs, list_of_popularity]
     return result_list
 
+@eel.expose
+def artist_average_tempo(artist_name):
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Drop rows with NaN values in the 'artists' or 'tempo' columns
+    df = df.dropna(subset=['artists', 'tempo'])
+
+    # Check for NaN values in the 'artists' column and replace them with an empty string
+    df['artists'] = df['artists'].fillna('')
+
+    # Filter songs by the given artist
+    artist_songs = df[df['artists'].str.contains(artist_name, case=False)]
+
+    # Check if there are tempo values available for the specified artist
+    if artist_songs.empty:
+        return "No tempo information available for the specified artist."
+
+    # Calculate the average tempo for the artist
+    average_tempo = artist_songs['tempo'].mean()
+
+    return average_tempo
+
+@eel.expose
+def artist_explicit_ratio(artist_name):
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Drop rows with missing values in the 'artists' and 'explicit' columns
+    df = df.dropna(subset=['artists', 'explicit'])
+
+    # Filter songs by the given artist
+    artist_songs = df[df['artists'].str.contains(artist_name, case=False)]
+
+    # Check if there are songs available for the specified artist
+    if artist_songs.empty:
+        return f"No information available for the artist: {artist_name}"
+
+    # Calculate the ratio of explicit and non-explicit songs
+    total_songs = len(artist_songs)
+    explicit_songs = artist_songs['explicit'].sum()
+    non_explicit_songs = total_songs - explicit_songs
+
+    # Check for division by zero
+    if total_songs == 0:
+        return f"No songs available for the artist: {artist_name}"
+
+    # Calculate the ratio
+    explicit_ratio = explicit_songs / total_songs
+    non_explicit_ratio = non_explicit_songs / total_songs
+
+    return {
+        'explicit': explicit_ratio,
+        'non_explicit': non_explicit_ratio
+    }
 
 
 @eel.expose
@@ -189,46 +248,6 @@ def format_duration(milliseconds):
     seconds = milliseconds / 1000
     minutes, seconds = divmod(seconds, 60)
     return f'{int(minutes):02d}:{int(seconds):02d}'
-
-@eel.expose
-def predict_artist_song_duration(artist_name):
-    # Load the dataset
-    df = pd.read_csv(filePath)
-
-    # Filter data for the specific artist
-    artist_songs = df[df['artists'].apply(lambda x: artist_name in x)]
-
-    if artist_songs.empty:
-        print(f"No data found for {artist_name}")
-        return None
-
-    # Extract relevant columns for the model (year and duration_ms)
-    data = artist_songs[['year', 'duration_ms']]
-
-    # Split the data into training and testing sets
-    train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
-
-    # Separate features (X) and target variable (y)
-    X_train, y_train = train_data[['year']], train_data['duration_ms']
-
-    # Create a linear regression model
-    model = LinearRegression()
-
-    # Train the model
-    model.fit(X_train, y_train)
-
-    # Make predictions for the years since the first release up to 2023
-    first_release_year = artist_songs['year'].min()
-    prediction_years = range(first_release_year, 2024)  # Adjusted range up to 2023
-    prediction_years_np = np.array(prediction_years).reshape(-1, 1)
-    predictions = model.predict(prediction_years_np)
-
-    # Convert the predictions from milliseconds to minutes and seconds
-    predictions = [format_duration(prediction) for prediction in predictions]
-
-    # Prepare data for Chart.js
-    chart_data = [{'x': int(year), 'y': prediction} for year, prediction in zip(prediction_years, predictions)]
-    return chart_data
 
 
 '''

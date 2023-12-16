@@ -110,31 +110,12 @@ async function search() {
             document.getElementById('infoArtistSpotifyURL').href = spotifyLink;
             
             //visualize data
-            plotTop10Songs(data);
+            await plotTop10Songs(data);
 
-            //check if songLengthWarning has class d-none
-            if (!document.getElementById('songLengthWarning').classList.contains('d-none')) {
-                //hide songLengthWarning
-                document.getElementById('songLengthWarning').classList.add('d-none');
-            }
-
-            //predictions here
-            try {
-                await predictSongLength(artistName).catch(error => {
-                    //this results when there is not enough data to make a prediction
-
-                    //delete the canvas if present 
-                    const parentDiv = document.getElementById('canvasSongLengthContainer');
-                    if (parentDiv.querySelector('canvas') != null) {
-                        parentDiv.removeChild(parentDiv.querySelector('canvas'));
-                    }
-
-                    //show the error message
-                    document.getElementById('songLengthWarning').classList.remove('d-none');
-                });
-            } catch (error) {
-                console.log("An error occurred outside the promise:", error);
-            }
+            //average tempo
+            await artistAverageTempo(getQuerry());
+            //explicit ratio
+            await artistExplicity(getQuerry());
 
             //show artist card
             document.getElementById('artistInfo').classList.remove('d-none');
@@ -162,4 +143,56 @@ function extractData(data) {
     return extractedData;
 }
 
+//average tempo of an artist
+async function artistAverageTempo(name){
+    const temp = async () => {
+        return await eel.artist_average_tempo(name)();
+    };
+    const details = JSON.parse(await temp());
 
+    //round off tempo to integer
+    const tempo = Math.round(details);
+
+    //append to #infoArtistTempo innerHTML
+    document.getElementById('infoArtistTempo').innerHTML = tempo;
+  }
+
+//explicity of an artist
+async function artistExplicity(name){
+    const temp = async () => {
+        return await eel.artist_explicit_ratio(name)();
+    };
+    const details = await temp();
+    const explicity = details['explicit'];
+
+    //convert to percentage
+    const explicitRatio = Math.round(explicity * 100);
+
+    //append to #infoArtistExplicitRatio innerHTML
+    document.getElementById('infoArtistExplicitValue').innerHTML = explicitRatio;
+
+    //note on the explicit ratio
+    const note = document.getElementById('infoArtistExplicitNote');
+    const textColor = document.getElementById('infoArtistExplicitValueTextColor');
+    if (explicitRatio < 25) {
+        note.innerHTML = 'This artist writes mostly clean songs';
+        // Clear all classes from classlist
+        textColor.className = '';
+        textColor.classList.add('text-success', 'font-weight-bold', 'text-center');
+    }
+    else if (explicitRatio < 60) {
+        note.innerHTML = 'Some songs contain explicit lyrics';
+        textColor.className = '';
+        textColor.classList.add('text-warning', 'font-weight-bold', 'text-center');
+    }
+    else if (explicitRatio < 85) {
+        note.innerHTML = 'Explicit lyrics are common in songs';
+        textColor.className = '';
+        textColor.classList.add('text-danger', 'font-weight-bold', 'text-center');
+    }
+    else {
+        note.innerHTML = 'Songs are mostly not family-friendly';
+        textColor.className = '';
+        textColor.classList.add('text-danger', 'font-weight-bold', 'text-center');
+    }
+}
