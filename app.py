@@ -53,7 +53,7 @@ def filePicker():
 
     file_path = filedialog.askopenfilename(
         title="Select file...",
-        filetypes=[("CSV files", "*.csv"), ("DBF files", "*.dbf"), ("All files", "*.*")]
+        filetypes=[("CSV files", "*.csv")]
     )
 
     global filePath
