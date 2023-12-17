@@ -15,7 +15,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.metrics import mean_squared_error
 import json
-from wikipedia import get_wikipedia_intro
+from wikipedia import wiki
 
 
 
@@ -310,9 +310,9 @@ def format_duration(milliseconds):
 
 # artist information from wikipedia
 @eel.expose
-def wiki(name):
-    wiki = get_wikipedia_intro(name)
-    return wiki
+def wikiSearch(name):
+    data = wiki(name)
+    return data
 
 '''
     --------------------------------------

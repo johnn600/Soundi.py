@@ -136,9 +136,10 @@ async function search() {
 //search some additional info from Wikipedia
 async function searchWikipedia(artistName) {
     const temp = async () => {
-        return await eel.wiki(artistName)();
+        return await eel.wikiSearch(artistName)();
     };
     const details = await temp();
+    console.log(details);
     return details;
 }
 
