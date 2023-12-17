@@ -40,6 +40,38 @@ function updateProgressBar(value) {
   --------------------------------------------
 */
 
+//dataset information
+async function getDatasetInfo(){
+    //total records
+    const totalRecord = async () => {
+        return await eel.dataset_total_records()();
+    };
+
+    const totalRecordData = await totalRecord();
+    document.getElementById("totalRecords").innerHTML = totalRecordData + " entries";
+
+    //file size
+    const fileSize = async () => {
+        return await eel.dataset_file_size()();
+    };
+
+    const fileSizeData = await fileSize();
+    const fileSizeDataRounded = fileSizeData.toFixed(2);
+    document.getElementById("fileSize").innerHTML = fileSizeDataRounded + " MB";
+
+    //time range
+    const timeRange = async () => {
+        return await eel.dataset_time_range()();
+    };
+
+    const temp = await timeRange();
+    const timeRangeData = JSON.parse(temp);
+    const min_year = timeRangeData['min_year'];
+    const max_year = timeRangeData['max_year'];
+    document.getElementById("timeRange").innerHTML = min_year + " - " + max_year;
+    
+}
+
 // released songs per year
 async function plotSongsPerYear(){
     const temp = async () => {
@@ -285,8 +317,6 @@ async function plotTop10Songs(data){
     plotHorizontalBarGraph(details, 'artistTop10SongsChart', 'Popularity')
 
 }
-
-
 
 // Convert time duration string to total seconds
 function convertToSeconds(durationString) {
@@ -601,6 +631,7 @@ function plotPolarAreaGraph(data, element, label) {
 
 
 const functionsToExecute = [
+  getDatasetInfo,
   plotSongsPerYear,
   plotMusicalKeyShare,
   () => getTopArtistInKey('C'),

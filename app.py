@@ -69,7 +69,7 @@ def returnFileDetails():
 # OVERVIEW SECTION
 
 @eel.expose
-def total_records_in_dataset():
+def dataset_total_records():
     # Load the dataset
     df = pd.read_csv(filePath)
 
@@ -77,6 +77,30 @@ def total_records_in_dataset():
     total_records = len(df)
 
     return total_records
+
+@eel.expose
+def dataset_file_size():
+    # Get the file size in bytes
+    file_size = os.path.getsize(filePath)
+
+    # Convert the file size to MB
+    file_size_mb = file_size / 1000000
+
+    return file_size_mb
+
+@eel.expose
+def dataset_time_range():
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Get the minimum and maximum years
+    data = {
+        'min_year': df['year'].min().item(),
+        'max_year': df['year'].max().item()
+    }
+
+    return json.dumps(data)
+
 
 @eel.expose
 def released_songs_per_year():

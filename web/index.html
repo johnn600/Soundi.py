@@ -113,7 +113,51 @@
         </div>
 
         <!-- main contents -->
-        <div class="w-100 align-items-center justify-content-center d-none" id="overviewSection">
+        <div class="w-100 align-items-center justify-content-center d-none pt-5" id="overviewSection">
+
+          <!-- Title -->
+          <div class="d-flex flex-column justify-content-start mt-3 mb-2 text-left">
+            <h2 class="mb-3">Dataset information</h2>
+
+            <div class="d-flex flex-row align-items-center mt-3">
+
+              <!-- total records -->
+              <div class="card pt-4 rounded col">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                  <i class="fa-solid fa-table fa-2xl"></i>
+                  <h6 class="text-center font-weight-bold mt-4" id="totalRecords"></h6>
+                </div>
+              </div>
+
+              <!-- file size -->
+              <div class="card pt-4 rounded col ml-3">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                  <i class="fa-solid fa-file fa-2xl"></i>
+                  <h6 class="text-center font-weight-bold mt-4" id="fileSize"></h6>
+                </div>
+              </div>
+
+              <!-- time range -->
+              <div class="card pt-4 rounded col ml-3">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                  <i class="fa-solid fa-calendar-days fa-2xl"></i>
+                  <h6 class="text-center font-weight-bold mt-4" id="timeRange"></h6>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+          <div class="container mt-5">
+            <div class="d-flex flex-row align-items-center">
+              <hr class="flex-grow-1">
+              <i class="fa-solid fa-music fa-2xl mb-3 mx-4"></i>
+              <hr class="flex-grow-1">
+            </div>
+          </div>
 
           <!-- Songs released per year -->
           <div class="card p-3 mt-5 rounded">
@@ -438,46 +482,42 @@
                 <p class="text-center mt-2"><small>*Data not reflective of current popular songs of the artist (2020 Spotify dataset)</small></p>
             </div>
 
-<!-- Some notable infos -->
-<div class="row align-items-center mt-5">
+            <!-- Some notable infos -->
+            <div class="row align-items-center mt-5">
 
-  <!-- favorite tempo -->
-  <div class="card mt-2 mx-1 rounded col d-flex flex-column align-items-center justify-content-center" style="height: 200px;">
-    <h5 class="font-weight-bold text-center mt-3">Tempo</h5>
-    <div class="card-body">
-      <h3 class="text-center font-weight-bold"><span id="infoArtistTempo">0</span> BPM</h3>
-      <div class="text-center mt-3">Average tempo of released tracks</div>
-    </div>
-  </div>
+              <!-- favorite tempo -->
+              <div class="card mt-2 mx-1 rounded col d-flex flex-column align-items-center justify-content-center" style="height: 200px;">
+                <h5 class="font-weight-bold text-center mt-3">Tempo</h5>
+                <div class="card-body">
+                  <h3 class="text-center font-weight-bold"><span id="infoArtistTempo">0</span> BPM</h3>
+                  <div class="text-center mt-3">Average tempo of released tracks</div>
+                </div>
+              </div>
 
-  <!-- number of songs in catalog -->
-  <div class="card mt-2 mx-1 rounded col d-flex flex-column align-items-center justify-content-center" style="height: 200px;">
-    <h5 class="font-weight-bold text-center mt-3">Catalog</h5>
-    <div class="card-body">
-      <h3 class="text-center font-weight-bold"><span id="infoArtistTrackCount">0</span></h3>
-      <div class="text-center mt-3">As recorded in the dataset</div>
-    </div>
-  </div>
+              <!-- number of songs in catalog -->
+              <div class="card mt-2 mx-1 rounded col d-flex flex-column align-items-center justify-content-center" style="height: 200px;">
+                <h5 class="font-weight-bold text-center mt-3">Catalog</h5>
+                <div class="card-body">
+                  <h3 class="text-center font-weight-bold"><span id="infoArtistTrackCount">0</span></h3>
+                  <div class="text-center mt-3">As recorded in the dataset</div>
+                </div>
+              </div>
 
-  <!-- is explicit? -->
-  <div class="card mt-2 mx-1 rounded col d-flex flex-column align-items-center justify-content-center" style="height: 200px;">
-    <h5 class="font-weight-bold text-center mt-3">Is Explicit?</h5>
-    <div class="card-body">
-      <h3 class="text-center font-weight-bold" id="infoArtistExplicitValueTextColor"><span id="infoArtistExplicitValue">0</span>%</h3>
-      <div class="text-center mt-3" id="infoArtistExplicitNote">Average tempo of released tracks</div>
-    </div>
-  </div>
+              <!-- is explicit? -->
+              <div class="card mt-2 mx-1 rounded col d-flex flex-column align-items-center justify-content-center" style="height: 200px;">
+                <h5 class="font-weight-bold text-center mt-3">Is Explicit?</h5>
+                <div class="card-body">
+                  <h3 class="text-center font-weight-bold" id="infoArtistExplicitValueTextColor"><span id="infoArtistExplicitValue">0</span>%</h3>
+                  <div class="text-center mt-3" id="infoArtistExplicitNote">Average tempo of released tracks</div>
+                </div>
+              </div>
 
-</div>
-
-
+            </div>
 
 
           </div>
 
               
-            
-
         </div>
       </div>
     </div>
