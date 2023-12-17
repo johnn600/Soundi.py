@@ -2,10 +2,11 @@
 
 ![Soundi.py Logo](./web/images/logo.png)
 
+<div align="center">
 **Spotify Dataset Analyzer**\
 **John Rey Vilbar | Zach Jacob Feldan | Ruby Jane Facurib**\
 **ITD105 Big Data Analytics**
-
+</div>
 
 ### Overview
 Soundi.py is a sophisticated platform designed for the analysis of Spotify datasets. This application focuses on providing insights into the music details contained in the database, offering valuable information on the number of songs released each year and highlighting the top songs of each artist.
