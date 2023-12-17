@@ -67,6 +67,17 @@ def returnFileDetails():
 
 # --------------------------------------
 # OVERVIEW SECTION
+
+@eel.expose
+def total_records_in_dataset():
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Get the total number of records (rows) in the dataset
+    total_records = len(df)
+
+    return total_records
+
 @eel.expose
 def released_songs_per_year():
     # Load the dataset
@@ -219,6 +230,28 @@ def artist_explicit_ratio(artist_name):
         'non_explicit': non_explicit_ratio
     }
 
+@eel.expose
+def artist_track_count(artist_name):
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Drop rows with NaN values in the 'artists' column
+    df = df.dropna(subset=['artists'])
+
+    # Check for NaN values in the 'artists' column and replace them with an empty string
+    df['artists'] = df['artists'].fillna('')
+
+    # Filter songs by the given artist
+    artist_tracks = df[df['artists'].str.contains(artist_name, case=False)]
+
+    # Check if there are tracks available for the specified artist
+    if artist_tracks.empty:
+        return f"No tracks found for the artist: {artist_name}"
+
+    # Count the number of tracks
+    tracks_count = len(artist_tracks)
+
+    return tracks_count
 
 @eel.expose
 def top_explicit_artists(year):
@@ -248,6 +281,8 @@ def format_duration(milliseconds):
     seconds = milliseconds / 1000
     minutes, seconds = divmod(seconds, 60)
     return f'{int(minutes):02d}:{int(seconds):02d}'
+
+
 
 
 '''

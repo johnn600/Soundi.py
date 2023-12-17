@@ -116,6 +116,8 @@ async function search() {
             await artistAverageTempo(getQuerry());
             //explicit ratio
             await artistExplicity(getQuerry());
+            //track count
+            await artistTrackCount(getQuerry());
 
             //show artist card
             document.getElementById('artistInfo').classList.remove('d-none');
@@ -191,8 +193,24 @@ async function artistExplicity(name){
         textColor.classList.add('text-danger', 'font-weight-bold', 'text-center');
     }
     else {
-        note.innerHTML = 'Songs are mostly not family-friendly';
+        note.innerHTML = 'Songs are generally not family-friendly';
         textColor.className = '';
         textColor.classList.add('text-danger', 'font-weight-bold', 'text-center');
+    }
+}
+
+//count the tracks of an artist
+async function artistTrackCount(name){
+    const temp = async () => {
+        return await eel.artist_track_count(name)();
+    };
+    const details = await temp();
+    
+    //append to #infoArtistTrackCount innerHTML
+    if (details == 1) {
+        document.getElementById('infoArtistTrackCount').innerHTML = details + ' track';
+    }
+    else {
+        document.getElementById('infoArtistTrackCount').innerHTML = details + ' tracks';
     }
 }
