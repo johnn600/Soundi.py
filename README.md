@@ -10,7 +10,7 @@
 
 
 ### Overview
-Soundi.py is a sophisticated platform designed for the analysis of Spotify datasets. This application focuses on providing insights into the music details contained in the database, offering valuable information on the number of songs released each year and highlighting the top songs of each artist.
+Soundi.py is a web app designed for doing simple data visualizations of Spotify datasets. This application focuses on providing insights into the music details contained in the database, offering valuable information on the number of songs released each year and highlighting the top songs of each artist.
 
 ### Dependencies
 * [Python Eel](https://github.com/python-eel/Eel)
@@ -24,16 +24,16 @@ This project uses the Kaggle dataset by Vatsal Mavani, which can be found [here]
 
 ### Setting up
 1. Install the needed dependencies
-2. Use the dataset (`data.csv`) provided in the Kaggle link above
+2. Use the datasets (especially `data.csv` and `data_w_genres.csv`) provided in the Kaggle link above
 2. Before loading to the web app, clean the csv file first busing the `clean.py` file
 3. Execute the `app.py` file
 
 
 ### Instructions
 1. Upon launching the application, you will be prompted to upload your dataset.
-2. Select your file and click the "Load" button. It is recommended to upload a CSV file for optimal compatibility.
+2. Select your file and click the "Analyze" button.
 3. Once your dataset is successfully loaded, the application will automatically initiate the analysis process, presenting an overview of the dataset selected.
-4. Another feature of the application is the "artist profile", wherein you can look for the top 10 most popular songs of a specific artist. To do this, click the "Artist Profile" button on the menu bar.
+4. Another feature of the application is the "artist profile", wherein you can look for the detailed information of a specific artist. To do this, click the "Artist Profile" button on the menu bar.
 
 ### Features
 1. Dataset Analysis:
