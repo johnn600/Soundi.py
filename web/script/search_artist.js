@@ -112,6 +112,11 @@ async function search() {
             //visualize data
             await plotTop10Songs(data);
 
+            //search wikipedia
+            const wikiData = await searchWikipedia(artistName);
+            //append to #infoArtistWiki innerHTML
+            document.getElementById('infoArtistWiki').innerHTML = wikiData;
+
             //average tempo
             await artistAverageTempo(getQuerry());
             //explicit ratio
@@ -126,6 +131,15 @@ async function search() {
             hideLoadingSpinner();
         }
     }
+}
+
+//search some additional info from Wikipedia
+async function searchWikipedia(artistName) {
+    const temp = async () => {
+        return await eel.wiki(artistName)();
+    };
+    const details = await temp();
+    return details;
 }
 
 function extractData(data) {

@@ -115,7 +115,7 @@
         <!-- main contents -->
         <div class="w-100 align-items-center justify-content-center d-none pt-5" id="overviewSection">
 
-          <!-- Title -->
+          <!-- Dataset information -->
           <div class="d-flex flex-column justify-content-start mt-3 mb-2 text-left">
             <h2 class="mb-3">Dataset information</h2>
 
@@ -465,25 +465,20 @@
               <!-- basic details -->
               <div class="col-md-6">
                   <div class="card-body">
-                      <h3 class="card-title font-weight-bold" id="infoArtistName">__</h3>
-                      <div class="card-text">Popularity: <span id="infoArtistPopularity">0</span></div>
-                      <div class="card-text">Followers: <span id="infoArtistFollowers">0</span></div>
+                      <h3 class="card-title font-weight-bold" id="infoArtistName"></h3>
+                      <h6 class="mb-2" id="infoArtistWiki">lorem ipsum</h6>
+                      <div class="card-text">Popularity: <span id="infoArtistPopularity"></span></div>
+                      <div class="card-text">Followers: <span id="infoArtistFollowers"></span></div>
                       <div><span id="infoArtistGenres"></span></div>
-                      <a title="Spotify link" href="#" id="infoArtistSpotifyURL" target="_blank"><i class="fa-brands fa-spotify fa-xl mt-4" style="color: #1dd366;"></i></a>
+                      <a title="Spotify link" href="#" id="infoArtistSpotifyURL" target="_blank">
+                        <i class="fa-brands fa-spotify fa-xl mt-4" style="color: #1dd366;"></i>
+                      </a>
                   </div>
               </div>
             </div>
             
-            <!-- top 10 popular songs -->
-            <div class="card p-3 rounded" >
-                <h5 class="font-weight-bold text-center mt-3">Top 10 popular songs</h5>
-                <!-- horizontal graph -->
-                <div id="canvasTop10Songs"></div>
-                <p class="text-center mt-2"><small>*Data not reflective of current popular songs of the artist (2020 Spotify dataset)</small></p>
-            </div>
-
             <!-- Some notable infos -->
-            <div class="row align-items-center mt-5">
+            <div class="row align-items-center mb-5">
 
               <!-- favorite tempo -->
               <div class="card mt-2 mx-1 rounded col d-flex flex-column align-items-center justify-content-center" style="height: 200px;">
@@ -512,6 +507,14 @@
                 </div>
               </div>
 
+            </div>
+
+            <!-- top 10 popular songs -->
+            <div class="card p-3 rounded" >
+              <h5 class="font-weight-bold text-center mt-3">Top 10 popular songs</h5>
+              <!-- horizontal graph -->
+              <div id="canvasTop10Songs"></div>
+              <p class="text-center mt-2"><small>*Data not reflective of current popular songs of the artist</small></p>
             </div>
 
 
