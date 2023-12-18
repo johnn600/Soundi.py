@@ -34,6 +34,12 @@ df['artists'] = df['artists'].apply(lambda x: x.strip("[]").split(",")[0].strip(
 # Merge the datasets based on the 'artists' column
 merged_df = pd.merge(df, data_w_genres_df[['artists', 'genres']], on='artists', how='left')
 
+# Extract the first genre from the lists in 'genres' column
+merged_df['genres'] = merged_df['genres'].apply(lambda x: x.strip("[]").split(",")[0].strip("'") if pd.notna(x) else x)
+
+# Rename the 'genres' column to 'genre'
+merged_df = merged_df.rename(columns={'genres': 'genre'})
+
 # Optionally, you can sort the dataframe based on a specific column
 merged_df = merged_df.sort_values(by=['year', 'popularity'], ascending=[True, False])
 

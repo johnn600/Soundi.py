@@ -40,7 +40,7 @@ function updateProgressBar(value) {
   --------------------------------------------
 */
 
-//dataset information
+//1. dataset information
 async function getDatasetInfo(){
     //total records
     const totalRecord = async () => {
@@ -71,6 +71,16 @@ async function getDatasetInfo(){
     document.getElementById("timeRange").innerHTML = min_year + " - " + max_year;
     
 }
+
+//2. genre distribution
+async function plotGenreDistribution(){
+    const temp = async () => {
+        return await eel.genre_distribution()();
+    };
+    const data = await temp();
+    console.log(data);
+}
+
 
 // released songs per year
 async function plotSongsPerYear(){
@@ -632,6 +642,7 @@ function plotPolarAreaGraph(data, element, label) {
 
 const functionsToExecute = [
   getDatasetInfo,
+  plotGenreDistribution,
   plotSongsPerYear,
   plotMusicalKeyShare,
   () => getTopArtistInKey('C'),

@@ -191,9 +191,9 @@ async function artistExplicity(name){
     //note on the explicit ratio
     const note = document.getElementById('infoArtistExplicitNote');
     const textColor = document.getElementById('infoArtistExplicitValueTextColor');
+
     if (explicitRatio < 25) {
         note.innerHTML = 'This artist writes mostly clean songs';
-        // Clear all classes from classlist
         textColor.className = '';
         textColor.classList.add('text-success', 'font-weight-bold', 'text-center');
     }
@@ -208,7 +208,7 @@ async function artistExplicity(name){
         textColor.classList.add('text-danger', 'font-weight-bold', 'text-center');
     }
     else {
-        note.innerHTML = 'Songs are generally not family-friendly';
+        note.innerHTML = 'Songs are not family-friendly';
         textColor.className = '';
         textColor.classList.add('text-danger', 'font-weight-bold', 'text-center');
     }

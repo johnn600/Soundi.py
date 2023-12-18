@@ -16,8 +16,11 @@ from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.metrics import mean_squared_error
 import json
 from wikipedia import wiki
+import ast
 
 
+#for testing
+filePath = r'C:\Users\Admin\Desktop\Spotify viz\Dataset\cleaned_and_merged_data.csv'
 
 
 # exclude all plugins and assets else mag-hang ang app
@@ -153,7 +156,6 @@ def top_artist_in_key(key):
     # Create a JSON object encoded in utf-8
     json_object = top_artists_key_of_C_after_1945.to_json(orient='records', force_ascii=False)
     return json_object
-
     
 @eel.expose
 def explicit_vs_nonexplicit_comparison():
@@ -174,6 +176,40 @@ def explicit_vs_nonexplicit_comparison():
     result_list = [list_of_labels, list_of_values]
     return result_list
 
+@eel.expose
+def genre_distribution():
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Drop rows with blank or empty values in the 'genre' column
+    df = df[df['genre'].apply(lambda x: isinstance(x, str) and x.strip() != '')]
+
+    # Create a new DataFrame with separate rows for each genre
+    genre_df = pd.DataFrame(df['genre'].tolist(), index=df.index).stack().reset_index(level=1, drop=True).reset_index(name='genre')
+
+    # Count the occurrences of each genre
+    genre_counts = genre_df['genre'].value_counts()
+
+
+    # Select the top 5 genres
+    top_5_genres = genre_counts.head(10)
+
+    # Create a new column 'category' based on the top genres
+    df['category'] = df['genre'].apply(lambda x: 'others' if x not in top_5_genres.index else x)
+
+    # Count the occurrences of each category
+    category_counts = df['category'].value_counts()
+
+    # Convert the dataframe to a JSON object
+    result_json = {
+        'genres': category_counts[1:].index.tolist(),
+        'values': category_counts[1:].values.tolist(),
+    }
+
+    print(result_json)
+
+    return result_json
+    
 
 
 # --------------------------------------
@@ -502,7 +538,6 @@ def linear_regression_average_danceability():
 
 
 
-
 #hide the python console when clicking the app.py
 #Windows OS specific solution
 print("Starting...")
@@ -517,5 +552,8 @@ user32.ShowWindow(hWnd, SW_HIDE)
 if __name__ == '__main__':
     try:
         x = eel.start('index.html', mode='chrome', host='localhost', port=8000, cmdline_args=['--start-maximized', '--disable-web-security'], shutdown_delay=1)
+
+        #for testing purposes
+        #genre_distribution()
     except OSError:
         pass

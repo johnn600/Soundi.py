@@ -21,15 +21,17 @@ def get_wikipedia_intro(artist_name):
     response = requests.get(api_url, params=params)
     data = response.json()
 
-
     page_id = list(data['query']['pages'].keys())[0]
     
     #-1 is the page id for the page not found
     if page_id != '-1':
+        #check if 'extract' contains the word 'may refer to' (meaning the page is a disambiguation page)
+        #e.g. 'Drake' may refer to many things
+        if 'may refer to' in data['query']['pages'][page_id]['extract']:
+            return None
         # Check if 'extract' is not equal to empty string
-        if data['query']['pages'][page_id]['extract'] != '':
+        elif data['query']['pages'][page_id]['extract'] != '':
             intro = data['query']['pages'][page_id]['extract']
-            #print(intro)
         else:
             return None
     else:
@@ -48,7 +50,16 @@ def get_wikipedia_intro(artist_name):
     if len(sentences) > 1:
         first_paragraph = '. '.join(sentences[:1]) + '.'
 
-    return first_paragraph
+    #check if first_pagraph contains the words 'musician', 'rapper', 'singer', 'band', 'DJ', 'group', 'duo', 'songwriter', 'artist'
+    #e.g. 'Train' may return information about the vehicle, not the band
+    for word in ['musician', 'rapper', 'singer', 'band', 'DJ', 'group', 'duo', 'songwriter', 'artist']:
+        if word in first_paragraph:
+            print(first_paragraph)
+            return first_paragraph
+        else:
+            pass
+
+    return None
 
 #test
 def wiki(query):
@@ -61,6 +72,7 @@ def wiki(query):
 
 def alternative(artist_name):
     #check if name is uppercase
+    #e.g. `banners` is `BANNERS` in spotify
     if artist_name.isupper():
         artist_name = artist_name.lower()
     
@@ -77,7 +89,6 @@ def alternative(artist_name):
         musician = get_wikipedia_intro(artist_name+' (musician)')
 
     if musician != None:
-        print("data:" + musician)
         return musician
     else:
         rapper = get_wikipedia_intro(artist_name+' (rapper)')
@@ -90,4 +101,12 @@ def alternative(artist_name):
     if singer != None:
         return singer
     else:
+        #e.g. 'The Carpenters' is 'Carpenters' in spotify
+        withThe = get_wikipedia_intro('The '+ artist_name)
+    
+    if withThe != None:
+        return withThe
+    else:
         return None
+
+wiki('The Weeknd')
