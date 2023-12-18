@@ -118,6 +118,8 @@ async function search() {
             await artistTrackCount(artistName);
             //genre contribution
             await artistGenreContribution(artistName);
+            //popularity over time
+            await artistPopularityOverTime(artistName);
 
             //show artist card
             document.getElementById('artistInfo').classList.remove('d-none');
@@ -256,13 +258,13 @@ async function artistGenreContribution(name){
     };
     const data = await temp();
 
-    const labels = data[0];
-    const values = data[1];
+    const labels = [`Artist: ${data[1][0]}`, `Others: ${data[1][1]-data[1][0]}`]
+    const ratio = data[0];
     const genre = data[2];
     
     const details = {
         index: labels,
-        values: values
+        values: ratio
     }
 
     //check if #artistGenreContributionChartContainer has a canvas child
@@ -278,5 +280,29 @@ async function artistGenreContribution(name){
     document.getElementById('artistGenre').innerHTML = `'${genre}'`;
 
     //plot the data
-    plotDonutGraph(details, 'artistGenreContributionChart', genre);
+    plotDonutGraph(details, 'artistGenreContributionChart', genre, true, true);
+}
+
+//artist popularity over time
+async function artistPopularityOverTime(name){
+    const temp = async () => {
+        return await eel.artist_popularity_over_time(name)();
+    };
+    const data = JSON.parse(await temp());
+    const years = data['year'];
+    const popularity = data['average_popularity'];
+
+    /*
+    //check if #artistPopularityOverTimeChartContainer has a canvas child
+    if (document.getElementById('artistPopularityOverTimeChartContainer').querySelector('canvas') != null) {
+        //remove all child elements
+        document.getElementById('artistPopularityOverTimeChartContainer').innerHTML = '';
+    } 
+    
+    //create a canvas
+    createCanvas('artistPopularityOverTimeChartContainer', 'artistPopularityOverTimeChart');
+
+    //plot the data
+    plotLineGraph(details, 'artistPopularityOverTimeChart');
+    */
 }

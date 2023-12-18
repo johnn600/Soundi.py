@@ -248,8 +248,8 @@ def artist_top_songs_by_popularity(artist_name):
     # Check for NaN values in the 'artists' column and replace them with an empty string
     df['artists'] = df['artists'].fillna('')
 
-    # Filter songs by the given artist
-    artist_songs = df[df['artists'].str.contains(artist_name, case=False)]
+    # Filter songs by the given artist (search for the exact name)
+    artist_songs = df[df['artists'].str.lower() == artist_name.lower()]
 
     # Sort songs by popularity in descending order
     top_songs = artist_songs.sort_values(by='popularity', ascending=False).head(10)
@@ -355,8 +355,6 @@ def artist_genre_contribution(artist_name):
     # Filter songs by the given artist (search for the exact name)
     artist_songs = df[df['artists'].str.lower() == artist_name.lower()]
 
-    print(artist_songs)
-
     #genre of the artist
     artist_genre = artist_songs['genre'].iloc[0]
 
@@ -366,15 +364,46 @@ def artist_genre_contribution(artist_name):
     #count all the songs in the genre that the artist is in
     genre_songs_count = len(df[df['genre'] == artist_songs['genre'].iloc[0]])
 
-    #labels - artist contribution and overall count
-    labels = ['Artist Contribution', 'Overall Count']
+    #percentage of the artist's contribution to the genre
+    artist_contribution = (artist_songs_count / genre_songs_count)
+    overall_count = (1 - artist_contribution)
+
+
+    #ratio
+    ratio = [artist_contribution, overall_count]
+    #values
+    values = [artist_songs_count, genre_songs_count]
 
     #combine the two counts into a single list
-    result_list = [labels, [artist_songs_count, genre_songs_count], artist_genre]
-
-    print(result_list)
+    result_list = [ratio, values, artist_genre]
 
     return result_list
+
+@eel.expose
+def artist_popularity_over_time(artist_name):
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Drop rows with NaN values in the 'artists' or 'popularity' columns
+    df = df.dropna(subset=['artists', 'popularity'])
+
+    # Check for NaN values in the 'artists' column and replace them with an empty string
+    df['artists'] = df['artists'].fillna('')
+
+    # Filter songs by the given artist (search for the exact name)
+    artist_songs = df[df['artists'].str.strip().str.lower() == artist_name.strip().lower()]
+
+    # Calculate the average popularity per year
+    avg_popularity_by_year = artist_songs.groupby('year')['popularity'].mean().reset_index()
+    avg_popularity_by_year['popularity'] = avg_popularity_by_year['popularity'].round(1)
+
+    # Create a JSON object with 'year' and 'average_popularity' lists
+    popularity_json = {
+        'year': avg_popularity_by_year['year'].tolist(),
+        'average_popularity': avg_popularity_by_year['popularity'].tolist()
+    }
+
+    return json.dumps(popularity_json)
 
 
 
@@ -592,6 +621,6 @@ if __name__ == '__main__':
         x = eel.start('index.html', mode='chrome', host='localhost', port=8000, cmdline_args=['--start-maximized', '--disable-web-security'], shutdown_delay=1)
 
         #for testing purposes
-        #artist_genre_contribution('Johann Pachelbel')
+        #artist_popularity('Drake')
     except OSError:
         pass

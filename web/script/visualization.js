@@ -513,18 +513,47 @@ function plotHorizontalBarGraph(data, element, label) {
 }
 
 // DONUT GRAPH CONSTRUCTOR
-function plotDonutGraph(data, element, label) {
+function plotDonutGraph(data, element, label, isSorted = false, isArtistProfile = false) {
   const ctx = document.getElementById(element).getContext('2d');
-
-  // Find the index of the minimum value in the data array
-  const minIndex = data.values.reduce((minIndex, currentValue, currentIndex, array) => currentValue < array[minIndex] ? currentIndex : minIndex, 0);
 
   // Colors for Spotify logo (green) and Bootstrap's dark theme (black)
   const spotifyGreen = '#1DB954';
   const bootstrapDark = '#343a40';
 
-  // Create an array of background colors with Bootstrap's dark theme for all segments except the smallest one (set to Spotify's green)
-  const backgroundColors = data.values.map((value, index) => index === minIndex ? spotifyGreen : bootstrapDark);
+  //change  the backgroundColors to spotify green if isSorted is true
+  if(isSorted){
+    var backgroundColors = [spotifyGreen, bootstrapDark]
+  } 
+  else {
+    // Find the index of the minimum value in the data array
+    const minIndex = data.values.reduce((minIndex, currentValue, currentIndex, array) => currentValue < array[minIndex] ? currentIndex : minIndex, 0);
+    
+    // Create an array of background colors with Bootstrap's dark theme for all segments except the smallest one (set to Spotify's green)
+    var backgroundColors = data.values.map((value, index) => index === minIndex ? spotifyGreen : bootstrapDark);
+  }
+
+  //if chart is for Artist Profile Section
+  if(isArtistProfile){
+    var tooltips = {
+      mode: 'index',
+      callbacks: {
+        label: function (context) {
+          const dataset = context.dataset;
+          const total = dataset.data.reduce((acc, cur) => acc + cur, 0);
+          const value = dataset.data[context.dataIndex];
+          const percentage = ((value / total) * 100).toFixed(1);
+          return `Percentage: ${percentage}%`;
+        },
+        title: function (tooltipItems) {
+            return ''; // Remove the title
+        }
+      }
+    }
+  }
+  else {
+    var tooltips = {}
+  }
+
 
   const myChart = new Chart(ctx, {
     type: 'doughnut',
@@ -544,7 +573,8 @@ function plotDonutGraph(data, element, label) {
         legend: {
           display: true,
           position: 'bottom',
-        }
+        },
+        tooltip: tooltips,
       },
       cutout: '60%',
     }
