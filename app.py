@@ -16,7 +16,6 @@ from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.metrics import mean_squared_error
 import json
 from wikipedia import wiki
-import ast
 
 
 #for testing
@@ -177,6 +176,28 @@ def explicit_vs_nonexplicit_comparison():
     return result_list
 
 @eel.expose
+def top_explicit_artists(year):
+    # Load the dataset
+    df = pd.read_csv(filePath)
+
+    # Filter songs for the given year
+    year_songs = df[df['year'] == int(year)]
+
+    # Count the number of explicit songs released by each artist
+    explicit_artist_counts = year_songs[year_songs['explicit'] == 1]['artists'].explode().value_counts()
+
+    # Select the top 5 artists
+    top_explicit_artists = explicit_artist_counts.head(5)
+
+    # Create separate lists for labels and values
+    list_of_labels = top_explicit_artists.index.tolist()
+    list_of_values = top_explicit_artists.values.tolist()
+
+    # Combine the lists into a single list
+    result_list = [list_of_labels, list_of_values]
+    return result_list
+
+@eel.expose
 def genre_distribution():
     # Load the dataset
     df = pd.read_csv(filePath)
@@ -206,14 +227,19 @@ def genre_distribution():
         'values': category_counts[1:].values.tolist(),
     }
 
-    print(result_json)
-
     return result_json
     
 
 
 # --------------------------------------
 # ARTIST SECTION
+
+#search artist information from Wikipedia
+@eel.expose
+def wikiSearch(name):
+    data = wiki(name)
+    return data
+
 @eel.expose
 def artist_top_songs_by_popularity(artist_name):
     # Load the dataset
@@ -316,27 +342,37 @@ def artist_track_count(artist_name):
     return tracks_count
 
 @eel.expose
-def top_explicit_artists(year):
+def artist_genre_contribution(artist_name):
     # Load the dataset
     df = pd.read_csv(filePath)
 
+    # Drop rows with NaN values in the 'artists' or 'genre' columns
+    df = df.dropna(subset=['artists', 'genre'])
 
-    # Filter songs for the given year
-    year_songs = df[df['year'] == int(year)]
+    # Check for NaN values in the 'artists' column and replace them with an empty string
+    df['artists'] = df['artists'].fillna('')
 
-    # Count the number of explicit songs released by each artist
-    explicit_artist_counts = year_songs[year_songs['explicit'] == 1]['artists'].explode().value_counts()
+# Filter songs by the given artist (search for the exact name)
+    artist_songs = df[df['artists'].str.lower() == artist_name.lower()]
 
-    # Select the top 5 artists
-    top_explicit_artists = explicit_artist_counts.head(5)
+    #genre of the artist
+    artist_genre = artist_songs['genre'].iloc[0]
 
-    # Create separate lists for labels and values
-    list_of_labels = top_explicit_artists.index.tolist()
-    list_of_values = top_explicit_artists.values.tolist()
+    #count all the songs of the artist
+    artist_songs_count = len(artist_songs)
 
-    # Combine the lists into a single list
-    result_list = [list_of_labels, list_of_values]
+    #count all the songs in the genre that the artist is in
+    genre_songs_count = len(df[df['genre'] == artist_songs['genre'].iloc[0]])
+
+    #labels - artist contribution and overall count
+    labels = ['Artist Contribution', 'Overall Count']
+
+    #combine the two counts into a single list
+    result_list = [labels, [artist_songs_count, genre_songs_count], artist_genre]
+
     return result_list
+
+
 
 #song length prediction for an artist
 def format_duration(milliseconds):
@@ -344,11 +380,9 @@ def format_duration(milliseconds):
     minutes, seconds = divmod(seconds, 60)
     return f'{int(minutes):02d}:{int(seconds):02d}'
 
-# artist information from wikipedia
-@eel.expose
-def wikiSearch(name):
-    data = wiki(name)
-    return data
+
+
+
 
 '''
     --------------------------------------
@@ -554,6 +588,6 @@ if __name__ == '__main__':
         x = eel.start('index.html', mode='chrome', host='localhost', port=8000, cmdline_args=['--start-maximized', '--disable-web-security'], shutdown_delay=1)
 
         #for testing purposes
-        #genre_distribution()
+        #artist_genre_contribution('Frank Sinatra')
     except OSError:
         pass

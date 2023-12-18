@@ -1,19 +1,12 @@
-
-function showLoadingSpinner() {
-    document.getElementById('loadingSpinner').classList.add('d-flex');
-    document.getElementById('loadingSpinner').classList.remove('d-none');
-}
-
-function hideLoadingSpinner() {
-    document.getElementById('loadingSpinner').classList.add('d-none');
-    document.getElementById('loadingSpinner').classList.remove('d-flex');
-}
+//ITD105 Big Data Analytics project
+//coder: John Rey Vilbar
 
 
-function getQuerry() {
-    const artistName = document.getElementById('artistName').value;
-    return artistName;
-}
+/*
+---------------------------------------------
+            MAIN FUNCTIONS
+---------------------------------------------
+*/
 
 //search for artist from imported csv file
 async function search() {
@@ -123,6 +116,8 @@ async function search() {
             await artistExplicity(getQuerry());
             //track count
             await artistTrackCount(getQuerry());
+            //genre contribution
+            await artistGenreContribution(getQuerry());
 
             //show artist card
             document.getElementById('artistInfo').classList.remove('d-none');
@@ -131,6 +126,30 @@ async function search() {
             hideLoadingSpinner();
         }
     }
+}
+
+
+
+/*
+---------------------------------------------
+                other functions
+---------------------------------------------
+*/
+
+
+function showLoadingSpinner() {
+    document.getElementById('loadingSpinner').classList.add('d-flex');
+    document.getElementById('loadingSpinner').classList.remove('d-none');
+}
+
+function hideLoadingSpinner() {
+    document.getElementById('loadingSpinner').classList.add('d-none');
+    document.getElementById('loadingSpinner').classList.remove('d-flex');
+}
+
+function getQuerry() {
+    const artistName = document.getElementById('artistName').value;
+    return artistName;
 }
 
 //search some additional info from Wikipedia
@@ -228,4 +247,36 @@ async function artistTrackCount(name){
     else {
         document.getElementById('infoArtistTrackCount').innerHTML = details + ' tracks';
     }
+}
+
+//artist's contribution to their respective genres
+async function artistGenreContribution(name){
+    const temp = async () => {
+        return await eel.artist_genre_contribution(name)();
+    };
+    const data = await temp();
+
+    const labels = data[0];
+    const values = data[1];
+    const genre = data[2];
+    
+    const details = {
+        index: labels,
+        values: values
+    }
+
+    //check if #artistGenreContributionChartContainer has a canvas child
+    if (document.getElementById('artistGenreContributionChartContainer').querySelector('canvas') != null) {
+        //remove all child elements
+        document.getElementById('artistGenreContributionChartContainer').innerHTML = '';
+    } 
+    
+    //create a canvas
+    createCanvas('artistGenreContributionChartContainer', 'artistGenreContributionChart');
+
+    //set artistGenre innerHTML
+    document.getElementById('artistGenre').innerHTML = `'${genre}'`;
+
+    //plot the data
+    plotDonutGraph(details, 'artistGenreContributionChart', genre);
 }

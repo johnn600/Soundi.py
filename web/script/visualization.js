@@ -78,7 +78,16 @@ async function plotGenreDistribution(){
         return await eel.genre_distribution()();
     };
     const data = await temp();
-    console.log(data);
+    genres = data['genres'].map(String);
+    values = data['values'];
+
+    const details = {
+        index: genres,
+        values: values
+    }
+
+    //plot the graph
+    plotHorizontalBarGraph(details, 'topGenresGraph', 'No. of songs')
 }
 
 

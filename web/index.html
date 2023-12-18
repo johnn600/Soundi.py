@@ -150,8 +150,8 @@
 
           </div>
 
-
-          <div class="container mt-5">
+          <!-- separator -->
+          <div class="container mt-5 mb-2">
             <div class="d-flex flex-row align-items-center">
               <hr class="flex-grow-1">
               <i class="fa-solid fa-music fa-2xl mb-3 mx-4"></i>
@@ -159,8 +159,35 @@
             </div>
           </div>
 
+          <!-- genre information -->
+          <div class="row align-items-center">
+
+            <!-- top genres graph -->
+            <div class="col-md-7">
+              <div class="card p-3 mt-3 rounded">
+                <h5 class="font-weight-bold mt-3 text-center">Top 10 Genres</h5>
+                <canvas id="topGenresGraph" height="105"></canvas>
+              </div>
+            </div>
+
+            <!-- some texts -->
+            <div class="col-md-5">
+              <div class="container container-fluid">
+                <h5 class="font-weight-bold">Genres</h5>
+                <p>
+                  A music genre is a conventional category that identifies some 
+                  pieces of music as belonging to a shared tradition or set of 
+                  conventions. As genres evolve, new music may fit into 
+                  existing categories or give rise to derivative subgenres 
+                  and "micro genres".
+                </p>
+              </div>
+            </div>
+
+          </div>
+
           <!-- Songs released per year -->
-          <div class="card p-3 mt-5 rounded">
+          <div class="card p-3 rounded mt-5">
             <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
       
               <div class="card-body position-relative">
@@ -476,7 +503,7 @@
             </div>
             
             <!-- Some notable infos -->
-            <div class="row align-items-center mb-5">
+            <div class="row align-items-center mb-2">
 
               <!-- favorite tempo -->
               <div class="card mt-2 mx-1 rounded col d-flex flex-column align-items-center justify-content-center" style="height: 200px;">
@@ -502,6 +529,22 @@
                 <div class="card-body">
                   <h3 class="text-center font-weight-bold" id="infoArtistExplicitValueTextColor"><span id="infoArtistExplicitValue">0</span>%</h3>
                   <div class="text-center mt-3" id="infoArtistExplicitNote">Average tempo of released tracks</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- some statistics -->
+            <div class="row align-items-center mb-5">
+
+              <!-- artist genre contribution ratio chart -->
+              <div class="col-md-5">
+                <div class="card p-3 mt-3 rounded">
+                    <h5 class="font-weight-bold mt-3 text-center">
+                      Contribution to
+                      <span id="artistGenre"></span>
+                    </h5>
+                    <div class="card-body" id="artistGenreContributionChartContainer"></div>
                 </div>
               </div>
 
