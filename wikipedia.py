@@ -97,6 +97,11 @@ def alternative(artist_name):
     if djLower != None:
         return djLower
     else:
+        djCapitalized = get_wikipedia_intro(capitalized+' (DJ)')
+    
+    if djCapitalized != None:
+        return djCapitalized
+    else:
         bandUpper = get_wikipedia_intro(upper+' (band)')
 
     if bandUpper != None:
@@ -106,6 +111,11 @@ def alternative(artist_name):
 
     if bandLower != None:
         return bandLower
+    else:
+        bandCapitalized = get_wikipedia_intro(capitalized+' (band)')
+    
+    if bandCapitalized != None:
+        return bandCapitalized
     else:
         musicianUpper = get_wikipedia_intro(upper+' (musician)')
 
@@ -117,6 +127,11 @@ def alternative(artist_name):
     if musicianLower != None:
         return musicianLower
     else:
+        musicianCapitalized = get_wikipedia_intro(capitalized+' (musician)')
+
+    if musicianCapitalized != None:
+        return musicianCapitalized
+    else:
         rapperUpper = get_wikipedia_intro(upper+' (rapper)')
 
     if rapperUpper != None:
@@ -127,6 +142,11 @@ def alternative(artist_name):
     if rapperLower != None:
         return rapperLower
     else:
+        rapperCapitalized = get_wikipedia_intro(capitalized+' (rapper)')
+
+    if rapperCapitalized != None:
+        return rapperCapitalized
+    else:
         singerUpper = get_wikipedia_intro(upper+' (singer)')
 
     if singerUpper != None:
@@ -136,6 +156,11 @@ def alternative(artist_name):
 
     if singerLower != None:
         return singerLower
+    else:
+        singerCapitalized = get_wikipedia_intro(capitalized+' (singer)')
+
+    if singerCapitalized != None:
+        return singerCapitalized
     else:
         #e.g. 'The Carpenters' is 'Carpenters' in spotify
         withThe = get_wikipedia_intro('The '+ artist_name)
