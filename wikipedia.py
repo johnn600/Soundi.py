@@ -81,30 +81,55 @@ def alternative(artist_name):
     if artistLower != None:
         return artistLower
     else: 
-        dj = get_wikipedia_intro(artist_name+' (DJ)')
+        djUpper = get_wikipedia_intro(upper+' (DJ)')
+    
+    if djUpper != None:
+        return djUpper
+    else:
+        djLower = get_wikipedia_intro(lower+' (DJ)')
+    
+    if djLower != None:
+        return djLower
+    else:
+        bandUpper = get_wikipedia_intro(upper+' (band)')
 
-    if dj != None:  
-        return dj
+    if bandUpper != None:
+        return bandUpper
     else:
-        band = get_wikipedia_intro(artist_name+' (band)')
-    
-    if band != None:
-        return band
-    else:
-        musician = get_wikipedia_intro(artist_name+' (musician)')
+        bandLower = get_wikipedia_intro(lower+' (band)')
 
-    if musician != None:
-        return musician
+    if bandLower != None:
+        return bandLower
     else:
-        rapper = get_wikipedia_intro(artist_name+' (rapper)')
-    
-    if rapper != None:
-        return rapper
+        musicianUpper = get_wikipedia_intro(upper+' (musician)')
+
+    if musicianUpper != None:
+        return musicianUpper
     else:
-        singer = get_wikipedia_intro(artist_name+' (singer)')
-    
-    if singer != None:
-        return singer
+        musicianLower = get_wikipedia_intro(lower+' (musician)')
+
+    if musicianLower != None:
+        return musicianLower
+    else:
+        rapperUpper = get_wikipedia_intro(upper+' (rapper)')
+
+    if rapperUpper != None:
+        return rapperUpper
+    else:
+        rapperLower = get_wikipedia_intro(lower+' (rapper)')
+
+    if rapperLower != None:
+        return rapperLower
+    else:
+        singerUpper = get_wikipedia_intro(upper+' (singer)')
+
+    if singerUpper != None:
+        return singerUpper
+    else:
+        singerLower = get_wikipedia_intro(lower+' (singer)')
+
+    if singerLower != None:
+        return singerLower
     else:
         #e.g. 'The Carpenters' is 'Carpenters' in spotify
         withThe = get_wikipedia_intro('The '+ artist_name)

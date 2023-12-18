@@ -111,13 +111,13 @@ async function search() {
             document.getElementById('infoArtistWiki').innerHTML = wikiData;
 
             //average tempo
-            await artistAverageTempo(getQuerry());
+            await artistAverageTempo(artistName);
             //explicit ratio
-            await artistExplicity(getQuerry());
+            await artistExplicity(artistName);
             //track count
-            await artistTrackCount(getQuerry());
+            await artistTrackCount(artistName);
             //genre contribution
-            await artistGenreContribution(getQuerry());
+            await artistGenreContribution(artistName);
 
             //show artist card
             document.getElementById('artistInfo').classList.remove('d-none');

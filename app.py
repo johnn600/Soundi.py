@@ -329,8 +329,8 @@ def artist_track_count(artist_name):
     # Check for NaN values in the 'artists' column and replace them with an empty string
     df['artists'] = df['artists'].fillna('')
 
-    # Filter songs by the given artist
-    artist_tracks = df[df['artists'].str.contains(artist_name, case=False)]
+    # Filter songs by the given artist (search for the exact name)
+    artist_tracks = df[df['artists'].str.lower() == artist_name.lower()]
 
     # Check if there are tracks available for the specified artist
     if artist_tracks.empty:
@@ -352,8 +352,10 @@ def artist_genre_contribution(artist_name):
     # Check for NaN values in the 'artists' column and replace them with an empty string
     df['artists'] = df['artists'].fillna('')
 
-# Filter songs by the given artist (search for the exact name)
+    # Filter songs by the given artist (search for the exact name)
     artist_songs = df[df['artists'].str.lower() == artist_name.lower()]
+
+    print(artist_songs)
 
     #genre of the artist
     artist_genre = artist_songs['genre'].iloc[0]
@@ -369,6 +371,8 @@ def artist_genre_contribution(artist_name):
 
     #combine the two counts into a single list
     result_list = [labels, [artist_songs_count, genre_songs_count], artist_genre]
+
+    print(result_list)
 
     return result_list
 
@@ -588,6 +592,6 @@ if __name__ == '__main__':
         x = eel.start('index.html', mode='chrome', host='localhost', port=8000, cmdline_args=['--start-maximized', '--disable-web-security'], shutdown_delay=1)
 
         #for testing purposes
-        #artist_genre_contribution('Frank Sinatra')
+        #artist_genre_contribution('Johann Pachelbel')
     except OSError:
         pass
