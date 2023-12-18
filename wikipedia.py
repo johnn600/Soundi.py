@@ -1,11 +1,7 @@
 import requests
 import re
 
-def get_wikipedia_intro(artist_name):
-    #lowecase the name if all is uppercase
-    if artist_name.isupper():
-        artist_name = artist_name.lower()
-    
+def get_wikipedia_intro(artist_name):    
     print(artist_name)
 
     api_url = "https://en.wikipedia.org/w/api.php"
@@ -71,15 +67,24 @@ def wiki(query):
         return alternative(query)
 
 def alternative(artist_name):
-    #check if name is uppercase
-    #e.g. `banners` is `BANNERS` in spotify
-    if artist_name.isupper():
-        artist_name = artist_name.lower()
-    
-    DJ = get_wikipedia_intro(artist_name+' (DJ)')
+    lower = artist_name.lower()
+    upper = artist_name.upper()
 
-    if DJ != None:  
-        return DJ
+    #check for results based on lowercase/upercase
+    artistUpper = get_wikipedia_intro(upper)
+
+    if artistUpper != None:
+        return artistUpper
+    else:
+        artistLower = get_wikipedia_intro(lower)
+    
+    if artistLower != None:
+        return artistLower
+    else: 
+        dj = get_wikipedia_intro(artist_name+' (DJ)')
+
+    if dj != None:  
+        return dj
     else:
         band = get_wikipedia_intro(artist_name+' (band)')
     
