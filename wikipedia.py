@@ -52,7 +52,7 @@ def get_wikipedia_intro(artist_name):
 
     #check if first_pagraph contains the words 'musician', 'rapper', 'singer', 'band', 'DJ', 'group', 'duo', 'songwriter', 'artist'
     #e.g. 'Train' may return information about the vehicle, not the band
-    for word in ['musician', 'rapper', 'singer', 'band', 'DJ', 'group', 'duo', 'songwriter', 'artist']:
+    for word in ['musician', 'rapper', 'producer', 'singer', 'band', 'DJ', 'group', 'duo', 'songwriter', 'artist']:
         if word in first_paragraph:
             print(first_paragraph)
             return first_paragraph
@@ -108,5 +108,3 @@ def alternative(artist_name):
         return withThe
     else:
         return None
-
-wiki('The Weeknd')
