@@ -292,17 +292,25 @@ async function artistPopularityOverTime(name){
     const years = data['year'];
     const popularity = data['average_popularity'];
 
-    /*
-    //check if #artistPopularityOverTimeChartContainer has a canvas child
-    if (document.getElementById('artistPopularityOverTimeChartContainer').querySelector('canvas') != null) {
+    console.log(years);
+    console.log(popularity);
+
+    const details = {
+        index: years,
+        values: popularity
+    }
+
+    
+    //check for a canvas child
+    if (document.getElementById('artistPopularityContainer').querySelector('canvas') != null) {
         //remove all child elements
-        document.getElementById('artistPopularityOverTimeChartContainer').innerHTML = '';
+        document.getElementById('artistPopularityContainer').innerHTML = '';
     } 
     
     //create a canvas
-    createCanvas('artistPopularityOverTimeChartContainer', 'artistPopularityOverTimeChart');
+    createCanvas('artistPopularityContainer', 'artistPopularity');
 
     //plot the data
-    plotLineGraph(details, 'artistPopularityOverTimeChart');
-    */
+    plotLineGraph(details, 'artistPopularity');
+    
 }

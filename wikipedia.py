@@ -69,7 +69,8 @@ def wiki(query):
 def alternative(artist_name):
     lower = artist_name.lower()
     upper = artist_name.upper()
-    capitalized = artist_name.capitalize()
+    #capitalize all words in artist name
+    capitalized = artist_name.title()
 
     #check for results based on lowercase/upercase/capitalized artist name
     artistUpper = get_wikipedia_intro(upper)

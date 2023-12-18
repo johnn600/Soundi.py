@@ -188,7 +188,7 @@
 
           <!-- Songs released per year -->
           <div class="card p-3 rounded mt-5">
-            <h5 class="font-weight-bold mt-3 text-center">Songs released per year</h5>
+            <h5 class="font-weight-bold mt-3 text-center">Overall dataset record</h5>
       
               <div class="card-body position-relative">
                 <canvas id="songsPerYearChart" width="400" height="70"></canvas>
@@ -538,13 +538,22 @@
             <div class="row align-items-center mb-5">
 
               <!-- artist genre contribution ratio chart -->
-              <div class="col-md-5">
+              <div class="col-md-4">
                 <div class="card p-3 mt-3 rounded">
                     <h5 class="font-weight-bold mt-3 text-center">
                       Contribution to
                       <span id="artistGenre"></span>
                     </h5>
                     <div class="card-body" id="artistGenreContributionChartContainer"></div>
+                </div>
+              </div>
+
+              <!-- popularity graph -->
+              <div class="col-md-8">
+                <div class="card p-3 mt-3 rounded">
+                    <h5 class="font-weight-bold mt-3 text-center">Popularity across the years</h5>
+                    <div class="card-body position-relative" id="artistPopularityContainer">
+                    </div>
                 </div>
               </div>
 
