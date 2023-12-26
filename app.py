@@ -6,7 +6,6 @@
 
 #Import libraries
 import eel
-import ctypes
 import os
 from tkinter import Tk, filedialog
 import pandas as pd
@@ -599,20 +598,6 @@ def linear_regression_average_danceability():
     return json.dumps(chart_data)
 
 
-
-
-
-
-
-
-#hide the python console when clicking the app.py
-#Windows OS specific solution
-print("Starting...")
-kernel32 = ctypes.WinDLL('kernel32')
-user32 = ctypes.WinDLL('user32')
-SW_HIDE = 0
-hWnd = kernel32.GetConsoleWindow()
-user32.ShowWindow(hWnd, SW_HIDE)
 
 
 #launch the webpage
