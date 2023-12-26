@@ -1,6 +1,8 @@
-//these are my keys, please don't be inlove with someone else
-const clientId = 'ede4783be3124ad6ae2bff3eae63a39c';
-const clientSecret = 'f97b9ebeb490444f8b39d1f1126c99d5';
+//get your client id and client secret from this link
+//https://developer.spotify.com/dashboard
+
+const clientId = 'YOUR_CLIENT_ID';
+const clientSecret = 'YOUR_CLIENT_SECRET';
 
 let accessToken;
 
