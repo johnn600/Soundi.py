@@ -1,7 +1,6 @@
 //ITD105 Big Data Analytics project
 //coder: John Rey Vilbar
 
-
 /*
 ---------------------------------------------
             MAIN FUNCTIONS
