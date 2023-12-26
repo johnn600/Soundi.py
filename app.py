@@ -10,7 +10,6 @@ import os
 from tkinter import Tk, filedialog
 import pandas as pd
 from sklearn.model_selection import train_test_split
-import numpy as np
 from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.metrics import mean_squared_error
 import json

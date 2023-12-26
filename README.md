@@ -15,9 +15,9 @@ Soundi.py is a web app designed for doing simple data visualizations of Spotify 
 ### Dependencies
 * [Python Eel](https://github.com/python-eel/Eel)
 * Pandas
-* Numpy
 * sklearn
-* ctypes
+* Tkinter
+
 
 ### Dataset
 This project uses the Kaggle dataset by Vatsal Mavani, which can be found [here](https://www.kaggle.com/datasets/vatsalmavani/spotify-dataset/data). 
