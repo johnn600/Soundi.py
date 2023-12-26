@@ -1,7 +1,7 @@
 import pandas as pd
 
-file1 = r"C:\Users\Admin\Desktop\Spotify viz\Dataset\data.csv"
-file2 = r'C:\Users\Admin\Desktop\Spotify viz\Dataset\data_w_genres.csv'
+file1 = r"path to data.csv"
+file2 = r'path to data_w_genres.csv'
 
 # Load the datasets
 df = pd.read_csv(file1)
@@ -44,4 +44,4 @@ merged_df = merged_df.rename(columns={'genres': 'genre'})
 merged_df = merged_df.sort_values(by=['year', 'popularity'], ascending=[True, False])
 
 # Save the cleaned and merged dataset to a new CSV file
-merged_df.to_csv(r"C:\Users\Admin\Desktop\Spotify viz\Dataset\cleaned_and_merged_data.csv", index=False)
+merged_df.to_csv(r"path to cleaned_and_merged_data.csv", index=False)
