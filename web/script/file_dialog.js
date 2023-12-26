@@ -1,5 +1,3 @@
-
-
 //global variable
 var csv;
 
@@ -60,6 +58,7 @@ function loadFile(){
 }
 
 //for testing
+/*
 function test(){
     fileInput = document.getElementById('fileInput');
     tabs = document.getElementById('myTabs');
@@ -83,5 +82,6 @@ function test(){
     //analyze the dataset
     analyzeDataset();
 }
+*/
 
 
