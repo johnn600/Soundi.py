@@ -1,4 +1,4 @@
-# Soundi.py (v 0.1)
+# Soundi.py (v0.1)
 
 ![Soundi.py Logo](./web/images/logo.png)
 
