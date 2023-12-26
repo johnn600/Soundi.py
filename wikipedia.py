@@ -1,3 +1,6 @@
+# this code is not optimized, but it works
+
+
 import requests
 import re
 
@@ -50,7 +53,6 @@ def get_wikipedia_intro(artist_name):
     #e.g. 'Train' may return information about the vehicle, not the band
     for word in ['musician', 'rapper', 'producer', 'singer', 'band', 'DJ', 'group', 'duo', 'songwriter', 'artist']:
         if word in first_paragraph:
-            print(first_paragraph)
             return first_paragraph
         else:
             pass
