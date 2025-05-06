@@ -8,34 +8,48 @@
   <strong>ITD105 Big Data Analytics</strong>
 </div>
 
-
 ### Overview
+
 Soundi.py is a web app designed for doing simple data visualizations of Spotify datasets. This application focuses on providing insights into the music details contained in the database, offering valuable information on the number of songs released each year and highlighting the top songs of each artist.
 
 ### Dependencies
-* [Python Eel](https://github.com/python-eel/Eel)
-* Pandas
-* sklearn
-* Tkinter
 
+- [Python Eel](https://github.com/python-eel/Eel)
+- Pandas
+- sklearn
+- Tkinter
 
 ### Dataset
-This project uses the Kaggle dataset by Vatsal Mavani, which can be found [here](https://www.kaggle.com/datasets/vatsalmavani/spotify-dataset/data). 
+
+This project uses the Kaggle dataset by Vatsal Mavani, which can be found [here](https://www.kaggle.com/datasets/vatsalmavani/spotify-dataset/data).
 
 ### Setting up
-1. Install the needed dependencies
-2. Use the datasets (especially `data.csv` and `data_w_genres.csv`) provided in the Kaggle link above
-2. Before loading to the web app, clean the csv file first busing the `clean.py` file
-3. Execute the `app.py` file
 
+1. Setup a virtual environment (Python version used: 3.11.0):
+
+```bash
+python -m venv env
+```
+
+2. Install the needed dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Use the datasets (especially `data.csv` and `data_w_genres.csv`) provided in the Kaggle link above
+4. Before loading to the web app, clean the csv file first busing the `clean.py` file
+5. Execute the `app.py` file
 
 ### Instructions
+
 1. Upon launching the application, you will be prompted to upload your dataset.
 2. Select your file and click the "Analyze" button.
 3. Once your dataset is successfully loaded, the application will automatically initiate the analysis process, presenting an overview of the dataset selected.
 4. Another feature of the application is the "artist profile", wherein you can look for the detailed information of a specific artist. To do this, click the "Artist Profile" button on the menu bar.
 
 ### Features
+
 1. Dataset Upload: Users are prompted to upload their dataset upon launching the application.
 2. File Compatibility: The application recommends uploading a CSV file for optimal compatibility.
 3. Automatic Analysis: Once the dataset is successfully loaded, the application automatically initiates the analysis process.
@@ -55,5 +69,4 @@ This project uses the Kaggle dataset by Vatsal Mavani, which can be found [here]
 17. Acousticness: Displays the acousticness of the songs over the years.
 18. Danceability: Presents the danceability or how suitable songs are for dancing over the years.
 
-Feel free to explore the diverse functionalities of Soundi.py to enhance your understanding of Spotify dataset analytics. 
-
+Feel free to explore the diverse functionalities of Soundi.py to enhance your understanding of Spotify dataset analytics.
